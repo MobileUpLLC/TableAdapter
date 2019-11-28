@@ -10,6 +10,7 @@
 		A19C7991238FD86800B4E62A /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19C7987238FD86700B4E62A /* TableAdapter.framework */; };
 		A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C7995238FD86800B4E62A /* TableAdapterTests.swift */; };
 		A19C7998238FD86800B4E62A /* TableAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = A19C798A238FD86700B4E62A /* TableAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A19C79C52390239700B4E62A /* TableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79C42390239700B4E62A /* TableAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		A19C7990238FD86800B4E62A /* TableAdapterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableAdapterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C7995238FD86800B4E62A /* TableAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAdapterTests.swift; sourceTree = "<group>"; };
 		A19C7997238FD86800B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A19C79C42390239700B4E62A /* TableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 		A19C7989238FD86700B4E62A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				A19C79C42390239700B4E62A /* TableAdapter.swift */,
 				A19C798A238FD86700B4E62A /* TableAdapter.h */,
 				A19C798B238FD86700B4E62A /* Info.plist */,
 			);
@@ -148,6 +151,7 @@
 				TargetAttributes = {
 					A19C7986238FD86700B4E62A = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 					A19C798F238FD86800B4E62A = {
 						CreatedOnToolsVersion = 11.2.1;
@@ -195,6 +199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A19C79C52390239700B4E62A /* TableAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +345,7 @@
 		A19C799C238FD86800B4E62A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4778UMCE49;
@@ -357,6 +363,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ru.mobileup.TableAdapter;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -365,6 +372,7 @@
 		A19C799D238FD86800B4E62A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 4778UMCE49;
@@ -390,6 +398,7 @@
 		A19C799F238FD86800B4E62A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4778UMCE49;
 				INFOPLIST_FILE = TableAdapterTests/Info.plist;
@@ -408,6 +417,7 @@
 		A19C79A0238FD86800B4E62A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4778UMCE49;
 				INFOPLIST_FILE = TableAdapterTests/Info.plist;

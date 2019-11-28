@@ -1,0 +1,16 @@
+PODS:
+  - TableAdapter (1.0.0)
+
+DEPENDENCIES:
+  - TableAdapter (from `../`)
+
+EXTERNAL SOURCES:
+  TableAdapter:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TableAdapter: 790fafc56bdcac8512a75010a4bf936392e329ee
+
+PODFILE CHECKSUM: 461bade39ec31c2c038543f9478ca919be17a50e
+
+COCOAPODS: 1.8.4
