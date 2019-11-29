@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A14B822E2391122800498B01 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B822D2391122800498B01 /* ConfigurableCell.swift */; };
+		A14B823623911B0C00498B01 /* TableAdapterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */; };
+		A14B823723911B0C00498B01 /* TableSectionsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B823523911B0C00498B01 /* TableSectionsSource.swift */; };
 		A19C7991238FD86800B4E62A /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19C7987238FD86700B4E62A /* TableAdapter.framework */; };
 		A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C7995238FD86800B4E62A /* TableAdapterTests.swift */; };
 		A19C7998238FD86800B4E62A /* TableAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = A19C798A238FD86700B4E62A /* TableAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -26,6 +28,8 @@
 
 /* Begin PBXFileReference section */
 		A14B822D2391122800498B01 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
+		A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapterDataSource.swift; sourceTree = "<group>"; };
+		A14B823523911B0C00498B01 /* TableSectionsSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionsSource.swift; sourceTree = "<group>"; };
 		A19C7987238FD86700B4E62A /* TableAdapter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableAdapter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C798A238FD86700B4E62A /* TableAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableAdapter.h; sourceTree = "<group>"; };
 		A19C798B238FD86700B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				A14B822D2391122800498B01 /* ConfigurableCell.swift */,
+				A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */,
+				A14B823523911B0C00498B01 /* TableSectionsSource.swift */,
 				A19C79C42390239700B4E62A /* TableAdapter.swift */,
 				A19C798A238FD86700B4E62A /* TableAdapter.h */,
 				A19C798B238FD86700B4E62A /* Info.plist */,
@@ -203,6 +209,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				A14B822E2391122800498B01 /* ConfigurableCell.swift in Sources */,
+				A14B823723911B0C00498B01 /* TableSectionsSource.swift in Sources */,
+				A14B823623911B0C00498B01 /* TableAdapterDataSource.swift in Sources */,
 				A19C79C52390239700B4E62A /* TableAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

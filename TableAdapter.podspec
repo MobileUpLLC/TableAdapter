@@ -20,16 +20,16 @@ Pod::Spec.new do |spec|
   # spec.social_media_url   = "https://twitter.com/Nikolai Timonin"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-#  spec.platform     = :ios, "9.0"
+  spec.platform     = :ios, "9.0"
   spec.ios.frameworks = 'UIKit'
-  spec.ios.deployment_target = "9.0"
+#  spec.ios.deployment_target = "9.0"
   
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.source       = { :path => '.' }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  spec.source_files  = "Source" 
+  spec.source_files  = "Source/"
   #  spec.exclude_files = "Classes/Exclude"
   # spec.public_header_files = "Classes/**/*.h"
 

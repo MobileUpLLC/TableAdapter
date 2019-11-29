@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,12 +61,12 @@
 		A19C79AD238FE8EF00B4E62A /* TableAdapterExample */ = {
 			isa = PBXGroup;
 			children = (
+				A19C79BC238FE8F400B4E62A /* Info.plist */,
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
 				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
-				A19C79B4238FE8EF00B4E62A /* Main.storyboard */,
 				A19C79B7238FE8F400B4E62A /* Assets.xcassets */,
 				A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */,
-				A19C79BC238FE8F400B4E62A /* Info.plist */,
+				A19C79B4238FE8EF00B4E62A /* Main.storyboard */,
 			);
 			path = TableAdapterExample;
 			sourceTree = "<group>";
@@ -77,7 +77,6 @@
 				2ADEF947A4DCE10EAF780A96 /* Pods-TableAdapterExample.debug.xcconfig */,
 				24429E11EFDF5BB60D1A9AB4 /* Pods-TableAdapterExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
