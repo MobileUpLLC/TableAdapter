@@ -14,5 +14,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let table = UITableView()
+        
+        let adapter = TableAdapter(tableView: table)
+        adapter.dataSource = self
+    }
+}
+
+extension ViewController: TableAdapterDataSource {
+    
+    func objectsForTableAdapter(_ adapter: TableAdapter) -> [Any] {
+        
+        return []
     }
 }

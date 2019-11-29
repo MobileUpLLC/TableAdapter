@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+public protocol ConfigurableCell {
+    
+    associatedtype T
+    
+    func setup(with object: T)
+}
