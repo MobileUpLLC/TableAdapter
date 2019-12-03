@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: AnyConfigurableCell
+// MARK: AnyConfigurable
 
 public protocol AnyConfigurable {
     
@@ -16,7 +16,7 @@ public protocol AnyConfigurable {
     func anySetup(with object: Any)
 }
 
-// MARK: ConfigurableCell
+// MARK: Configurable
 
 public protocol Configurable: AnyConfigurable {
     

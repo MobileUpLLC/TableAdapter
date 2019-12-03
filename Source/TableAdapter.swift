@@ -40,21 +40,19 @@ open class TableAdapter: NSObject {
     
     // MARK: Private methods
     
-    private func dequeConfiguredCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func dequeueConfiguredCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdetifier(for: indexPath), for: indexPath)
         
         if let cell = cell as? AnyConfigurable {
             
-            let object = getObject(for: indexPath)
-            
-            cell.anySetup(with: object)
+            cell.anySetup(with: getObject(for: indexPath))
         }
         
         return cell
     }
     
-    private func dequeConfiguredHeaderFooterView(withIdentifier id: String, object: Any?) -> UIView? {
+    private func dequeueConfiguredHeaderFooterView(withIdentifier id: String, object: Any?) -> UIView? {
         
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
         
@@ -68,9 +66,7 @@ open class TableAdapter: NSObject {
     
     private func getCellIdetifier(for indexPath: IndexPath) -> String {
         
-        let object = getObject(for: indexPath)
-        
-        return dataSource?.tableAdapter(self, cellIdentifierFor: object) ?? "Cell"
+        return dataSource?.tableAdapter(self, cellIdentifierFor: getObject(for: indexPath)) ?? "Cell"
     }
     
     private func getObject(for indexPath: IndexPath) -> AnyEquatable {
@@ -90,7 +86,6 @@ open class TableAdapter: NSObject {
                 && compare(lhs: groups.last?.header, rhs: header)
                 && compare(lhs: groups.last?.footer, rhs: footer)
             {
-                
                 groups[groups.endIndex - 1].rowObjects.append(object)
                 
             } else {
@@ -164,7 +159,7 @@ extension TableAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        return dequeConfiguredCell(forRowAt: indexPath)
+        return dequeueConfiguredCell(forRowAt: indexPath)
     }
     
     // MARK: HeaderFooter setup
@@ -181,12 +176,12 @@ extension TableAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return dequeConfiguredHeaderFooterView(withIdentifier: headerIdentifier, object: groups[section].header)
+        return dequeueConfiguredHeaderFooterView(withIdentifier: headerIdentifier, object: groups[section].header)
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        return dequeConfiguredHeaderFooterView(withIdentifier: footerIdentifier, object: groups[section].footer)
+        return dequeueConfiguredHeaderFooterView(withIdentifier: footerIdentifier, object: groups[section].footer)
     }
 }
 
