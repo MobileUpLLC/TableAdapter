@@ -11,7 +11,7 @@ import Foundation
 
 public protocol AnyConfigurableCell {
     
-    var objectType: Any.Type { get }
+    var anyObjectType: Any.Type { get }
     
     func anySetup(with object: Any)
 }
@@ -27,7 +27,7 @@ public protocol ConfigurableCell: AnyConfigurableCell {
 
 public extension ConfigurableCell {
     
-    var objectType: Any.Type {
+    var anyObjectType: Any.Type {
         
         return T.self
     }
@@ -40,7 +40,7 @@ public extension ConfigurableCell {
             
         } else {
             
-            assertionFailure("Could not cast value of type \(type(of: object)) to expected type \(T.self). \(type(of: self)) must provide correct jeneric type for ConfigurableCell protocol")
+            assertionFailure("Could not cast value of type '\(type(of: object))' to expected type '\(T.self)'. '\(type(of: self))' must provide correct jeneric type for ConfigurableCell protocol")
         }
         
     }

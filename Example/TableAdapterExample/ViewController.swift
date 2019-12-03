@@ -22,8 +22,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.tableFooterView = UIView()
         adapter.dataSource = self
+        adapter.delegate = self
+        adapter.sectionsSource = self
+        
+        adapter.update()
     }
 }
 
@@ -31,9 +34,62 @@ class ViewController: UIViewController {
 
 extension ViewController: TableAdapterDataSource {
 
-    func objects(for tableAdapter: TableAdapter) -> [Any] {
+    func objects(for tableAdapter: TableAdapter) -> [AnyEquatable] {
         
-        return ["1", "2", "3"]
+        var items: [AnyEquatable] = ["1", "2", "3", "4", "5"]
+        
+        items += [true, true, false]
+        
+        items += ["aaa", "bbb"]
+        
+        items += [123, 456, 789]
+        
+        return items
+    }
+}
+
+// MARK: TableSectionsSource
+
+extension ViewController: TableSectionsSource {
+    
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
+        
+        switch object {
+            
+        case is String:
+            return "Strings"
+            
+        case is Int:
+            return "Ints"
+            
+        default:
+            return "Any"
+        }
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+        
+        switch object {
+            
+        case is String:
+            return "Strings End"
+            
+        case is Int:
+            return "Ints End"
+            
+        default:
+            return "Any End"
+        }
+    }
+}
+
+// MARK: TableAdapterDelegate
+
+extension ViewController: TableAdapterDelegate {
+    
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: Any) {
+        
+        print(object)
     }
 }
 
@@ -46,8 +102,8 @@ class Cell: UITableViewCell {
 
 extension Cell: ConfigurableCell {
     
-    func setup(with object: String) {
+    func setup(with object: Any) {
         
-        mainLabel.text = object
+        mainLabel.text = "\(object)"
     }
 }

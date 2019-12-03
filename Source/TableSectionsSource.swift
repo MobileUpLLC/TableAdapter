@@ -11,12 +11,7 @@ public protocol TableSectionsSource: AnyObject {
     
     // MARK: Optional
     
-    func tableAdapter(_ adapter: TableAdapter, sectionViewIdentifierFor object: Any) -> String
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable?
     
-    func tableAdapter(_ adapter: TableAdapter, sectionObjectFor object: Any) -> Any
-}
-
-public extension TableSectionsSource {
-    
-    
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable?
 }

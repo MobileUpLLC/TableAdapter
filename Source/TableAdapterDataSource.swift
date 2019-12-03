@@ -11,7 +11,7 @@ public protocol TableAdapterDataSource: AnyObject {
     
     // MARK: Required
     
-    func objects(for tableAdapter: TableAdapter) -> [Any]
+    func objects(for tableAdapter: TableAdapter) -> [AnyEquatable]
     
     // MARK: Optional
     
