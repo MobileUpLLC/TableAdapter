@@ -117,7 +117,6 @@ open class TableAdapter: NSObject {
         } else {
             
             return lhs!.equal(any: rhs!)
-            
         }
     }
     

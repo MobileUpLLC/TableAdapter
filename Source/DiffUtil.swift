@@ -7,29 +7,6 @@
 
 import Foundation
 
-public protocol AnyEquatable {
-    
-    func equal(any: AnyEquatable?) -> Bool
-}
-
-public extension AnyEquatable where Self: Equatable {
-
-    func equal(any: AnyEquatable?) -> Bool {
-
-        if let aany = any as? Self {
-            return aany == self
-        }
-
-        return false
-    }
-}
-
-extension Int: AnyEquatable {}
-extension String: AnyEquatable {}
-extension Bool: AnyEquatable {}
-extension Float: AnyEquatable {}
-extension Double: AnyEquatable {}
-
 
 public struct Move<T> {
     
