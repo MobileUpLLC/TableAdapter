@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: AnyConfigurableCell
 
-public protocol AnyConfigurableCell {
+public protocol AnyConfigurable {
     
     var anyObjectType: Any.Type { get }
     
@@ -18,14 +18,14 @@ public protocol AnyConfigurableCell {
 
 // MARK: ConfigurableCell
 
-public protocol ConfigurableCell: AnyConfigurableCell {
+public protocol Configurable: AnyConfigurable {
     
     associatedtype T: Any
     
     func setup(with object: T)
 }
 
-public extension ConfigurableCell {
+public extension Configurable {
     
     var anyObjectType: Any.Type {
         
@@ -40,7 +40,7 @@ public extension ConfigurableCell {
             
         } else {
             
-            assertionFailure("Could not cast value of type '\(type(of: object))' to expected type '\(T.self)'. '\(type(of: self))' must provide correct jeneric type for ConfigurableCell protocol")
+            assertionFailure("Could not cast value of type '\(type(of: object))' to expected type '\(T.self)'. '\(type(of: self))' must provide correct jeneric type for Configurable protocol")
         }
         
     }

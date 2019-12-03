@@ -100,7 +100,7 @@ class Cell: UITableViewCell {
     @IBOutlet private weak var mainLabel: UILabel!
 }
 
-extension Cell: ConfigurableCell {
+extension Cell: Configurable {
     
     func setup(with object: Any) {
         

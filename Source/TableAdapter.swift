@@ -44,7 +44,7 @@ open class TableAdapter: NSObject {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdetifier(for: indexPath), for: indexPath)
         
-        if let cell = cell as? AnyConfigurableCell {
+        if let cell = cell as? AnyConfigurable {
             
             let object = getObject(for: indexPath)
             
@@ -58,7 +58,7 @@ open class TableAdapter: NSObject {
         
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
         
-        if let view = view as? AnyConfigurableCell, let object = object {
+        if let view = view as? AnyConfigurable, let object = object {
             
             view.anySetup(with: object)
         }
