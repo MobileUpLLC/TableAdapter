@@ -38,6 +38,8 @@ open class TableAdapter: NSObject {
         didSet { assert(headerIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
     }
     
+    public var animationType: UITableView.RowAnimation = .fade
+    
     // MARK: Private methods
     
     private func dequeueConfiguredCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -74,50 +76,58 @@ open class TableAdapter: NSObject {
         return groups[indexPath.section].rowObjects[indexPath.row]
     }
     
-    private func groupObjects() {
+    private func makeGroups(from objects: [AnyEquatable]) -> [Group] {
+        
+        var result: [Group] = []
         
         for object in objects {
             
             let header = sectionsSource?.tableAdapter(self, headerObjectFor: object)
             let footer = sectionsSource?.tableAdapter(self, footerObjectFor: object)
             
-            if
-                groups.isEmpty == false
-                && compare(lhs: groups.last?.header, rhs: header)
-                && compare(lhs: groups.last?.footer, rhs: footer)
-            {
-                groups[groups.endIndex - 1].rowObjects.append(object)
+            let newGroup = Group(header: header, footer: footer, rowObjects: [object])
+            
+            if let lastGroup = result.last, lastGroup == newGroup {
+                
+                result[result.endIndex - 1].rowObjects.append(object)
                 
             } else {
                 
-                let newGroup = Group(header: header, footer: footer, rowObjects: [object])
-                groups.append(newGroup)
+                result.append(newGroup)
             }
         }
+        
+        return result
     }
     
-    // nil nil -> equal
-    // any nil -> not equal
-    // nil any -> not euqal
-    // any any -> check
-    private func compare(lhs: AnyEquatable?, rhs: AnyEquatable?) -> Bool {
+    private func updateTable() {
         
-        if lhs == nil && rhs == nil {
-            
-            return true
-            
-        } else if lhs != nil && rhs == nil {
-            
-            return false
-            
-        } else if lhs == nil && rhs != nil {
-            
-            return false
-            
-        } else {
-            
-            return lhs!.equal(any: rhs!)
-        }
+        groups = makeGroups(from: objects)
+        
+        tableView.reloadData()
+    }
+    
+    private func updateTableAnimated() {
+
+        let oldGroups = groups
+        groups = makeGroups(from: objects)
+        
+        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: groups)
+        
+        print(diff)
+
+        tableView.beginUpdates()
+
+        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
+        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
+//        tableView.reloadSections(diff.sectionsDiff.reloads, with: animationType)
+        
+        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
+        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
+
+        tableView.endUpdates()
     }
     
     // MARK: Public methods
@@ -134,9 +144,14 @@ open class TableAdapter: NSObject {
     
     public func update(animated: Bool = true) {
         
-        groupObjects()
+        if animated {
+            
+            updateTableAnimated()
         
-        tableView.reloadData()
+        } else {
+            
+            updateTable()
+        }
     }
 }
 

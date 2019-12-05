@@ -15,3 +15,16 @@ public protocol TableSectionsSource: AnyObject {
     
     func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable?
 }
+
+public extension TableSectionsSource {
+    
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
+        
+        return nil
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+        
+        return nil
+    }
+}

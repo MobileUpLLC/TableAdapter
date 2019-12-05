@@ -17,16 +17,20 @@ class ViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
+    var items: [AnyEquatable] = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
+    
     // MARK: Override methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        adapter.animationType = .fade
         
         adapter.dataSource = self
         adapter.delegate = self
         adapter.sectionsSource = self
-        
-        adapter.update()
+
+        adapter.update(animated: false)
     }
 }
 
@@ -36,14 +40,6 @@ extension ViewController: TableAdapterDataSource {
 
     func objects(for tableAdapter: TableAdapter) -> [AnyEquatable] {
         
-        var items: [AnyEquatable] = ["1", "2", "3", "4", "5"]
-        
-        items += [true, true, false]
-        
-        items += ["aaa", "bbb"]
-        
-        items += [123, 456, 789]
-        
         return items
     }
 }
@@ -51,36 +47,39 @@ extension ViewController: TableAdapterDataSource {
 // MARK: TableSectionsSource
 
 extension ViewController: TableSectionsSource {
-    
+
     func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
-        
+
         switch object {
-            
+
         case is String:
             return "Strings"
-            
+
         case is Int:
             return "Ints"
             
+        case is Bool:
+            return "Bools"
+
         default:
             return "Any"
         }
     }
-    
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
-        
-        switch object {
-            
-        case is String:
-            return "Strings End"
-            
-        case is Int:
-            return "Ints End"
-            
-        default:
-            return "Any End"
-        }
-    }
+
+//    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+//
+//        switch object {
+//
+//        case is String:
+//            return "Strings End"
+//
+//        case is Int:
+//            return "Ints End"
+//
+//        default:
+//            return nil
+//        }
+//    }
 }
 
 // MARK: TableAdapterDelegate
@@ -89,7 +88,16 @@ extension ViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: Any) {
         
-        print(object)
+        if items.count == 6 {
+            
+            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
+            
+        } else {
+            
+            items = [1, 3, 10.1, 13.1, 11.1, 12.1]
+        }
+        
+        adapter.update(animated: true)
     }
 }
 
