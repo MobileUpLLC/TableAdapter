@@ -119,7 +119,7 @@ open class TableAdapter: NSObject {
         tableView.beginUpdates()
 
         tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
-        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+//        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
         tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
 //        tableView.reloadSections(diff.sectionsDiff.reloads, with: animationType)
         
