@@ -26,21 +26,10 @@ class ViewController: UIViewController {
 
         adapter.animationType = .fade
         
-        adapter.dataSource = self
         adapter.delegate = self
         adapter.sectionsSource = self
 
-        adapter.update(animated: false)
-    }
-}
-
-// MARK: TableAdapterDataSource
-
-extension ViewController: TableAdapterDataSource {
-
-    func objects(for tableAdapter: TableAdapter) -> [AnyEquatable] {
-        
-        return items
+        adapter.update(with: items, animated: false)
     }
 }
 
@@ -88,16 +77,18 @@ extension ViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: Any) {
         
-        if items.count == 6 {
-            
-            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
-            
-        } else {
-            
-            items = [1, 3, 10.1, 13.1, 11.1, 12.1]
-        }
+        navigationController?.pushViewController(SearchViewController(), animated: true)
         
-        adapter.update(animated: true)
+//        if items.count != 9 {
+//
+//            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
+//
+//        } else {
+//
+//            items = [1, 3, 2, 3, 10.1, 13.1, 11.1, 12.1, true, false, false, true]
+//        }
+//
+//        adapter.update(with: items, animated: true)
     }
 }
 

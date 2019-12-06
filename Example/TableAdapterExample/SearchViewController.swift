@@ -56,8 +56,7 @@ class SearchViewController: UIViewController {
         
         setupSearchController()
         
-        adapter.dataSource = self
-        adapter.update(animated: false)
+        adapter.update(with: words, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,7 +69,6 @@ class SearchViewController: UIViewController {
     
     private func setupSearchController() {
         
-        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
@@ -78,21 +76,6 @@ class SearchViewController: UIViewController {
         definesPresentationContext = true
         searchController.isActive = true
         navigationItem.hidesSearchBarWhenScrolling = false
-    }
-}
-
-// MARK: TableAdapterDataSource
-
-extension SearchViewController: TableAdapterDataSource {
-
-    func objects(for tableAdapter: TableAdapter) -> [AnyEquatable] {
-        
-        guard let filter = filter, filter.isEmpty == false else {
-            
-            return words
-        }
-        
-        return words.filter { $0.lowercased().contains(filter.lowercased()) }
     }
 }
 
@@ -104,7 +87,15 @@ extension SearchViewController: UISearchResultsUpdating {
         
         filter = searchController.searchBar.text
         
-        adapter.update(animated: true)
+        guard let filter = filter, filter.isEmpty == false else {
+            
+            return adapter.update(with: words, animated: true)
+        }
+        
+        let akk = words.filter { $0.lowercased().contains(filter.lowercased()) }
+        
+        
+        adapter.update(with: akk, animated: true)
     }
 }
 

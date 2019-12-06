@@ -15,11 +15,6 @@ open class TableAdapter: NSObject {
     
     private var groups: [Group] = []
     
-    var objects: [AnyEquatable] {
-        
-        return dataSource?.objects(for: self) ?? []
-    }
-    
     // MARK: Public properties
     
     public weak var dataSource: TableAdapterDataSource?
@@ -100,14 +95,14 @@ open class TableAdapter: NSObject {
         return result
     }
     
-    private func updateTable() {
+    private func updateTable(with objects: [AnyEquatable]) {
         
         groups = makeGroups(from: objects)
         
         tableView.reloadData()
     }
     
-    private func updateTableAnimated() {
+    private func updateTableAnimated(with objects: [AnyEquatable]) {
 
         let oldGroups = groups
         groups = makeGroups(from: objects)
@@ -142,15 +137,15 @@ open class TableAdapter: NSObject {
         tableView.delegate = self
     }
     
-    public func update(animated: Bool = true) {
+    public func update(with objects: [AnyEquatable], animated: Bool = true) {
         
         if animated {
             
-            updateTableAnimated()
+            updateTableAnimated(with: objects)
         
         } else {
             
-            updateTable()
+            updateTable(with: objects)
         }
     }
 }

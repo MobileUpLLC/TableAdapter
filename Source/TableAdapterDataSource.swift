@@ -9,15 +9,7 @@ import UIKit
 
 public protocol TableAdapterDataSource: AnyObject {
     
-    // MARK: Required
-    
-    func objects(for tableAdapter: TableAdapter) -> [AnyEquatable]
-    
-    // MARK: Optional
-    
     func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String
-    
-    func emptyStateViewForTableAdapter(_ adapter: TableAdapter) -> UIView?
 }
 
 public extension TableAdapterDataSource {
@@ -25,10 +17,5 @@ public extension TableAdapterDataSource {
     func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String {
         
         return "Cell"
-    }
-    
-    func emptyStateViewForTableAdapter(_ adapter: TableAdapter) -> UIView? {
-        
-        return nil
     }
 }
