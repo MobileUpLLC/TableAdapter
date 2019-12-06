@@ -9,5 +9,5 @@ import Foundation
 
 public protocol TableAdapterDelegate: AnyObject {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: Any)
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable)
 }

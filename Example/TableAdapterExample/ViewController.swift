@@ -55,40 +55,43 @@ extension ViewController: TableSectionsSource {
         }
     }
 
-//    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
-//
-//        switch object {
-//
-//        case is String:
-//            return "Strings End"
-//
-//        case is Int:
-//            return "Ints End"
-//
-//        default:
-//            return nil
-//        }
-//    }
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+
+        switch object {
+
+        case is String:
+            return "Strings"
+
+        case is Int:
+            return "Ints"
+            
+        case is Bool:
+            return "Bools"
+
+        default:
+            return "Any"
+        }
+    }
 }
 
 // MARK: TableAdapterDelegate
 
 extension ViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: Any) {
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
         
-        navigationController?.pushViewController(SearchViewController(), animated: true)
+//        navigationController?.pushViewController(SearchViewController(), animated: true)
         
-//        if items.count != 9 {
-//
-//            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
-//
-//        } else {
-//
-//            items = [1, 3, 2, 3, 10.1, 13.1, 11.1, 12.1, true, false, false, true]
-//        }
-//
-//        adapter.update(with: items, animated: true)
+        if items.count != 9 {
+
+            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
+
+        } else {
+
+            items = [1, 2, 10.1, 13.1, 11.1, 12.1, true, false, "qwe", "zxc"]
+        }
+
+        adapter.update(with: items, animated: true)
     }
 }
 

@@ -9,6 +9,13 @@ import UIKit
 
 open class TableAdapter: NSObject {
     
+    // MARK: Types
+    
+    enum Event {
+        
+        case move, insert, delete, update
+    }
+    
     // MARK: Private properties
     
     private let tableView: UITableView
@@ -31,6 +38,11 @@ open class TableAdapter: NSObject {
     public var footerIdentifier = "Footer" {
         
         didSet { assert(headerIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
+    }
+    
+    public var currentGroups: [Group] {
+        
+        return groups
     }
     
     public var animationType: UITableView.RowAnimation = .fade
@@ -95,34 +107,207 @@ open class TableAdapter: NSObject {
         return result
     }
     
-    private func updateTable(with objects: [AnyEquatable]) {
+    private func updateTable(with newGroups: [Group]) {
         
-        groups = makeGroups(from: objects)
+        groups = newGroups
         
         tableView.reloadData()
     }
     
-    private func updateTableAnimated(with objects: [AnyEquatable]) {
+    private func updateTableAnimated(with newGroups: [Group]) {
 
         let oldGroups = groups
-        groups = makeGroups(from: objects)
+        groups = newGroups
         
-        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: groups)
+        for g in groups {
+            
+            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
+                
+                tableView.reloadData()
+                
+                return
+            }
+        }
         
-        print(diff)
+        for g in oldGroups {
+            
+            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
+                
+                tableView.reloadData()
+                
+                return
+            }
+        }
+        
+        let color = tableView.separatorColor
+
+        tableView.separatorColor = .clear
 
         tableView.beginUpdates()
 
-        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
-//        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
-        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
-//        tableView.reloadSections(diff.sectionsDiff.reloads, with: animationType)
-        
-        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
-        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
-        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
+        updateSections(with: oldGroups)
+
+        updateRows(with: oldGroups)
 
         tableView.endUpdates()
+
+        tableView.separatorColor = color
+        
+//        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: groups)
+//
+//        print(diff)
+//
+//        tableView.beginUpdates()
+//
+//        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
+////        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+//        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
+////        tableView.reloadSections(diff.sectionsDiff.reloads, with: animationType)
+//
+//        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
+//        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+//        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
+//
+//        tableView.endUpdates()
+    }
+    
+    
+    private func updateSections(with oldGroups: [Group]) {
+        
+        var groupsToDelete: [Group] = oldGroups
+        
+        for (newIndex, newGroup) in groups.enumerated() {
+            
+            guard let index = oldGroups.firstIndex(of: newGroup) else {
+                
+                changeSection(at: newIndex, for: .insert)
+                
+                continue
+            }
+            
+            if index != newIndex {
+                
+                changeSection(at: newIndex, for: .move)
+            }
+            
+            if let deleteIndex = groupsToDelete.firstIndex(of: newGroup) {
+                
+                groupsToDelete.remove(at: deleteIndex)
+            }
+        }
+        
+        for section in groupsToDelete {
+            
+            guard let index = oldGroups.firstIndex(of: section)  else { continue }
+            
+            changeSection(at: index, for: .delete)
+        }
+    }
+    
+    private func updateRows(with oldGroups: [Group]) {
+        
+        var objectsToDelete: [Group] = oldGroups
+        
+        for (newSection, newGroup) in groups.enumerated() {
+            
+            for (newRow, newObject) in newGroup.rowObjects.enumerated() {
+                
+                let newIndexPath = IndexPath(row: newRow, section: newSection)
+                
+                guard let oldIndexPath = getIndexPath(for: newObject, in: oldGroups) else {
+                    
+                    changeRow(at: newIndexPath, for: .insert)
+                    
+                    continue
+                }
+                
+//                if oldIndexPath == newIndexPath {
+//
+//                    if delegate?.isObjectChanged(for: newObject) ?? false {
+//
+//                        changeRow(from: oldIndexPath, at: newIndexPath, for: .update)
+//                    } else {
+//                        updateRow(at: oldIndexPath, with: newObject)
+//                    }
+//                }
+                
+                if oldIndexPath != newIndexPath {
+                    
+                    changeRow(from: oldIndexPath, at: newIndexPath, for: .move)
+                    
+//                    updateRow(at: oldIndexPath, with: newObject)
+                }
+                
+                if let indexPath = getIndexPath(for: newObject, in: objectsToDelete) {
+                    
+                    objectsToDelete[indexPath.section].rowObjects.remove(at: indexPath.row)
+                }
+            }
+        }
+        
+        for (_,objects) in objectsToDelete.enumerated() {
+            
+            for (_,object) in objects.rowObjects.enumerated() {
+                
+                if let indexPath = getIndexPath(for: object, in: oldGroups) {
+                    
+                    changeRow(from: indexPath, for: .delete)
+                }
+            }
+        }
+    }
+    
+    func getIndexPath(for object: AnyEquatable, in groups: [Group]) -> IndexPath? {
+        
+        for (groupIdx, group) in groups.enumerated() {
+            
+            if let objectIdx = group.rowObjects.firstIndex(where: { object.equal(any: $0) }) {
+                
+                return IndexPath(row: objectIdx, section: groupIdx)
+            }
+        }
+        
+        return nil
+    }
+    
+    private func checkAreDuplicateObjectExist(objects: [AnyEquatable]) -> Bool {
+        
+        let objects = objects.enumerated()
+        
+        for (index,object) in objects {
+            
+            for (secondIndex, secondObject) in objects {
+                
+                if object.equal(any: secondObject) && index != secondIndex {
+                    
+                    print("Error: there are duplicated objects \(object)")
+                    
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    private func changeRow(from oldIndex: IndexPath? = nil, at index: IndexPath? = nil, for type: Event) {
+        
+        switch type {
+        case .insert : tableView.insertRows(at: [index!], with: animationType)
+        case .update : tableView.reloadRows(at: [oldIndex!], with: animationType)
+        case .delete : tableView.deleteRows(at: [oldIndex!], with: animationType)
+        case .move   : tableView.moveRow(at: oldIndex!, to: index!)
+        }
+    }
+    
+    private func changeSection(at index: Int, for type: Event) {
+        
+        switch type {
+        case .insert : tableView.insertSections([index], with: animationType)
+        case .delete : tableView.deleteSections([index], with: animationType)
+        case .update : tableView.reloadSections([index], with: animationType)
+        default      : break
+        }
     }
     
     // MARK: Public methods
@@ -139,13 +324,20 @@ open class TableAdapter: NSObject {
     
     public func update(with objects: [AnyEquatable], animated: Bool = true) {
         
+        let newGroups = makeGroups(from: objects)
+        
+        update(with: newGroups, animated: animated)
+    }
+    
+    public func update(with groups: [Group], animated: Bool = true) {
+        
         if animated {
             
-            updateTableAnimated(with: objects)
+            updateTableAnimated(with: groups)
         
         } else {
             
-            updateTable(with: objects)
+            updateTable(with: groups)
         }
     }
 }

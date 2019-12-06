@@ -51,6 +51,7 @@ class SearchViewController: UIViewController {
         // Make auto in Adapter if (sectionsSource = nil)
         tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 0
+        
         tableView.sectionFooterHeight = UITableView.automaticDimension
         tableView.estimatedSectionFooterHeight = 0
         

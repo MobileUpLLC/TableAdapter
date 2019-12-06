@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Group {
+public struct Group {
     
     // MARK: Public properties
     
@@ -22,7 +22,7 @@ struct Group {
 
 extension Group: Equatable, AnyEquatable {
     
-    static func == (lhs: Group, rhs: Group) -> Bool {
+    public static func == (lhs: Group, rhs: Group) -> Bool {
         
         return compare(lhs: lhs.header, rhs: rhs.header) && compare(lhs: lhs.footer, rhs: rhs.footer)
     }
