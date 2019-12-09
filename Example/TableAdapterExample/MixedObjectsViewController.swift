@@ -17,17 +17,26 @@ class MixedObjectsViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    let items: [AnyEquatable] = [
+    private let items: [AnyEquatable] = [
         1, 2, 3,
         "aaa", "bbb", "ccc",
         true, false,
         1.1, 2.2, 3.3
     ]
     
+    let segments: [String: Any.Type?] = [
+        "Int": Int.self,
+        "String": String.self,
+        "Bool": Bool.self,
+        "Any": nil
+    ]
+    
     // MARK: Override methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupSegmentedControl()
         
         view.addSubview(tableView)
         tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
@@ -40,6 +49,38 @@ class MixedObjectsViewController: UIViewController {
         super.viewDidLayoutSubviews()
         
         tableView.frame = view.bounds
+    }
+    
+    // MARK: Private methods
+    
+    private func setupSegmentedControl() {
+        
+        let control = UISegmentedControl(items: segments.keys.sorted())
+        control.addTarget(
+            self,
+            action: #selector(MixedObjectsViewController.segmentedControlValueChanged(_:)),
+            for: .valueChanged
+        )
+        
+        navigationItem.titleView = control
+    }
+    
+    @objc private func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        
+        let selectedTypeName = segments.keys.sorted()[sender.selectedSegmentIndex]
+        
+        var newItems: [AnyEquatable]
+        
+        if let selectedType = segments[selectedTypeName], selectedType != nil {
+            
+            newItems = items.filter { type(of: $0) == selectedType }
+            
+        } else {
+            
+            newItems = items
+        }
+        
+        adapter.update(with: newItems, animated: true)
     }
 }
 
