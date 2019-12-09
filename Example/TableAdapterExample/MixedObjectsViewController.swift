@@ -56,6 +56,7 @@ class MixedObjectsViewController: UIViewController {
     private func setupSegmentedControl() {
         
         let control = UISegmentedControl(items: segments.keys.sorted())
+        control.selectedSegmentIndex = 0
         control.addTarget(
             self,
             action: #selector(MixedObjectsViewController.segmentedControlValueChanged(_:)),
