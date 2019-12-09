@@ -102,8 +102,8 @@ extension SearchViewController: UISearchResultsUpdating {
 
 class MyCell: UITableViewCell, Configurable {
     
-    public func setup(with object: String) {
+    public func setup(with object: Any) {
         
-        textLabel?.text = object
+        textLabel?.text = "\(object)"
     }
 }

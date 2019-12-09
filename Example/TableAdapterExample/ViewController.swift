@@ -17,60 +17,24 @@ class ViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    var items: [AnyEquatable] = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
+    enum Akk: String, AnyEquatable {
+        case search = "Search"
+        case filter = "Mixed objects"
+    }
+    
+    var items: [Akk] = [
+        .search,
+        .filter
+    ]
     
     // MARK: Override methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        adapter.animationType = .fade
-        
         adapter.delegate = self
-        adapter.sectionsSource = self
 
         adapter.update(with: items, animated: false)
-    }
-}
-
-// MARK: TableSectionsSource
-
-extension ViewController: TableSectionsSource {
-
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
-
-        switch object {
-
-        case is String:
-            return "Strings"
-
-        case is Int:
-            return "Ints"
-            
-        case is Bool:
-            return "Bools"
-
-        default:
-            return "Any"
-        }
-    }
-
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
-
-        switch object {
-
-        case is String:
-            return "Strings"
-
-        case is Int:
-            return "Ints"
-            
-        case is Bool:
-            return "Bools"
-
-        default:
-            return "Any"
-        }
     }
 }
 
@@ -80,18 +44,20 @@ extension ViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
         
-//        navigationController?.pushViewController(SearchViewController(), animated: true)
+        guard let obj = object as? ViewController.Akk else { return }
         
-        if items.count != 9 {
+        var viewController: UIViewController
+        
+        switch obj {
 
-            items = [1, 2, 3, "aaa", "bbb", "ccc", 10.1, 11.1, 12.1]
-
-        } else {
-
-            items = [1, 2, 10.1, 13.1, 11.1, 12.1, true, false, "qwe", "zxc"]
+        case .search:
+            viewController = SearchViewController()
+            
+        case .filter:
+            viewController = MixedObjectsViewController()
         }
-
-        adapter.update(with: items, animated: true)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -104,8 +70,8 @@ class Cell: UITableViewCell {
 
 extension Cell: Configurable {
     
-    func setup(with object: Any) {
+    func setup(with object: ViewController.Akk) {
         
-        mainLabel.text = "\(object)"
+        mainLabel.text = "\(object.rawValue)"
     }
 }

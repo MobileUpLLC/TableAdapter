@@ -14,6 +14,7 @@
 		A19C79B8238FE8F400B4E62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B7238FE8F400B4E62A /* Assets.xcassets */; };
 		A19C79BB238FE8F400B4E62A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */; };
 		A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */; };
+		A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		A19C79BA238FE8F400B4E62A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A19C79BC238FE8F400B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedObjectsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
 				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
 				A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */,
+				A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */,
 				A19C79B7238FE8F400B4E62A /* Assets.xcassets */,
 				A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */,
 				A19C79B4238FE8EF00B4E62A /* Main.storyboard */,
@@ -208,6 +211,7 @@
 			files = (
 				A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
+				A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */,
 				A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
