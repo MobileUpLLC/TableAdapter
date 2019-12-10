@@ -48,11 +48,7 @@ class SearchViewController: UIViewController {
         view.addSubview(tableView)
         tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
         
-        // Make auto in Adapter if (sectionsSource = nil)
-        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.estimatedSectionHeaderHeight = 0
-        
-        tableView.sectionFooterHeight = UITableView.automaticDimension
         tableView.estimatedSectionFooterHeight = 0
         
         setupSearchController()
@@ -94,7 +90,6 @@ extension SearchViewController: UISearchResultsUpdating {
         }
         
         let akk = words.filter { $0.lowercased().contains(filter.lowercased()) }
-        
         
         adapter.update(with: akk, animated: true)
     }

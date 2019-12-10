@@ -17,10 +17,10 @@ class MixedObjectsViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    private let items: [AnyEquatable] = [
+    private let items: [AnyDifferentiable] = [
         1, 2, 3,
         "aaa", "bbb", "ccc",
-        true, false,
+        true, false, 
         1.1, 2.2, 3.3
     ]
     
@@ -40,6 +40,16 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
+        
+        tableView.register(
+            UINib(nibName: "TitleHeaderFooterView", bundle: nil),
+            forHeaderFooterViewReuseIdentifier: adapter.headerIdentifier
+        )
+
+        tableView.register(
+            UINib(nibName: "TitleHeaderFooterView", bundle: nil),
+            forHeaderFooterViewReuseIdentifier: adapter.footerIdentifier
+        )
         
         adapter.sectionsSource = self
         adapter.update(with: items)
@@ -70,7 +80,7 @@ class MixedObjectsViewController: UIViewController {
         
         let selectedTypeName = segments.keys.sorted()[sender.selectedSegmentIndex]
         
-        var newItems: [AnyEquatable]
+        var newItems: [AnyDifferentiable]
         
         if let selectedType = segments[selectedTypeName], selectedType != nil {
             
@@ -89,7 +99,7 @@ class MixedObjectsViewController: UIViewController {
 
 extension MixedObjectsViewController: TableSectionsSource {
 
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyEquatable? {
 
         switch object {
 
@@ -107,7 +117,7 @@ extension MixedObjectsViewController: TableSectionsSource {
         }
     }
 
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyEquatable? {
 
         switch object {
 

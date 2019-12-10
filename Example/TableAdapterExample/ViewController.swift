@@ -10,6 +10,16 @@ import UIKit
 import TableAdapter
 
 class ViewController: UIViewController {
+    
+    // MARK: Types
+    
+    enum Example: String, AnyDifferentiable {
+        
+        var id: AnyEquatable { return rawValue }
+        
+        case search = "Search"
+        case filter = "Mixed objects"
+    }
 
     // MARK: Private properties
     
@@ -17,12 +27,7 @@ class ViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    enum Akk: String, AnyEquatable {
-        case search = "Search"
-        case filter = "Mixed objects"
-    }
-    
-    var items: [Akk] = [
+    private let items: [Example] = [
         .search,
         .filter
     ]
@@ -33,8 +38,16 @@ class ViewController: UIViewController {
         super.viewDidLoad()
 
         adapter.delegate = self
+        adapter.sender = self
 
         adapter.update(with: items, animated: false)
+    }
+    
+    // MARK: Private methods
+    
+    private func open(_ viewController: UIViewController) {
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -42,22 +55,18 @@ class ViewController: UIViewController {
 
 extension ViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
         
-        guard let obj = object as? ViewController.Akk else { return }
+        guard let selectedObject = object as? ViewController.Example else { return }
         
-        var viewController: UIViewController
-        
-        switch obj {
+        switch selectedObject {
 
         case .search:
-            viewController = SearchViewController()
+            open(SearchViewController())
             
         case .filter:
-            viewController = MixedObjectsViewController()
+            open(MixedObjectsViewController())
         }
-        
-        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
@@ -68,10 +77,18 @@ class Cell: UITableViewCell {
     @IBOutlet private weak var mainLabel: UILabel!
 }
 
-extension Cell: Configurable {
-    
-    func setup(with object: ViewController.Akk) {
-        
+extension Cell: SenderConfigurable {
+
+    func setup(with object: ViewController.Example, sender: ViewController) {
+
         mainLabel.text = "\(object.rawValue)"
     }
 }
+
+//extension Cell: Configurable {
+//
+//    func setup(with object: ViewController.Example) {
+//
+//        mainLabel.text = "\(object.rawValue)"
+//    }
+//}

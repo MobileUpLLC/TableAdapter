@@ -7,6 +7,15 @@
 
 import Foundation
 
+public protocol SectionGroup {
+    
+    var header: Any { get }
+    
+    var footer: Any { get }
+    
+    var rowObjects: [AnyDifferentiable] { get }
+}
+
 public struct Group {
     
     // MARK: Public properties
@@ -15,7 +24,7 @@ public struct Group {
     
     let footer: AnyEquatable?
     
-    var rowObjects: [AnyEquatable]
+    var rowObjects: [AnyDifferentiable]
 }
 
 // MARK: Equatable
@@ -27,27 +36,18 @@ extension Group: Equatable, AnyEquatable {
         return compare(lhs: lhs.header, rhs: rhs.header) && compare(lhs: lhs.footer, rhs: rhs.footer)
     }
     
-    // nil nil -> equal
-    // any nil -> not equal
-    // nil any -> not euqal
-    // any any -> check
     private static func compare(lhs: AnyEquatable?, rhs: AnyEquatable?) -> Bool {
         
-        if lhs == nil && rhs == nil {
+        switch (lhs, rhs) {
             
+        case let (l?, r?):
+            return l.equal(any: r)
+            
+        case (.none, .none):
             return true
-            
-        } else if lhs != nil && rhs == nil {
-            
+        
+        case (.none, .some), (.some, .none):
             return false
-            
-        } else if lhs == nil && rhs != nil {
-            
-            return false
-            
-        } else {
-            
-            return lhs!.equal(any: rhs!)
         }
     }
 }

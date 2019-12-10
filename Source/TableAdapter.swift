@@ -24,6 +24,8 @@ open class TableAdapter: NSObject {
     
     // MARK: Public properties
     
+    public weak var sender: AnyObject?
+    
     public weak var dataSource: TableAdapterDataSource?
     
     public weak var sectionsSource: TableSectionsSource?
@@ -53,24 +55,36 @@ open class TableAdapter: NSObject {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: getCellIdetifier(for: indexPath), for: indexPath)
         
-        if let cell = cell as? AnyConfigurable {
-            
-            cell.anySetup(with: getObject(for: indexPath))
-        }
+        setup(cell, with: getObject(for: indexPath))
         
         return cell
     }
     
     private func dequeueConfiguredHeaderFooterView(withIdentifier id: String, object: Any?) -> UIView? {
         
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
-        
-        if let view = view as? AnyConfigurable, let object = object {
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) else {
             
-            view.anySetup(with: object)
+            return nil
+        }
+        
+        if let object = object {
+            
+            setup(view, with: object)
         }
         
         return view
+    }
+    
+    private func setup(_ view: UIView, with object: Any) {
+        
+        if let view = view as? AnySenderConfigurable {
+            
+            view.anySetup(with: object, sender: getSender())
+            
+        } else if let view = view as? AnyConfigurable {
+            
+            view.anySetup(with: object)
+        }
     }
     
     private func getCellIdetifier(for indexPath: IndexPath) -> String {
@@ -78,12 +92,12 @@ open class TableAdapter: NSObject {
         return dataSource?.tableAdapter(self, cellIdentifierFor: getObject(for: indexPath)) ?? "Cell"
     }
     
-    private func getObject(for indexPath: IndexPath) -> AnyEquatable {
+    private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
         
         return groups[indexPath.section].rowObjects[indexPath.row]
     }
     
-    private func makeGroups(from objects: [AnyEquatable]) -> [Group] {
+    private func makeGroups(from objects: [AnyDifferentiable]) -> [Group] {
         
         var result: [Group] = []
         
@@ -105,6 +119,11 @@ open class TableAdapter: NSObject {
         }
         
         return result
+    }
+    
+    private func getSender() -> AnyObject {
+        
+        return sender ?? self
     }
     
     private func updateTable(with newGroups: [Group]) {
@@ -221,21 +240,23 @@ open class TableAdapter: NSObject {
                     continue
                 }
                 
-//                if oldIndexPath == newIndexPath {
-//
-//                    if delegate?.isObjectChanged(for: newObject) ?? false {
-//
-//                        changeRow(from: oldIndexPath, at: newIndexPath, for: .update)
-//                    } else {
-//                        updateRow(at: oldIndexPath, with: newObject)
-//                    }
-//                }
+                if oldIndexPath == newIndexPath {
+                    
+                    let oldObject = oldGroups[oldIndexPath.section].rowObjects[oldIndexPath.row]
+
+                    if newObject.equal(any: oldObject) == false {
+
+                        changeRow(from: oldIndexPath, at: newIndexPath, for: .update)
+                    } else {
+                        updateRow(at: oldIndexPath, with: newObject)
+                    }
+                }
                 
                 if oldIndexPath != newIndexPath {
                     
                     changeRow(from: oldIndexPath, at: newIndexPath, for: .move)
                     
-//                    updateRow(at: oldIndexPath, with: newObject)
+                    updateRow(at: oldIndexPath, with: newObject)
                 }
                 
                 if let indexPath = getIndexPath(for: newObject, in: objectsToDelete) {
@@ -257,11 +278,16 @@ open class TableAdapter: NSObject {
         }
     }
     
-    func getIndexPath(for object: AnyEquatable, in groups: [Group]) -> IndexPath? {
+    private func updateRow(at indexPath: IndexPath, with newObject: AnyDifferentiable) {
+        
+        (tableView.cellForRow(at: indexPath) as? AnyConfigurable)?.anySetup(with: newObject)
+    }
+    
+    private func getIndexPath(for object: AnyDifferentiable, in groups: [Group]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.rowObjects.firstIndex(where: { object.equal(any: $0) }) {
+            if let objectIdx = group.rowObjects.firstIndex(where: { object.id.equal(any: $0.id) }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -270,7 +296,7 @@ open class TableAdapter: NSObject {
         return nil
     }
     
-    private func checkAreDuplicateObjectExist(objects: [AnyEquatable]) -> Bool {
+    private func checkAreDuplicateObjectExist(objects: [AnyDifferentiable]) -> Bool {
         
         let objects = objects.enumerated()
         
@@ -278,9 +304,9 @@ open class TableAdapter: NSObject {
             
             for (secondIndex, secondObject) in objects {
                 
-                if object.equal(any: secondObject) && index != secondIndex {
+                if object.id.equal(any: secondObject.id) && index != secondIndex {
                     
-                    print("Error: there are duplicated objects \(object)")
+                    print("Error: there are duplicated ids \(object.id)")
                     
                     return true
                 }
@@ -322,7 +348,7 @@ open class TableAdapter: NSObject {
         tableView.delegate = self
     }
     
-    public func update(with objects: [AnyEquatable], animated: Bool = true) {
+    public func update(with objects: [AnyDifferentiable], animated: Bool = true) {
         
         let newGroups = makeGroups(from: objects)
         
@@ -366,12 +392,12 @@ extension TableAdapter: UITableViewDataSource {
     // MARK: HeaderFooter setup
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
+
         return groups[section].header as? String
     }
-    
+
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        
+
         return groups[section].footer as? String
     }
     

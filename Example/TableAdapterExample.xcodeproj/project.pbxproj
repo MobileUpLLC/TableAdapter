@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3B967099B905CFDDF9125291 /* Pods_TableAdapterExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */; };
+		A11869DC239EE18C003827B3 /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869DB239EE18C003827B3 /* TitleHeaderFooterView.swift */; };
+		A11869DE239EE242003827B3 /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11869DD239EE242003827B3 /* TitleHeaderFooterView.xib */; };
 		A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */; };
 		A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79B2238FE8EF00B4E62A /* ViewController.swift */; };
 		A19C79B6238FE8EF00B4E62A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B4238FE8EF00B4E62A /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 		24429E11EFDF5BB60D1A9AB4 /* Pods-TableAdapterExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.release.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.release.xcconfig"; sourceTree = "<group>"; };
 		2ADEF947A4DCE10EAF780A96 /* Pods-TableAdapterExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.debug.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.debug.xcconfig"; sourceTree = "<group>"; };
 		3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableAdapterExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A11869DB239EE18C003827B3 /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
+		A11869DD239EE242003827B3 /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
 		A19C79AB238FE8EE00B4E62A /* TableAdapterExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableAdapterExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A19C79B2238FE8EF00B4E62A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -44,6 +48,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A11869DA239EE13A003827B3 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				A11869DB239EE18C003827B3 /* TitleHeaderFooterView.swift */,
+				A11869DD239EE242003827B3 /* TitleHeaderFooterView.xib */,
+			);
+			path = Headers;
+			sourceTree = "<group>";
+		};
 		A19C79A2238FE8EE00B4E62A = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +78,7 @@
 		A19C79AD238FE8EF00B4E62A /* TableAdapterExample */ = {
 			isa = PBXGroup;
 			children = (
+				A11869DA239EE13A003827B3 /* Headers */,
 				A19C79BC238FE8F400B4E62A /* Info.plist */,
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
 				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
@@ -157,6 +171,7 @@
 				A19C79BB238FE8F400B4E62A /* LaunchScreen.storyboard in Resources */,
 				A19C79B8238FE8F400B4E62A /* Assets.xcassets in Resources */,
 				A19C79B6238FE8EF00B4E62A /* Main.storyboard in Resources */,
+				A11869DE239EE242003827B3 /* TitleHeaderFooterView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11869DC239EE18C003827B3 /* TitleHeaderFooterView.swift in Sources */,
 				A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
 				A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */,

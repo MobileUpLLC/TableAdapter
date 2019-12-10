@@ -63,11 +63,11 @@ public class DiffUtil {
     
     // MARK: Private methods
     
-    static func getIndexPath(for object: AnyEquatable, in groups: [Group]) -> IndexPath? {
+    static func getIndexPath(for object: AnyDifferentiable, in groups: [Group]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.rowObjects.firstIndex(where: { object.equal(any: $0) }) {
+            if let objectIdx = group.rowObjects.firstIndex(where: { object.id.equal(any: $0.id) }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -78,32 +78,12 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateOrderedGroupsDiff(from oldGroups: [Group], to newGroups: [Group]) -> GroupsDiff {
-        
-        var secInserts = IndexSet()
-        var secMoves = [Move<Int>]()
-        var secDeletes = IndexSet()
-        
-        var rowInserts = [IndexPath]()
-        var rowDeletes = [IndexPath]()
-        var rowMoves = [Move<IndexPath>]()
-        
-        // Do some staff...
-        
-        
-        var secDiff = IndexSetDiff(inserts: secInserts, moves: secMoves, deletes: secDeletes)
-        var rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
-        
-        var groupDiff = GroupsDiff(sectionsDiff: secDiff, rowsDiff: rowsDiff)
-        
-        return groupDiff
-    }
-    
     static func calculateGroupsDiff(from oldGroups: [Group], to newGroups: [Group]) -> GroupsDiff {
         
         var rowInserts = [IndexPath]()
         var rowDeletes = [IndexPath]()
         var rowMoves = [Move<IndexPath>]()
+//        var rowReloads = [IndexPath]()
         
         // Map groups to index pathes.
         rowDeletes = oldGroups.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
@@ -126,6 +106,13 @@ public class DiffUtil {
                         rowMoves.append(Move<IndexPath>(from: oldRowObjectIp, to: newRowObjectIp))
                     }
                     
+//                    let oldRowObject = oldGroups[oldRowObjectIp.section].rowObjects[oldRowObjectIp.row]
+//                    
+//                    if newRowObject.equal(any: oldRowObject) == false {
+//                        
+//                        rowReloads.append(newRowObjectIp)
+//                    }
+                    
                 } else {
                     
                     rowInserts.append(newRowObjectIp)
@@ -133,12 +120,8 @@ public class DiffUtil {
             }
         }
         
-        var sectionDiff = DiffUtil.calculateDiff(from: oldGroups, to: newGroups)
-//        sectionDiff.moves = []
-        
-        var rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
-//        rowsDiff.moves = []
-//        rowsDiff.deletes = [IndexPath(row: 1, section: 0)]
+        let sectionDiff = DiffUtil.calculateDiff(from: oldGroups, to: newGroups)
+        let rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
         
         return GroupsDiff(sectionsDiff: sectionDiff, rowsDiff: rowsDiff)
     }
