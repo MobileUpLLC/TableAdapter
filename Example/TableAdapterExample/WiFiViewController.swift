@@ -33,6 +33,10 @@ class WiFiViewController: UIViewController {
     
     private var currentNetwork: Network?
     
+    private let wifiSwitchCellIdentifier = "WifiSettings"
+    
+    private let networkCellIdentifier = "Network"
+    
     // MARK: Public properties
     
     var isWifiEnabled = true
@@ -66,8 +70,8 @@ class WiFiViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(WiFiSwitchCell.self, forCellReuseIdentifier: "WifiSettings")
-        tableView.register(NetworkCell.self, forCellReuseIdentifier: "Network")
+        tableView.register(WiFiSwitchCell.self, forCellReuseIdentifier: wifiSwitchCellIdentifier)
+        tableView.register(NetworkCell.self, forCellReuseIdentifier: networkCellIdentifier)
     }
     
     private func updateUI() {
@@ -124,12 +128,14 @@ extension WiFiViewController: TableAdapterDataSource {
         switch object {
             
         case is String:
-            return "WifiSettings"
+            return wifiSwitchCellIdentifier
             
         case is Network:
-            return "Network"
+            return networkCellIdentifier
             
         default:
+            assertionFailure("Undefind cell identifier for \(object)")
+            
             return nil
         }
         

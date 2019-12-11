@@ -60,7 +60,7 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(MyCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.register(
             UINib(nibName: "TitleHeaderFooterView", bundle: nil),

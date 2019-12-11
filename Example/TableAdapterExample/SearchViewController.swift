@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(MyCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0

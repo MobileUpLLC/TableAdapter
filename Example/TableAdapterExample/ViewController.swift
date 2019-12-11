@@ -10,17 +10,6 @@ import UIKit
 import TableAdapter
 
 class ViewController: UIViewController {
-    
-    // MARK: Types
-    
-    enum Example: String, AnyDifferentiable {
-        
-        var id: AnyEquatable { return rawValue }
-        
-        case search = "Search"
-        case filter = "Mixed objects"
-        case wifi = "Wi-Fi"
-    }
 
     // MARK: Private properties
     
@@ -29,9 +18,10 @@ class ViewController: UIViewController {
     private lazy var adapter = TableAdapter(tableView: tableView)
     
     private let items: [Example] = [
-        .search,
-        .filter,
-        .wifi
+        
+        Example(name: "Search", controller: SearchViewController.self),
+        Example(name: "Mixed objects", controller: MixedObjectsViewController.self),
+        Example(name: "Wi-Fi", controller: WiFiViewController.self)
     ]
     
     // MARK: Override methods
@@ -39,17 +29,21 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        adapter.delegate = self
-        adapter.sender = self
+        setupTableAdapter()
 
         adapter.update(with: items, animated: false)
     }
     
     // MARK: Private methods
     
-    private func open(_ viewController: UIViewController) {
+    private func setupTableAdapter() {
         
-        navigationController?.pushViewController(viewController, animated: true)
+        adapter.delegate = self
+    }
+    
+    private func open(_ viewController: UIViewController.Type) {
+        
+        navigationController?.pushViewController(viewController.init(), animated: true)
     }
 }
 
@@ -59,19 +53,9 @@ extension ViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
         
-        guard let selectedObject = object as? ViewController.Example else { return }
+        guard let selectedObject = object as? Example else { return }
         
-        switch selectedObject {
-
-        case .search:
-            open(SearchViewController())
-            
-        case .filter:
-            open(MixedObjectsViewController())
-            
-        case .wifi:
-            open(WiFiViewController())
-        }
+        open(selectedObject.controller)
     }
 }
 
@@ -84,8 +68,8 @@ class Cell: UITableViewCell {
 
 extension Cell: Configurable {
 
-    func setup(with object: ViewController.Example) {
+    func setup(with object: Example) {
 
-        mainLabel.text = "\(object.rawValue)"
+        mainLabel.text = "\(object.name)"
     }
 }
