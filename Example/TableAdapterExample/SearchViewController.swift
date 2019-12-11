@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(MyCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
@@ -97,13 +97,5 @@ extension SearchViewController: UISearchResultsUpdating {
         let akk = words.filter { $0.lowercased().contains(filter.lowercased()) }
         
         adapter.update(with: akk, animated: true)
-    }
-}
-
-class MyCell: UITableViewCell, Configurable {
-    
-    public func setup(with object: Any) {
-        
-        textLabel?.text = "\(object)"
     }
 }

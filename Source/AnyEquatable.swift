@@ -34,7 +34,7 @@ public extension AnyEquatable where Self: Equatable {
     }
 }
 
-// MARK: AnyDifferentiableÔ
+// MARK: AnyDifferentiable
 
 public typealias AnyDifferentiable = AnyIdentifiable & AnyEquatable
 

@@ -60,7 +60,7 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(MyCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.register(
             UINib(nibName: "TitleHeaderFooterView", bundle: nil),
@@ -153,5 +153,13 @@ extension MixedObjectsViewController: TableAdapterDataSource {
     func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
         
         return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
+    }
+}
+
+class AnyObjectCell: UITableViewCell, Configurable {
+    
+    public func setup(with object: Any) {
+        
+        textLabel?.text = "\(object)"
     }
 }

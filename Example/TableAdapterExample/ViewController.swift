@@ -21,7 +21,8 @@ class ViewController: UIViewController {
         
         Example(name: "Search", controller: SearchViewController.self),
         Example(name: "Mixed objects", controller: MixedObjectsViewController.self),
-        Example(name: "Wi-Fi", controller: WiFiViewController.self)
+        Example(name: "Wi-Fi", controller: WiFiViewController.self),
+        Example(name: "Delete objects", controller: DeleteObjectsViewController.self)
     ]
     
     // MARK: Override methods
