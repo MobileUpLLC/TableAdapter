@@ -31,38 +31,40 @@ class WiFiViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
     
+    private var currentNetwork: Network?
+    
     // MARK: Public properties
     
     var isWifiEnabled = true
-    
-    var currentNetwork: Network?
     
     // MARK: Override methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureTableView()
-        
-        adapter.dataSource = self
-        adapter.delegate = self
+        setupTableView()
+        setupTableAdapter()
         
         updateUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.frame = view.bounds
+    }
+    
     // MARK: Private methods
     
-    func configureTableView() {
+    private func setupTableAdapter() {
+        
+        adapter.dataSource = self
+        adapter.delegate = self
+    }
+    
+    private func setupTableView() {
         
         view.addSubview(tableView)
-        
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
         
         tableView.register(WiFiSwitchCell.self, forCellReuseIdentifier: "WifiSettings")
         tableView.register(NetworkCell.self, forCellReuseIdentifier: "Network")

@@ -36,9 +36,31 @@ class MixedObjectsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTableView()
         setupSegmentedControl()
+        setupTableAdapter()
+        
+
+        adapter.update(with: items)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        tableView.frame = view.bounds
+    }
+    
+    // MARK: Private methods
+    
+    private func setupTableAdapter() {
+        
+        adapter.dataSource = self
+    }
+    
+    private func setupTableView() {
         
         view.addSubview(tableView)
+        
         tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
         
         tableView.register(
@@ -50,18 +72,7 @@ class MixedObjectsViewController: UIViewController {
             UINib(nibName: "RightTitleHeaderFooterView", bundle: nil),
             forHeaderFooterViewReuseIdentifier: "RightTitleHeaderFooterView"
         )
-        
-        adapter.dataSource = self
-        adapter.update(with: items)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        tableView.frame = view.bounds
-    }
-    
-    // MARK: Private methods
     
     private func setupSegmentedControl() {
         

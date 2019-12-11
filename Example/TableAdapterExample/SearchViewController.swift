@@ -45,12 +45,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(tableView)
-        tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
-        
-        tableView.estimatedSectionHeaderHeight = 0
-        tableView.estimatedSectionFooterHeight = 0
-        
+        setupTableView()
         setupSearchController()
         
         adapter.update(with: words, animated: false)
@@ -63,6 +58,16 @@ class SearchViewController: UIViewController {
     }
     
     // MARK: Private methods
+    
+    private func setupTableView() {
+        
+        view.addSubview(tableView)
+        
+        tableView.register(MyCell.self, forCellReuseIdentifier: "Cell")
+        
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
+    }
     
     private func setupSearchController() {
         
