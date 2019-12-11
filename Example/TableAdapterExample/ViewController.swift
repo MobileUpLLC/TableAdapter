@@ -9,19 +9,6 @@
 import UIKit
 import TableAdapter
 
-struct MyGroup: SectionGroup {
-    
-    func equal(any: AnyEquatable?) -> Bool { return false }
-    
-    var id: AnyEquatable
-    
-    let header: AnyDifferentiable?
-    
-    let footer: AnyDifferentiable?
-    
-    var rowObjects: [AnyDifferentiable]
-}
-
 class ViewController: UIViewController {
     
     // MARK: Types

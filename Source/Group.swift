@@ -7,41 +7,45 @@
 
 import Foundation
 
-public protocol SectionGroup: AnyDifferentiable {
+struct Group {
     
-    var header: AnyDifferentiable? { get }
+    public let headerObject: AnyDifferentiable?
     
-    var footer: AnyDifferentiable? { get }
-    
-    var rowObjects: [AnyDifferentiable] { get set }
-}
-
-public struct Group {
-    
-    // MARK: Public properties
-    
-    public let header: AnyDifferentiable?
-    
-    public let footer: AnyDifferentiable?
+    public let footerObject: AnyDifferentiable?
     
     public var rowObjects: [AnyDifferentiable]
 }
 
-// MARK: Equatable
+// MARK: SectionGroup
 
-extension Group: Equatable, SectionGroup {
+extension Group: Section {
+    
+    public var header: Any? {
+
+        return headerObject
+    }
+
+    public var footer: Any? {
+        
+        return footerObject
+    }
     
     public var id: AnyEquatable {
         
-        let headerId = header?.id ?? ""
-        let footerId = footer?.id ?? ""
+        let headerId = headerObject?.id ?? ""
+        let footerId = footerObject?.id ?? ""
         
         return "\(headerId)-\(footerId)"
     }
+}
+
+// MARK: Equatable
+
+extension Group: Equatable {
     
     public static func == (lhs: Group, rhs: Group) -> Bool {
         
-        return compare(lhs: lhs.header, rhs: rhs.header) && compare(lhs: lhs.footer, rhs: rhs.footer)
+        return compare(lhs: lhs.headerObject, rhs: rhs.headerObject) && compare(lhs: lhs.footerObject, rhs: rhs.footerObject)
     }
     
     private static func compare(lhs: AnyEquatable?, rhs: AnyEquatable?) -> Bool {

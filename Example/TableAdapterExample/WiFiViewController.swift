@@ -70,7 +70,7 @@ class WiFiViewController: UIViewController {
     
     private func updateUI() {
         
-        let sections: [SectionGroup]
+        let sections: [Section]
         
         if isWifiEnabled {
             
@@ -85,9 +85,9 @@ class WiFiViewController: UIViewController {
                 nts.removeAll(where: { $0.equal(any: net) })
             }
             
-            let config = MyGroup(id: 0, header: nil, footer: nil, rowObjects: configItems)
+            let config = DefaultSection(id: 0, objects: configItems)
             
-            let network = MyGroup(id: 1, header: nil, footer: nil, rowObjects: nts)
+            let network = DefaultSection(id: 1, objects: nts)
             
             sections = [config, network]
             
@@ -95,7 +95,7 @@ class WiFiViewController: UIViewController {
             
             currentNetwork = nil
             
-            let config = MyGroup(id: 0, header: nil, footer: nil, rowObjects: ["wifi-config"])
+            let config = DefaultSection(id: 0, objects: ["wifi-config"])
             
             sections = [config]
         }
