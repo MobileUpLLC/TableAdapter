@@ -102,7 +102,7 @@ class WiFiViewController: UIViewController {
             sections = [config]
         }
         
-        adapter.update(withG: sections, animated: true)
+        adapter.update(with: sections, animated: true)
     }
     
     // MARK: Public methods

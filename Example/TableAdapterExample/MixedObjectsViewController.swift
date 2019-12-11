@@ -40,7 +40,6 @@ class MixedObjectsViewController: UIViewController {
         setupSegmentedControl()
         setupTableAdapter()
         
-
         adapter.update(with: items)
     }
     

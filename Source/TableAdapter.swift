@@ -162,10 +162,10 @@ open class TableAdapter: NSObject {
         
         let newGroups = makeGroups(from: objects)
         
-        update(withG: newGroups, animated: animated)
+        update(with: newGroups, animated: animated)
     }
     
-    public func update(withG groups: [Section], animated: Bool = true) {
+    public func update(with groups: [Section], animated: Bool = true) {
         
         if animated {
             
