@@ -20,7 +20,7 @@ open class TableAdapter: NSObject {
     
     private let tableView: UITableView
     
-    private var groups: [Group] = []
+    private var groups: [SectionGroup] = []
     
     // MARK: Public properties
     
@@ -42,7 +42,7 @@ open class TableAdapter: NSObject {
         didSet { assert(headerIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
     }
     
-    public var currentGroups: [Group] {
+    public var currentGroups: [SectionGroup] {
         
         return groups
     }
@@ -97,7 +97,7 @@ open class TableAdapter: NSObject {
         return groups[indexPath.section].rowObjects[indexPath.row]
     }
     
-    private func makeGroups(from objects: [AnyDifferentiable]) -> [Group] {
+    private func makeGroups(from objects: [AnyDifferentiable]) -> [SectionGroup] {
         
         var result: [Group] = []
         
@@ -108,7 +108,7 @@ open class TableAdapter: NSObject {
             
             let newGroup = Group(header: header, footer: footer, rowObjects: [object])
             
-            if let lastGroup = result.last, lastGroup == newGroup {
+            if let lastGroup = result.last, lastGroup.id.equal(any: newGroup.id) {
                 
                 result[result.endIndex - 1].rowObjects.append(object)
                 
@@ -126,14 +126,14 @@ open class TableAdapter: NSObject {
         return sender ?? self
     }
     
-    private func updateTable(with newGroups: [Group]) {
+    private func updateTable(with newGroups: [SectionGroup]) {
         
         groups = newGroups
         
         tableView.reloadData()
     }
     
-    private func updateTableAnimated(with newGroups: [Group]) {
+    private func updateTableAnimated(with newGroups: [SectionGroup]) {
 
         let oldGroups = groups
         groups = newGroups
@@ -191,13 +191,13 @@ open class TableAdapter: NSObject {
     }
     
     
-    private func updateSections(with oldGroups: [Group]) {
+    private func updateSections(with oldGroups: [SectionGroup]) {
         
-        var groupsToDelete: [Group] = oldGroups
+        var groupsToDelete: [SectionGroup] = oldGroups
         
         for (newIndex, newGroup) in groups.enumerated() {
             
-            guard let index = oldGroups.firstIndex(of: newGroup) else {
+            guard let index = oldGroups.firstIndex(where: { newGroup.id.equal(any: $0.id) }) else {
                 
                 changeSection(at: newIndex, for: .insert)
                 
@@ -209,7 +209,7 @@ open class TableAdapter: NSObject {
                 changeSection(at: newIndex, for: .move)
             }
             
-            if let deleteIndex = groupsToDelete.firstIndex(of: newGroup) {
+            if let deleteIndex = groupsToDelete.firstIndex(where: { newGroup.id.equal(any: $0.id) }) {
                 
                 groupsToDelete.remove(at: deleteIndex)
             }
@@ -217,15 +217,15 @@ open class TableAdapter: NSObject {
         
         for section in groupsToDelete {
             
-            guard let index = oldGroups.firstIndex(of: section)  else { continue }
+            guard let index = oldGroups.firstIndex(where: { section.id.equal(any: $0.id) })  else { continue }
             
             changeSection(at: index, for: .delete)
         }
     }
     
-    private func updateRows(with oldGroups: [Group]) {
+    private func updateRows(with oldGroups: [SectionGroup]) {
         
-        var objectsToDelete: [Group] = oldGroups
+        var objectsToDelete: [SectionGroup] = oldGroups
         
         for (newSection, newGroup) in groups.enumerated() {
             
@@ -283,7 +283,7 @@ open class TableAdapter: NSObject {
         (tableView.cellForRow(at: indexPath) as? AnyConfigurable)?.anySetup(with: newObject)
     }
     
-    private func getIndexPath(for object: AnyDifferentiable, in groups: [Group]) -> IndexPath? {
+    private func getIndexPath(for object: AnyDifferentiable, in groups: [SectionGroup]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
@@ -352,10 +352,10 @@ open class TableAdapter: NSObject {
         
         let newGroups = makeGroups(from: objects)
         
-        update(with: newGroups, animated: animated)
+        update(withG: newGroups, animated: animated)
     }
     
-    public func update(with groups: [Group], animated: Bool = true) {
+    public func update(withG groups: [SectionGroup], animated: Bool = true) {
         
         if animated {
             

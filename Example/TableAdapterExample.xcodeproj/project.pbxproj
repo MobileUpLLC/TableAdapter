@@ -10,6 +10,8 @@
 		3B967099B905CFDDF9125291 /* Pods_TableAdapterExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */; };
 		A11869DC239EE18C003827B3 /* TitleHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869DB239EE18C003827B3 /* TitleHeaderFooterView.swift */; };
 		A11869DE239EE242003827B3 /* TitleHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11869DD239EE242003827B3 /* TitleHeaderFooterView.xib */; };
+		A11869E1239FD635003827B3 /* WiFiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E0239FD635003827B3 /* WiFiViewController.swift */; };
+		A11869E423A01000003827B3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E323A01000003827B3 /* Network.swift */; };
 		A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */; };
 		A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79B2238FE8EF00B4E62A /* ViewController.swift */; };
 		A19C79B6238FE8EF00B4E62A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B4238FE8EF00B4E62A /* Main.storyboard */; };
@@ -25,6 +27,8 @@
 		3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableAdapterExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A11869DB239EE18C003827B3 /* TitleHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleHeaderFooterView.swift; sourceTree = "<group>"; };
 		A11869DD239EE242003827B3 /* TitleHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TitleHeaderFooterView.xib; sourceTree = "<group>"; };
+		A11869E0239FD635003827B3 /* WiFiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiViewController.swift; sourceTree = "<group>"; };
+		A11869E323A01000003827B3 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		A19C79AB238FE8EE00B4E62A /* TableAdapterExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableAdapterExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A19C79B2238FE8EF00B4E62A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -57,6 +61,14 @@
 			path = Headers;
 			sourceTree = "<group>";
 		};
+		A11869E223A00FE0003827B3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A11869E323A01000003827B3 /* Network.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		A19C79A2238FE8EE00B4E62A = {
 			isa = PBXGroup;
 			children = (
@@ -78,12 +90,14 @@
 		A19C79AD238FE8EF00B4E62A /* TableAdapterExample */ = {
 			isa = PBXGroup;
 			children = (
+				A11869E223A00FE0003827B3 /* Models */,
 				A11869DA239EE13A003827B3 /* Headers */,
 				A19C79BC238FE8F400B4E62A /* Info.plist */,
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
 				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
 				A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */,
 				A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */,
+				A11869E0239FD635003827B3 /* WiFiViewController.swift */,
 				A19C79B7238FE8F400B4E62A /* Assets.xcassets */,
 				A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */,
 				A19C79B4238FE8EF00B4E62A /* Main.storyboard */,
@@ -225,9 +239,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11869DC239EE18C003827B3 /* TitleHeaderFooterView.swift in Sources */,
+				A11869E1239FD635003827B3 /* WiFiViewController.swift in Sources */,
 				A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
 				A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */,
+				A11869E423A01000003827B3 /* Network.swift in Sources */,
 				A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

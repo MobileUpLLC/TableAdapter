@@ -99,7 +99,7 @@ class MixedObjectsViewController: UIViewController {
 
 extension MixedObjectsViewController: TableSectionsSource {
 
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
 
         switch object {
 
@@ -117,7 +117,7 @@ extension MixedObjectsViewController: TableSectionsSource {
         }
     }
 
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
 
         switch object {
 

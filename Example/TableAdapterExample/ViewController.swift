@@ -9,6 +9,19 @@
 import UIKit
 import TableAdapter
 
+struct MyGroup: SectionGroup {
+    
+    func equal(any: AnyEquatable?) -> Bool { return false }
+    
+    var id: AnyEquatable
+    
+    let header: AnyDifferentiable?
+    
+    let footer: AnyDifferentiable?
+    
+    var rowObjects: [AnyDifferentiable]
+}
+
 class ViewController: UIViewController {
     
     // MARK: Types
@@ -19,6 +32,7 @@ class ViewController: UIViewController {
         
         case search = "Search"
         case filter = "Mixed objects"
+        case wifi = "Wi-Fi"
     }
 
     // MARK: Private properties
@@ -29,7 +43,8 @@ class ViewController: UIViewController {
     
     private let items: [Example] = [
         .search,
-        .filter
+        .filter,
+        .wifi
     ]
     
     // MARK: Override methods
@@ -66,6 +81,9 @@ extension ViewController: TableAdapterDelegate {
             
         case .filter:
             open(MixedObjectsViewController())
+            
+        case .wifi:
+            open(WiFiViewController())
         }
     }
 }
@@ -77,18 +95,10 @@ class Cell: UITableViewCell {
     @IBOutlet private weak var mainLabel: UILabel!
 }
 
-extension Cell: SenderConfigurable {
+extension Cell: Configurable {
 
-    func setup(with object: ViewController.Example, sender: ViewController) {
+    func setup(with object: ViewController.Example) {
 
         mainLabel.text = "\(object.rawValue)"
     }
 }
-
-//extension Cell: Configurable {
-//
-//    func setup(with object: ViewController.Example) {
-//
-//        mainLabel.text = "\(object.rawValue)"
-//    }
-//}
