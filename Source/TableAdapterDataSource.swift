@@ -9,13 +9,51 @@ import UIKit
 
 public protocol TableAdapterDataSource: AnyObject {
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String
+    // MARK: Cell
+    
+    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String?
+    
+    // MARK: HeaderFooter
+    
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable?
+    
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable?
+    
+    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String?
+    
+    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String?
 }
+
+// MARK: Default implementation
 
 public extension TableAdapterDataSource {
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String {
+    // MARK: Cell
+    
+    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String? {
         
-        return adapter.defaultCellIdentifier
+        return nil
+    }
+    
+    // MARK: HeaderFooter
+    
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+        
+        return nil
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+        
+        return nil
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
+        
+        return nil
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
+        
+        return nil
     }
 }

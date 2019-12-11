@@ -51,7 +51,7 @@ class MixedObjectsViewController: UIViewController {
             forHeaderFooterViewReuseIdentifier: "RightTitleHeaderFooterView"
         )
         
-        adapter.sectionsSource = self
+        adapter.dataSource = self
         adapter.update(with: items)
     }
     
@@ -97,7 +97,7 @@ class MixedObjectsViewController: UIViewController {
 
 // MARK: TableSectionsSource
 
-extension MixedObjectsViewController: TableSectionsSource {
+extension MixedObjectsViewController: TableAdapterDataSource {
 
     func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
 

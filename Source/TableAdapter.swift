@@ -28,8 +28,6 @@ open class TableAdapter: NSObject {
     
     public weak var dataSource: TableAdapterDataSource?
     
-    public weak var sectionsSource: TableSectionsSource?
-    
     public weak var delegate: TableAdapterDelegate?
     
     public var defaultHeaderIdentifier = "Header" {
@@ -99,12 +97,12 @@ open class TableAdapter: NSObject {
     
     private func getHeaderIdentifier(for section: Int) -> String {
         
-        return sectionsSource?.tableAdapter(self, headerIdentifierFor: section) ?? defaultHeaderIdentifier
+        return dataSource?.tableAdapter(self, headerIdentifierFor: section) ?? defaultHeaderIdentifier
     }
     
     private func getFooterIdentifier(for section: Int) -> String {
         
-        return sectionsSource?.tableAdapter(self, footerIdentifierFor: section) ?? defaultHeaderIdentifier
+        return dataSource?.tableAdapter(self, footerIdentifierFor: section) ?? defaultHeaderIdentifier
     }
     
     private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
@@ -118,8 +116,8 @@ open class TableAdapter: NSObject {
         
         for object in objects {
             
-            let header = sectionsSource?.tableAdapter(self, headerObjectFor: object)
-            let footer = sectionsSource?.tableAdapter(self, footerObjectFor: object)
+            let header = dataSource?.tableAdapter(self, headerObjectFor: object)
+            let footer = dataSource?.tableAdapter(self, footerObjectFor: object)
             
             let newGroup = Group(header: header, footer: footer, rowObjects: [object])
             
