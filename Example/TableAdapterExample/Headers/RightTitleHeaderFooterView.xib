@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RightTitleHeaderFooterView" customModule="TableAdapterExample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="402" height="50"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KfJ-c2-aDP">
+                    <rect key="frame" x="0.0" y="0.0" width="402" height="50"/>
+                    <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="vbb-gZ-Ejo"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="KfJ-c2-aDP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6yl-Eu-LNr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="KfJ-c2-aDP" secondAttribute="bottom" id="7Pb-kN-2WU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="KfJ-c2-aDP" secondAttribute="trailing" id="Npj-iF-7F8"/>
+                <constraint firstItem="KfJ-c2-aDP" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vXe-9G-kMX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="titleLabel" destination="KfJ-c2-aDP" id="wbe-fR-Jip"/>
+            </connections>
+            <point key="canvasLocation" x="130.43478260869566" y="-147.32142857142856"/>
+        </view>
+    </objects>
+</document>

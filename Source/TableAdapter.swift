@@ -32,14 +32,19 @@ open class TableAdapter: NSObject {
     
     public weak var delegate: TableAdapterDelegate?
     
-    public var headerIdentifier = "Header" {
+    public var defaultHeaderIdentifier = "Header" {
         
-        didSet { assert(headerIdentifier.isEmpty == false, "Header reuse identifier must not be empty string") }
+        didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Header reuse identifier must not be empty string") }
     }
     
-    public var footerIdentifier = "Footer" {
+    public var defaultFooterIdentifier = "Footer" {
         
-        didSet { assert(headerIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
+        didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
+    }
+    
+    public var defaultCellIdentifier = "Cell" {
+        
+        didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Cell reuse identifier must not be empty string") }
     }
     
     public var currentGroups: [SectionGroup] {
@@ -89,7 +94,17 @@ open class TableAdapter: NSObject {
     
     private func getCellIdetifier(for indexPath: IndexPath) -> String {
         
-        return dataSource?.tableAdapter(self, cellIdentifierFor: getObject(for: indexPath)) ?? "Cell"
+        return dataSource?.tableAdapter(self, cellIdentifierFor: getObject(for: indexPath)) ?? defaultCellIdentifier
+    }
+    
+    private func getHeaderIdentifier(for section: Int) -> String {
+        
+        return sectionsSource?.tableAdapter(self, headerIdentifierFor: section) ?? defaultHeaderIdentifier
+    }
+    
+    private func getFooterIdentifier(for section: Int) -> String {
+        
+        return sectionsSource?.tableAdapter(self, footerIdentifierFor: section) ?? defaultHeaderIdentifier
     }
     
     private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
@@ -348,6 +363,13 @@ open class TableAdapter: NSObject {
         tableView.delegate = self
     }
     
+    public convenience init(tableView: UITableView, sender: AnyObject?) {
+        
+        self.init(tableView: tableView)
+        
+        self.sender = sender
+    }
+    
     public func update(with objects: [AnyDifferentiable], animated: Bool = true) {
         
         let newGroups = makeGroups(from: objects)
@@ -403,12 +425,20 @@ extension TableAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return dequeueConfiguredHeaderFooterView(withIdentifier: headerIdentifier, object: groups[section].header)
+        return dequeueConfiguredHeaderFooterView(
+            
+            withIdentifier: getHeaderIdentifier(for: section),
+            object: groups[section].header
+        )
     }
     
     public func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        return dequeueConfiguredHeaderFooterView(withIdentifier: footerIdentifier, object: groups[section].footer)
+        return dequeueConfiguredHeaderFooterView(
+            
+            withIdentifier: getFooterIdentifier(for: section),
+            object: groups[section].footer
+        )
     }
 }
 

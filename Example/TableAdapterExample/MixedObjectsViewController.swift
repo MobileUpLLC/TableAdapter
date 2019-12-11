@@ -43,12 +43,12 @@ class MixedObjectsViewController: UIViewController {
         
         tableView.register(
             UINib(nibName: "TitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: adapter.headerIdentifier
+            forHeaderFooterViewReuseIdentifier: "TitleHeaderFooterView"
         )
 
         tableView.register(
-            UINib(nibName: "TitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: adapter.footerIdentifier
+            UINib(nibName: "RightTitleHeaderFooterView", bundle: nil),
+            forHeaderFooterViewReuseIdentifier: "RightTitleHeaderFooterView"
         )
         
         adapter.sectionsSource = self
@@ -133,5 +133,15 @@ extension MixedObjectsViewController: TableSectionsSource {
         default:
             return "Any end"
         }
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
+        
+        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
+    }
+    
+    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
+        
+        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
     }
 }

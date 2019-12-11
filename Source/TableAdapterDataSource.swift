@@ -16,6 +16,6 @@ public extension TableAdapterDataSource {
     
     func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String {
         
-        return "Cell"
+        return adapter.defaultCellIdentifier
     }
 }

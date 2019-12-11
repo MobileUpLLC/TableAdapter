@@ -29,7 +29,7 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter(tableView: tableView)
+    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
     
     // MARK: Public properties
     
@@ -44,7 +44,6 @@ class WiFiViewController: UIViewController {
         
         configureTableView()
         
-        adapter.sender = self
         adapter.dataSource = self
         adapter.delegate = self
         
