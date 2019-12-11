@@ -80,6 +80,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		A11869FF23A14E4D003827B3 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
+				A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */,
+				A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */,
+				A11869E0239FD635003827B3 /* WiFiViewController.swift */,
+				A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		A19C79A2238FE8EE00B4E62A = {
 			isa = PBXGroup;
 			children = (
@@ -103,13 +115,9 @@
 			children = (
 				A11869E223A00FE0003827B3 /* Models */,
 				A11869DA239EE13A003827B3 /* Headers */,
+				A11869FF23A14E4D003827B3 /* ViewControllers */,
 				A19C79BC238FE8F400B4E62A /* Info.plist */,
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
-				A19C79B2238FE8EF00B4E62A /* ViewController.swift */,
-				A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */,
-				A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */,
-				A11869E0239FD635003827B3 /* WiFiViewController.swift */,
-				A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */,
 				A19C79B7238FE8F400B4E62A /* Assets.xcassets */,
 				A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */,
 				A19C79B4238FE8EF00B4E62A /* Main.storyboard */,
