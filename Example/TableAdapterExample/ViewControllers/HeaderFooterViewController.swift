@@ -24,6 +24,9 @@ class HeaderFooterViewController: UIViewController {
         1.1, 2.2, 3.3
     ]
     
+    private let redHeaderFooterIdentifier = "RedHeaderFooterIdentifier"
+    private let blueHeaderFooterIdentifier = "BlueHeaderFooterIdentifier"
+    
     // MARK: Override methods
 
     override func viewDidLoad() {
@@ -56,12 +59,12 @@ class HeaderFooterViewController: UIViewController {
         
         tableView.register(
             UINib(nibName: "TitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: "TitleHeaderFooterView"
+            forHeaderFooterViewReuseIdentifier: redHeaderFooterIdentifier
         )
 
         tableView.register(
             UINib(nibName: "RightTitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: "RightTitleHeaderFooterView"
+            forHeaderFooterViewReuseIdentifier: blueHeaderFooterIdentifier
         )
     }
 }
@@ -108,11 +111,11 @@ extension HeaderFooterViewController: TableAdapterDataSource {
     
     func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
         
-        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
+        return (section % 2 == 0) ? redHeaderFooterIdentifier : blueHeaderFooterIdentifier
     }
     
     func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
         
-        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
+        return (section % 2 == 0) ? redHeaderFooterIdentifier : blueHeaderFooterIdentifier
     }
 }

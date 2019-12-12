@@ -54,6 +54,9 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
+        
         tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
     }
     
