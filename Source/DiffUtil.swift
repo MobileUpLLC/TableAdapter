@@ -61,11 +61,17 @@ extension GroupsDiff: CustomStringConvertible {
     }
 }
 
+enum DiffError: Error {
+    
+    case duplicates
+    case moveSection
+}
+
 public class DiffUtil {
     
     // MARK: Private methods
     
-    static func getIndexPath(for object: AnyDifferentiable, in groups: [Section]) -> IndexPath? {
+    private static func getIndexPath(for object: AnyDifferentiable, in groups: [Section]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
@@ -78,9 +84,37 @@ public class DiffUtil {
         return nil
     }
     
+    private static func checkDuplicates(in sections: [Section]) -> Bool {
+        
+        let allObjects = sections.flatMap { $0.rowObjects }
+        
+        for (lhsIdx, lhsObj) in allObjects.enumerated() {
+            
+            for (rhsIdx, rhsObj) in allObjects.enumerated() {
+                
+                if lhsObj.id.equal(any: rhsObj.id) && lhsIdx != rhsIdx {
+                    
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
     // MARK: Public methods
     
-    static func calculateGroupsDiff(from oldGroups: [Section], to newGroups: [Section]) -> GroupsDiff {
+    static func calculateSectionsDiff(from oldGroups: [Section], to newGroups: [Section]) throws -> GroupsDiff {
+        
+        guard
+            
+            checkDuplicates(in: oldGroups) == false,
+            checkDuplicates(in: newGroups) == false
+        
+        else {
+            
+            throw DiffError.duplicates
+        }
         
         var rowInserts = [IndexPath]()
         var rowDeletes = [IndexPath]()

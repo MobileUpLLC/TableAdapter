@@ -256,26 +256,42 @@ extension TableAdapter {
         let oldGroups = sections
         sections = newGroups
         
-        for g in sections {
+        do {
+            let diff = try DiffUtil.calculateSectionsDiff(from: oldGroups, to: sections)
             
-            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
-                
-                tableView.reloadData()
-                
-                return
-            }
+            updateTableView(with: diff)
+            
+        } catch DiffError.duplicates {
+            
+            print("Duplicates found during updating. Updates will be will be performed without animation")
+            
+            tableView.reloadData()
+            
+        } catch {
+            
+            tableView.reloadData()
         }
         
-        for g in oldGroups {
-            
-            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
-                
-                tableView.reloadData()
-                
-                return
-            }
-        }
-        
+//        for g in sections {
+//
+//            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
+//
+//                tableView.reloadData()
+//
+//                return
+//            }
+//        }
+//
+//        for g in oldGroups {
+//
+//            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
+//
+//                tableView.reloadData()
+//
+//                return
+//            }
+//        }
+//        
 //        let color = tableView.separatorColor
 //
 //        tableView.separatorColor = .clear
@@ -289,11 +305,9 @@ extension TableAdapter {
 //        tableView.endUpdates()
 //
 //        tableView.separatorColor = color
-        
-        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: sections)
-        
-        print(diff)
-        
+    }
+    
+    private func updateTableView(with diff:GroupsDiff) {
         tableView.beginUpdates()
         
         tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
