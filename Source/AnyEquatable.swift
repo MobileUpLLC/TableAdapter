@@ -7,13 +7,6 @@
 
 import Foundation
 
-// MARK: AnyIdentifiable
-
-public protocol AnyIdentifiable {
-    
-    var id: AnyEquatable { get }
-}
-
 // MARK: AnyEquatable
 
 public protocol AnyEquatable {
@@ -32,38 +25,4 @@ public extension AnyEquatable where Self: Equatable {
 
         return false
     }
-}
-
-// MARK: AnyDifferentiable
-
-public typealias AnyDifferentiable = AnyIdentifiable & AnyEquatable
-
-extension Int: AnyDifferentiable {
-    
-    public var id: AnyEquatable { return self }
-    
-}
-
-extension String: AnyDifferentiable {
-    
-    public var id: AnyEquatable { return self }
-    
-}
-
-extension Bool: AnyDifferentiable {
-    
-    public var id: AnyEquatable { return self }
-    
-}
-
-extension Float: AnyDifferentiable {
-    
-    public var id: AnyEquatable { return self }
-    
-}
-
-extension Double: AnyDifferentiable {
-    
-    public var id: AnyEquatable { return self }
-    
 }

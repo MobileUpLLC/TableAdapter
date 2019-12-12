@@ -22,6 +22,7 @@ public struct DefaultSection: Section {
     // MARK: Public methods
     
     public init(
+        
         id: AnyEquatable,
         header: Any? = nil,
         footer: Any? = nil,
