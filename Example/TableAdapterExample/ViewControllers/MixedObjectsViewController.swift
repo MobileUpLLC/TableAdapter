@@ -11,7 +11,7 @@ import TableAdapter
 
 class MixedObjectsViewController: UIViewController {
     
-    // MARK: Privete properties
+    // MARK: Private properties
     
     private let tableView = UITableView()
     
@@ -38,7 +38,6 @@ class MixedObjectsViewController: UIViewController {
         
         setupTableView()
         setupSegmentedControl()
-        setupTableAdapter()
         
         adapter.update(with: items)
     }
@@ -51,26 +50,11 @@ class MixedObjectsViewController: UIViewController {
     
     // MARK: Private methods
     
-    private func setupTableAdapter() {
-        
-        adapter.dataSource = self
-    }
-    
     private func setupTableView() {
         
         view.addSubview(tableView)
         
         tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
-        
-        tableView.register(
-            UINib(nibName: "TitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: "TitleHeaderFooterView"
-        )
-
-        tableView.register(
-            UINib(nibName: "RightTitleHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: "RightTitleHeaderFooterView"
-        )
     }
     
     private func setupSegmentedControl() {
@@ -105,56 +89,7 @@ class MixedObjectsViewController: UIViewController {
     }
 }
 
-// MARK: TableSectionsSource
-
-extension MixedObjectsViewController: TableAdapterDataSource {
-
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
-
-        switch object {
-
-        case is String:
-            return "Strings start"
-
-        case is Int:
-            return "Ints start"
-            
-        case is Bool:
-            return "Bools start"
-
-        default:
-            return "Any start"
-        }
-    }
-
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
-
-        switch object {
-
-        case is String:
-            return "Strings end"
-
-        case is Int:
-            return "Ints end"
-            
-        case is Bool:
-            return "Bools end"
-
-        default:
-            return "Any end"
-        }
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
-        
-        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
-        
-        return (section % 2 == 0) ? "TitleHeaderFooterView" : "RightTitleHeaderFooterView"
-    }
-}
+// MARK: AnyObjectCell
 
 class AnyObjectCell: UITableViewCell, Configurable {
     
