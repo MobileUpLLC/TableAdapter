@@ -176,6 +176,11 @@ open class TableAdapter: NSObject {
             updateTable(with: sections)
         }
     }
+    
+    public func reserveCell(with id: String, at indexPath: IndexPath) {
+        
+        assertionFailure("Not implemented yet")
+    }
 }
 
 // MARK: UITableViewDataSource
@@ -307,7 +312,8 @@ extension TableAdapter {
 //        tableView.separatorColor = color
     }
     
-    private func updateTableView(with diff:GroupsDiff) {
+    private func updateTableView(with diff: GroupsDiff) {
+        
         tableView.beginUpdates()
         
         tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
