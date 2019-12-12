@@ -62,7 +62,7 @@ extension DeleteObjectsViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
         
-        var sections = adapter.currentGroups
+        var sections = adapter.currentSections
         
         sections[0].rowObjects.removeAll(where: { $0.id.equal(any: object.id) })
         

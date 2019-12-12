@@ -13,7 +13,7 @@ open class TableAdapter: NSObject {
     
     private let tableView: UITableView
     
-    private var groups: [Section] = []
+    private var sections: [Section] = []
     
     // MARK: Public properties
     
@@ -38,9 +38,9 @@ open class TableAdapter: NSObject {
         didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Cell reuse identifier must not be empty string") }
     }
     
-    public var currentGroups: [Section] {
+    public var currentSections: [Section] {
         
-        return groups
+        return sections
     }
     
     public var animationType: UITableView.RowAnimation = .fade
@@ -100,10 +100,10 @@ open class TableAdapter: NSObject {
     
     private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
         
-        return groups[indexPath.section].rowObjects[indexPath.row]
+        return sections[indexPath.section].rowObjects[indexPath.row]
     }
     
-    private func makeGroups(from objects: [AnyDifferentiable]) -> [Section] {
+    private func makeSections(from objects: [AnyDifferentiable]) -> [Section] {
         
         var result: [Group] = []
         
@@ -132,9 +132,9 @@ open class TableAdapter: NSObject {
         return sender ?? self
     }
     
-    private func updateTable(with newGroups: [Section]) {
+    private func updateTable(with newSections: [Section]) {
         
-        groups = newGroups
+        sections = newSections
         
         tableView.reloadData()
     }
@@ -160,20 +160,20 @@ open class TableAdapter: NSObject {
     
     public func update(with objects: [AnyDifferentiable], animated: Bool = true) {
         
-        let newGroups = makeGroups(from: objects)
+        let newGroups = makeSections(from: objects)
         
         update(with: newGroups, animated: animated)
     }
     
-    public func update(with groups: [Section], animated: Bool = true) {
+    public func update(with sections: [Section], animated: Bool = true) {
         
         if animated {
             
-            updateTableAnimated(with: groups)
+            updateTableAnimated(with: sections)
         
         } else {
             
-            updateTable(with: groups)
+            updateTable(with: sections)
         }
     }
 }
@@ -186,12 +186,12 @@ extension TableAdapter: UITableViewDataSource {
     
     public func numberOfSections(in tableView: UITableView) -> Int {
         
-        return groups.count
+        return sections.count
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return groups[section].rowObjects.count
+        return sections[section].rowObjects.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -203,12 +203,12 @@ extension TableAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
-        return groups[section].header as? String
+        return sections[section].header as? String
     }
 
     public func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 
-        return groups[section].footer as? String
+        return sections[section].footer as? String
     }
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -216,7 +216,7 @@ extension TableAdapter: UITableViewDataSource {
         return dequeueConfiguredHeaderFooterView(
             
             withIdentifier: getHeaderIdentifier(for: section),
-            object: groups[section].header
+            object: sections[section].header
         )
     }
     
@@ -225,7 +225,7 @@ extension TableAdapter: UITableViewDataSource {
         return dequeueConfiguredHeaderFooterView(
             
             withIdentifier: getFooterIdentifier(for: section),
-            object: groups[section].footer
+            object: sections[section].footer
         )
     }
 }
@@ -253,10 +253,10 @@ extension TableAdapter {
     
     private func updateTableAnimated(with newGroups: [Section]) {
         
-        let oldGroups = groups
-        groups = newGroups
+        let oldGroups = sections
+        sections = newGroups
         
-        for g in groups {
+        for g in sections {
             
             if checkAreDuplicateObjectExist(objects: g.rowObjects) {
                 
@@ -276,36 +276,36 @@ extension TableAdapter {
             }
         }
         
-        let color = tableView.separatorColor
+//        let color = tableView.separatorColor
+//
+//        tableView.separatorColor = .clear
+//
+//        tableView.beginUpdates()
+//
+//        updateSections(with: oldGroups)
+//
+//        updateRows(with: oldGroups)
+//
+//        tableView.endUpdates()
+//
+//        tableView.separatorColor = color
         
-        tableView.separatorColor = .clear
+        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: sections)
+        
+        print(diff)
         
         tableView.beginUpdates()
         
-        updateSections(with: oldGroups)
+        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
+//        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
         
-        updateRows(with: oldGroups)
+        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
+        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
+        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+        tableView.reloadRows(at: diff.rowsDiff.reloads, with: animationType)
         
         tableView.endUpdates()
-        
-        tableView.separatorColor = color
-        
-        //        let diff = DiffUtil.calculateGroupsDiff(from: oldGroups, to: groups)
-        //
-        //        print(diff)
-        //
-        //        tableView.beginUpdates()
-        //
-        //        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
-        ////        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
-        //        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
-        ////        tableView.reloadSections(diff.sectionsDiff.reloads, with: animationType)
-        //
-        //        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
-        //        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
-        //        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
-        //
-        //        tableView.endUpdates()
     }
     
     
@@ -313,7 +313,7 @@ extension TableAdapter {
         
         var groupsToDelete: [Section] = oldGroups
         
-        for (newIndex, newGroup) in groups.enumerated() {
+        for (newIndex, newGroup) in sections.enumerated() {
             
             guard let index = oldGroups.firstIndex(where: { newGroup.id.equal(any: $0.id) }) else {
                 
@@ -345,7 +345,7 @@ extension TableAdapter {
         
         var objectsToDelete: [Section] = oldGroups
         
-        for (newSection, newGroup) in groups.enumerated() {
+        for (newSection, newGroup) in sections.enumerated() {
             
             for (newRow, newObject) in newGroup.rowObjects.enumerated() {
                 
