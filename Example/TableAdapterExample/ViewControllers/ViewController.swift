@@ -43,9 +43,12 @@ class ViewController: UIViewController {
         adapter.delegate = self
     }
     
-    private func open(_ viewController: UIViewController.Type) {
+    private func open(_ example: Example) {
         
-        navigationController?.pushViewController(viewController.init(), animated: true)
+        let controller = example.controller.init()
+        controller.title = example.name
+        
+        navigationController?.pushViewController(controller, animated: true)
     }
 }
 
@@ -55,9 +58,9 @@ extension ViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
         
-        guard let selectedObject = object as? Example else { return }
+        guard let example = object as? Example else { return }
         
-        open(selectedObject.controller)
+        open(example)
     }
 }
 

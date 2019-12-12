@@ -9,7 +9,7 @@ import Foundation
 
 public struct DefaultSection: Section {
     
-    public func equal(any: AnyEquatable?) -> Bool { return false }
+    // MARK: Public properties
     
     public var id: AnyEquatable
     
@@ -17,12 +17,11 @@ public struct DefaultSection: Section {
     
     public let footer: Any?
     
-    public var rowObjects: [AnyDifferentiable]
-}
-
-public extension DefaultSection {
+    public var objects: [AnyDifferentiable]
     
-    init(
+    // MARK: Public methods
+    
+    public init(
         id: AnyEquatable,
         header: Any? = nil,
         footer: Any? = nil,
@@ -31,6 +30,16 @@ public extension DefaultSection {
         self.id = id
         self.header = header
         self.footer = footer
-        self.rowObjects = objects
+        self.objects = objects
+    }
+}
+
+// MARK: Equatable
+
+extension DefaultSection: Equatable {
+    
+    public static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
+        
+        return lhs.id.equal(any: rhs.id)
     }
 }

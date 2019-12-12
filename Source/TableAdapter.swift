@@ -100,7 +100,7 @@ open class TableAdapter: NSObject {
     
     private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
         
-        return sections[indexPath.section].rowObjects[indexPath.row]
+        return sections[indexPath.section].objects[indexPath.row]
     }
     
     private func makeSections(from objects: [AnyDifferentiable]) -> [Section] {
@@ -112,11 +112,11 @@ open class TableAdapter: NSObject {
             let header = dataSource?.tableAdapter(self, headerObjectFor: object)
             let footer = dataSource?.tableAdapter(self, footerObjectFor: object)
             
-            let newGroup = Group(headerObject: header, footerObject: footer, rowObjects: [object])
+            let newGroup = Group(headerObject: header, footerObject: footer, objects: [object])
             
             if let lastGroup = result.last, lastGroup.id.equal(any: newGroup.id) {
                 
-                result[result.endIndex - 1].rowObjects.append(object)
+                result[result.endIndex - 1].objects.append(object)
                 
             } else {
                 
@@ -191,7 +191,7 @@ extension TableAdapter: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return sections[section].rowObjects.count
+        return sections[section].objects.count
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -361,7 +361,7 @@ extension TableAdapter {
         
         for (newSection, newGroup) in sections.enumerated() {
             
-            for (newRow, newObject) in newGroup.rowObjects.enumerated() {
+            for (newRow, newObject) in newGroup.objects.enumerated() {
                 
                 let newIndexPath = IndexPath(row: newRow, section: newSection)
                 
@@ -374,7 +374,7 @@ extension TableAdapter {
                 
                 if oldIndexPath == newIndexPath {
                     
-                    let oldObject = oldGroups[oldIndexPath.section].rowObjects[oldIndexPath.row]
+                    let oldObject = oldGroups[oldIndexPath.section].objects[oldIndexPath.row]
                     
                     if newObject.equal(any: oldObject) == false {
                         
@@ -393,14 +393,14 @@ extension TableAdapter {
                 
                 if let indexPath = getIndexPath(for: newObject, in: objectsToDelete) {
                     
-                    objectsToDelete[indexPath.section].rowObjects.remove(at: indexPath.row)
+                    objectsToDelete[indexPath.section].objects.remove(at: indexPath.row)
                 }
             }
         }
         
         for (_,objects) in objectsToDelete.enumerated() {
             
-            for (_,object) in objects.rowObjects.enumerated() {
+            for (_,object) in objects.objects.enumerated() {
                 
                 if let indexPath = getIndexPath(for: object, in: oldGroups) {
                     
@@ -419,7 +419,7 @@ extension TableAdapter {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.rowObjects.firstIndex(where: { object.id.equal(any: $0.id) }) {
+            if let objectIdx = group.objects.firstIndex(where: { object.id.equal(any: $0.id) }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }

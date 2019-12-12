@@ -185,6 +185,8 @@ extension NetworkCell: Configurable {
     }
 }
 
+// MARK: WiFiSwitchCell
+
 class WiFiSwitchCell: UITableViewCell {
     
     // MARK: Override methods

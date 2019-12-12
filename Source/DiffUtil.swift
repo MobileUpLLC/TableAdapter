@@ -7,60 +7,6 @@
 
 import Foundation
 
-public struct Move<T> {
-    
-    let from: T
-    let to: T
-}
-
-extension Move: CustomStringConvertible {
-    
-    public var description: String {
-        
-        return "\(from) -> \(to)"
-    }
-}
-
-public struct IndexPathDiff {
-    
-    var inserts: [IndexPath]
-    var moves: [Move<IndexPath>]
-    var deletes: [IndexPath]
-    var reloads: [IndexPath]
-}
-
-public struct IndexSetDiff {
-    
-    var inserts: IndexSet
-    var moves: [Move<Int>]
-    var deletes: IndexSet
-    var reloads: IndexSet
-}
-
-struct GroupsDiff {
-    
-    let sectionsDiff: IndexSetDiff
-    let rowsDiff: IndexPathDiff
-}
-
-extension GroupsDiff: CustomStringConvertible {
-    
-    var description: String {
-        
-        return """
-        
-        Sec inserts: \(Array(sectionsDiff.inserts))
-        Sec deletes: \(Array(sectionsDiff.deletes))
-        Sec moves: \(sectionsDiff.moves)
-        
-        Row inserts: \(rowsDiff.inserts)
-        Row deletes: \(rowsDiff.deletes)
-        Row moves: \(rowsDiff.moves)
-        
-        """
-    }
-}
-
 enum DiffError: Error {
     
     case duplicates
@@ -75,7 +21,7 @@ public class DiffUtil {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.rowObjects.firstIndex(where: { object.id.equal(any: $0.id) }) {
+            if let objectIdx = group.objects.firstIndex(where: { object.id.equal(any: $0.id) }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -86,7 +32,7 @@ public class DiffUtil {
     
     private static func checkDuplicates(in sections: [Section]) -> Bool {
         
-        let allObjects = sections.flatMap { $0.rowObjects }
+        let allObjects = sections.flatMap { $0.objects }
         
         for (lhsIdx, lhsObj) in allObjects.enumerated() {
             
@@ -124,12 +70,12 @@ public class DiffUtil {
         // Map groups to index pathes.
         rowDeletes = oldGroups.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
 
-            return group.rowObjects.enumerated().map { IndexPath(row: $0.offset, section: groupIdx) }
+            return group.objects.enumerated().map { IndexPath(row: $0.offset, section: groupIdx) }
         })
         
         for (newGroupIdx, newGroup) in newGroups.enumerated() {
             
-            for (newRowObjectIdx, newRowObject) in newGroup.rowObjects.enumerated() {
+            for (newRowObjectIdx, newRowObject) in newGroup.objects.enumerated() {
                 
                 let newRowObjectIp = IndexPath(row: newRowObjectIdx, section: newGroupIdx)
                 
@@ -142,7 +88,7 @@ public class DiffUtil {
                         rowMoves.append(Move<IndexPath>(from: oldRowObjectIp, to: newRowObjectIp))
                     }
                     
-                    let oldRowObject = oldGroups[oldRowObjectIp.section].rowObjects[oldRowObjectIp.row]
+                    let oldRowObject = oldGroups[oldRowObjectIp.section].objects[oldRowObjectIp.row]
                     
                     if newRowObject.equal(any: oldRowObject) == false {
                         

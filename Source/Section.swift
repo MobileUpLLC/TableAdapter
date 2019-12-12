@@ -13,5 +13,5 @@ public protocol Section: AnyDifferentiable {
     
     var footer: Any? { get }
     
-    var rowObjects: [AnyDifferentiable] { get set }
+    var objects: [AnyDifferentiable] { get set }
 }

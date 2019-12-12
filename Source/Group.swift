@@ -13,7 +13,7 @@ struct Group {
     
     public let footerObject: AnyDifferentiable?
     
-    public var rowObjects: [AnyDifferentiable]
+    public var objects: [AnyDifferentiable]
 }
 
 // MARK: SectionGroup
@@ -45,7 +45,8 @@ extension Group: Equatable {
     
     public static func == (lhs: Group, rhs: Group) -> Bool {
         
-        return compare(lhs: lhs.headerObject, rhs: rhs.headerObject) && compare(lhs: lhs.footerObject, rhs: rhs.footerObject)
+        return compare(lhs: lhs.headerObject, rhs: rhs.headerObject)
+            && compare(lhs: lhs.footerObject, rhs: rhs.footerObject)
     }
     
     private static func compare(lhs: AnyEquatable?, rhs: AnyEquatable?) -> Bool {
