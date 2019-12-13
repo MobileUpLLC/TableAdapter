@@ -58,12 +58,12 @@ class HeaderFooterViewController: UIViewController {
         tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.register(
-            UINib(nibName: "TitleHeaderFooterView", bundle: nil),
+            UINib(nibName: "RedHeaderFooterView", bundle: nil),
             forHeaderFooterViewReuseIdentifier: redHeaderFooterIdentifier
         )
 
         tableView.register(
-            UINib(nibName: "RightTitleHeaderFooterView", bundle: nil),
+            UINib(nibName: "BlueHeaderFooterView", bundle: nil),
             forHeaderFooterViewReuseIdentifier: blueHeaderFooterIdentifier
         )
     }

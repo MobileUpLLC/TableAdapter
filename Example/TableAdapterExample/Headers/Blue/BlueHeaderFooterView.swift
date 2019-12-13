@@ -9,14 +9,14 @@
 import UIKit
 import TableAdapter
 
-class RightTitleHeaderFooterView: UITableViewHeaderFooterView {
+class BlueHeaderFooterView: UITableViewHeaderFooterView {
     
     @IBOutlet weak var titleLabel: UILabel!
 }
 
 // MARK: Configurable
 
-extension RightTitleHeaderFooterView: Configurable {
+extension BlueHeaderFooterView: Configurable {
     
     func setup(with object: String) {
         
