@@ -17,6 +17,41 @@ public class DiffUtil {
     
     // MARK: Private methods
     
+    private static func calculateDiff(
+        
+        from oldObjects: [AnyEquatable],
+        to newObjects: [AnyEquatable]
+        
+    ) throws -> IndexSetDiff {
+        
+        var inserts = IndexSet()
+        var moves = [Move<Int>]()
+        var deletes = IndexSet()
+        
+        deletes.insert(integersIn: oldObjects.indices)
+        
+        for (newIdx, newObject) in newObjects.enumerated() {
+            
+            if let oldIdx = oldObjects.firstIndex(where: { newObject.equal(any: $0) }) {
+                
+                deletes.remove(oldIdx)
+                
+                if oldIdx != newIdx {
+                    
+                    moves.append(Move<Int>(from: oldIdx, to: newIdx))
+                    
+                    throw DiffError.moveSection
+                }
+                
+            } else {
+                
+                inserts.insert(newIdx)
+            }
+        }
+        
+        return IndexSetDiff(inserts: inserts, moves: moves, deletes: deletes)
+    }
+    
     private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
@@ -50,7 +85,7 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateSectionsDiff(from oldGroups: [Section], to newGroups: [Section]) throws -> GroupsDiff {
+    static func calculateSectionsDiff(from oldGroups: [Section], to newGroups: [Section]) throws -> Diff {
         
         guard
             
@@ -67,7 +102,6 @@ public class DiffUtil {
         var rowInserts = [IndexPath]()
         var rowDeletes = [IndexPath]()
         var rowMoves = [Move<IndexPath>]()
-        var rowReloads = [IndexPath]()
         
         // Map groups to index pathes.
         rowDeletes = oldGroups.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
@@ -90,13 +124,6 @@ public class DiffUtil {
                         rowMoves.append(Move<IndexPath>(from: oldRowObjectIp, to: newRowObjectIp))
                     }
                     
-//                    let oldRowObject = oldGroups[oldRowObjectIp.section].objects[oldRowObjectIp.row]
-//
-//                    if newRowObject.equal(any: oldRowObject) == false {
-//
-//                        rowReloads.append(newRowObjectIp)
-//                    }
-                    
                 } else {
                     
                     rowInserts.append(newRowObjectIp)
@@ -104,51 +131,8 @@ public class DiffUtil {
             }
         }
         
-        let rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes, reloads: rowReloads)
+        let rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
         
-        return GroupsDiff(sectionsDiff: sectionDiff, rowsDiff: rowsDiff)
-    }
-    
-    public static func calculateDiff(
-        
-        from oldObjects: [AnyEquatable],
-        to newObjects: [AnyEquatable]
-        
-    ) throws -> IndexSetDiff {
-        
-        var inserts = IndexSet()
-        var moves = [Move<Int>]()
-        var deletes = IndexSet()
-        var reloads = IndexSet()
-        
-        deletes.insert(integersIn: oldObjects.indices)
-        
-        for (newIdx, newObject) in newObjects.enumerated() {
-            
-            if let oldIdx = oldObjects.firstIndex(where: { newObject.equal(any: $0) }) {
-                
-                deletes.remove(oldIdx)
-                
-                if oldIdx != newIdx {
-                    
-                    moves.append(Move<Int>(from: oldIdx, to: newIdx))
-                    
-                    throw DiffError.moveSection
-                }
-                
-//                let oldObject = oldObjects[oldIdx]
-//
-//                if oldObject.equal(any: newObject) == false {
-//
-//                    reloads.insert(newIdx)
-//                }
-                                
-            } else {
-                
-                inserts.insert(newIdx)
-            }
-        }
-        
-        return IndexSetDiff(inserts: inserts, moves: moves, deletes: deletes, reloads: reloads)
+        return Diff(sections: sectionDiff, rows: rowsDiff)
     }
 }

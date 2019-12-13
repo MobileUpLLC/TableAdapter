@@ -112,15 +112,15 @@ open class TableAdapter: NSObject {
             let header = dataSource?.tableAdapter(self, headerObjectFor: object)
             let footer = dataSource?.tableAdapter(self, footerObjectFor: object)
             
-            let newGroup = DefaultSection(headerObject: header, footerObject: footer, objects: [object])
+            let newSection = DefaultSection(headerObject: header, footerObject: footer, objects: [object])
             
-            if let lastGroup = result.last, lastGroup.equal(any: newGroup) {
+            if let lastSection = result.last, lastSection.equal(any: newSection) {
                 
                 result[result.endIndex - 1].objects.append(object)
                 
             } else {
                 
-                result.append(newGroup)
+                result.append(newSection)
             }
         }
         
@@ -139,15 +139,15 @@ open class TableAdapter: NSObject {
         tableView.reloadData()
     }
     
-    private func updateTableAnimated(with newGroups: [Section]) {
+    private func updateTableAnimated(with newSections: [Section]) {
             
-        let oldGroups = sections
+        let oldSection = sections
         
-        sections = newGroups
+        sections = newSections
         
         do {
             
-            let diff = try DiffUtil.calculateSectionsDiff(from: oldGroups, to: sections)
+            let diff = try DiffUtil.calculateSectionsDiff(from: oldSection, to: newSections)
             
             updateTableView(with: diff)
             
@@ -169,23 +169,22 @@ open class TableAdapter: NSObject {
         }
     }
     
-    private func updateTableView(with diff: GroupsDiff) {
+    private func updateTableView(with diff: Diff) {
         
         tableView.beginUpdates()
         performBatchUpdates(with: diff)
         tableView.endUpdates()
     }
     
-    private func performBatchUpdates(with diff: GroupsDiff) {
+    private func performBatchUpdates(with diff: Diff) {
         
-        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
+        tableView.insertSections(diff.sections.inserts, with: animationType)
 //        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
-        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
+        tableView.deleteSections(diff.sections.deletes, with: animationType)
         
-        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
-        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
-        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
-        tableView.reloadRows(at: diff.rowsDiff.reloads, with: animationType)
+        tableView.deleteRows(at: diff.rows.deletes, with: animationType)
+        tableView.insertRows(at: diff.rows.inserts, with: animationType)
+        diff.rows.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
     }
     
     // MARK: Public methods

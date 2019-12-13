@@ -30,7 +30,6 @@ public struct IndexPathDiff {
     var inserts: [IndexPath]
     var moves: [Move<IndexPath>]
     var deletes: [IndexPath]
-    var reloads: [IndexPath]
 }
 
 // MARK: IndexSetDiff
@@ -40,30 +39,29 @@ public struct IndexSetDiff {
     var inserts: IndexSet
     var moves: [Move<Int>]
     var deletes: IndexSet
-    var reloads: IndexSet
 }
 
 // MARK: GroupsDiff
 
-struct GroupsDiff {
+struct Diff {
     
-    let sectionsDiff: IndexSetDiff
-    let rowsDiff: IndexPathDiff
+    let sections: IndexSetDiff
+    let rows: IndexPathDiff
 }
 
-extension GroupsDiff: CustomStringConvertible {
+extension Diff: CustomStringConvertible {
     
     var description: String {
         
         return """
         
-        Sec inserts: \(Array(sectionsDiff.inserts))
-        Sec deletes: \(Array(sectionsDiff.deletes))
-        Sec moves: \(sectionsDiff.moves)
+        Sec inserts: \(Array(sections.inserts))
+        Sec deletes: \(Array(sections.deletes))
+        Sec moves: \(sections.moves)
         
-        Row inserts: \(rowsDiff.inserts)
-        Row deletes: \(rowsDiff.deletes)
-        Row moves: \(rowsDiff.moves)
+        Row inserts: \(rows.inserts)
+        Row deletes: \(rows.deletes)
+        Row moves: \(rows.moves)
         
         """
     }
