@@ -37,6 +37,8 @@ class WiFiViewController: UIViewController {
     
     private let networkCellIdentifier = "Network"
     
+    private let wifiItem = "Wi-Fi"
+    
     // MARK: Public properties
     
     var isWifiEnabled = true
@@ -80,30 +82,26 @@ class WiFiViewController: UIViewController {
         
         if isWifiEnabled {
             
-            var nts = networks
+            var networkItems = networks
             
-            var configItems: [AnyEquatable] = ["wifi-config"]
+            var configItems: [AnyEquatable] = [wifiItem]
             
             if let net = currentNetwork {
                 
                 configItems.append(net)
                 
-                nts.removeAll(where: { $0.equal(any: net) })
+                networkItems.removeAll(where: { $0 == net })
             }
             
-            let config = ObjectsSection(id: 0, objects: configItems)
-            
-            let network = ObjectsSection(id: 1, objects: nts)
-            
-            sections = [config, network]
+            sections = [
+                
+                ObjectsSection(id: 0, objects: configItems),
+                ObjectsSection(id: 1, objects: networkItems)
+            ]
             
         } else {
             
-            currentNetwork = nil
-            
-            let config = ObjectsSection(id: 0, objects: ["wifi-config"])
-            
-            sections = [config]
+            sections = [ObjectsSection(id: 0, objects: [wifiItem])]
         }
         
         adapter.update(with: sections, animated: true)
@@ -209,7 +207,7 @@ extension WiFiSwitchCell: SenderConfigurable {
     
     func setup(with object: String, sender: WiFiViewController) {
         
-        textLabel?.text = "Wi-Fi"
+        textLabel?.text = object
         
         guard let wifiSwitch = accessoryView as? UISwitch else { return }
         
