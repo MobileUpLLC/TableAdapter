@@ -14,6 +14,8 @@ public protocol AnyEquatable {
     func equal(any: AnyEquatable?) -> Bool
 }
 
+// MARK: Equatable
+
 public extension AnyEquatable where Self: Equatable {
 
     func equal(any: AnyEquatable?) -> Bool {
@@ -26,3 +28,17 @@ public extension AnyEquatable where Self: Equatable {
         return false
     }
 }
+
+// MARK: Default Types Conformance
+
+extension Int: AnyEquatable {}
+
+extension String: AnyEquatable {}
+
+extension Bool: AnyEquatable {}
+
+extension Float: AnyEquatable {}
+
+extension Double: AnyEquatable {}
+
+extension UUID: AnyEquatable {}

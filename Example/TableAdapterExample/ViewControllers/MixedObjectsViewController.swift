@@ -17,7 +17,7 @@ class MixedObjectsViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    private let items: [AnyDifferentiable] = [
+    private let items: [AnyEquatable] = [
         1, 2, 3,
         "aaa", "bbb", "ccc",
         true, false, 
@@ -77,7 +77,7 @@ class MixedObjectsViewController: UIViewController {
         
         let selectedTypeName = segments.keys.sorted()[sender.selectedSegmentIndex]
         
-        var newItems: [AnyDifferentiable]
+        var newItems: [AnyEquatable]
         
         if let selectedType = segments[selectedTypeName], selectedType != nil {
             

@@ -57,7 +57,7 @@ class ViewController: UIViewController {
 
 extension ViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
         
         guard let example = object as? Example else { return }
         

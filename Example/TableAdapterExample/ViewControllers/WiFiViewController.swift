@@ -82,7 +82,7 @@ class WiFiViewController: UIViewController {
             
             var nts = networks
             
-            var configItems: [AnyDifferentiable] = ["wifi-config"]
+            var configItems: [AnyEquatable] = ["wifi-config"]
             
             if let net = currentNetwork {
                 
@@ -91,9 +91,9 @@ class WiFiViewController: UIViewController {
                 nts.removeAll(where: { $0.equal(any: net) })
             }
             
-            let config = DefaultSection(id: 0, objects: configItems)
+            let config = ObjectsSection(id: 0, objects: configItems)
             
-            let network = DefaultSection(id: 1, objects: nts)
+            let network = ObjectsSection(id: 1, objects: nts)
             
             sections = [config, network]
             
@@ -101,7 +101,7 @@ class WiFiViewController: UIViewController {
             
             currentNetwork = nil
             
-            let config = DefaultSection(id: 0, objects: ["wifi-config"])
+            let config = ObjectsSection(id: 0, objects: ["wifi-config"])
             
             sections = [config]
         }
@@ -146,7 +146,7 @@ extension WiFiViewController: TableAdapterDataSource {
 
 extension WiFiViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
         
         guard let net = object as? Network else { return }
         

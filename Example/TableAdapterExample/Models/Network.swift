@@ -20,12 +20,7 @@ struct Network {
 
 // MARK: AnyDifferentiable
 
-extension Network: Equatable, AnyDifferentiable {
-    
-    var id: AnyEquatable {
-        
-        return identifier.uuidString
-    }
+extension Network: Equatable, AnyEquatable {
     
     static func == (lhs: Network, rhs: Network) -> Bool {
         

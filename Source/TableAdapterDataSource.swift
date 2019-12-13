@@ -15,9 +15,9 @@ public protocol TableAdapterDataSource: AnyObject {
     
     // MARK: HeaderFooter
     
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable?
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable?
     
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable?
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable?
     
     func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String?
     
@@ -37,12 +37,12 @@ public extension TableAdapterDataSource {
     
     // MARK: HeaderFooter
     
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
         
         return nil
     }
     
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
         
         return nil
     }

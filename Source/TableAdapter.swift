@@ -98,23 +98,23 @@ open class TableAdapter: NSObject {
         return dataSource?.tableAdapter(self, footerIdentifierFor: section) ?? defaultHeaderIdentifier
     }
     
-    private func getObject(for indexPath: IndexPath) -> AnyDifferentiable {
+    private func getObject(for indexPath: IndexPath) -> AnyEquatable {
         
         return sections[indexPath.section].objects[indexPath.row]
     }
     
-    private func makeSections(from objects: [AnyDifferentiable]) -> [Section] {
+    private func makeSections(from objects: [AnyEquatable]) -> [Section] {
         
-        var result: [Group] = []
+        var result: [DefaultSection] = []
         
         for object in objects {
             
             let header = dataSource?.tableAdapter(self, headerObjectFor: object)
             let footer = dataSource?.tableAdapter(self, footerObjectFor: object)
             
-            let newGroup = Group(headerObject: header, footerObject: footer, objects: [object])
+            let newGroup = DefaultSection(headerObject: header, footerObject: footer, objects: [object])
             
-            if let lastGroup = result.last, lastGroup.id.equal(any: newGroup.id) {
+            if let lastGroup = result.last, lastGroup.equal(any: newGroup) {
                 
                 result[result.endIndex - 1].objects.append(object)
                 
@@ -139,6 +139,55 @@ open class TableAdapter: NSObject {
         tableView.reloadData()
     }
     
+    private func updateTableAnimated(with newGroups: [Section]) {
+            
+        let oldGroups = sections
+        
+        sections = newGroups
+        
+        do {
+            
+            let diff = try DiffUtil.calculateSectionsDiff(from: oldGroups, to: sections)
+            
+            updateTableView(with: diff)
+            
+        } catch DiffError.duplicates {
+            
+            print("Duplicates found during updating. Updates will be will be performed without animation")
+            
+            tableView.reloadData()
+            
+        } catch DiffError.moveSection {
+            
+            print("Moving sections is not dupported for now. Updates will be will be performed without animation")
+            
+            tableView.reloadData()
+            
+        } catch {
+            
+            tableView.reloadData()
+        }
+    }
+    
+    private func updateTableView(with diff: GroupsDiff) {
+        
+        tableView.beginUpdates()
+        performBatchUpdates(with: diff)
+        tableView.endUpdates()
+    }
+    
+    private func performBatchUpdates(with diff: GroupsDiff) {
+        
+        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
+//        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
+        
+        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
+        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
+        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+        tableView.reloadRows(at: diff.rowsDiff.reloads, with: animationType)
+    }
+    
     // MARK: Public methods
     
     public init(tableView: UITableView) {
@@ -158,7 +207,7 @@ open class TableAdapter: NSObject {
         self.sender = sender
     }
     
-    public func update(with objects: [AnyDifferentiable], animated: Bool = true) {
+    public func update(with objects: [AnyEquatable], animated: Bool = true) {
         
         let newGroups = makeSections(from: objects)
         
@@ -256,76 +305,44 @@ extension TableAdapter {
         case move, insert, delete, update
     }
     
-    private func updateTableAnimated(with newGroups: [Section]) {
+    private func updateTableAnimatedOld(with newGroups: [Section]) {
         
         let oldGroups = sections
         sections = newGroups
         
-        do {
-            let diff = try DiffUtil.calculateSectionsDiff(from: oldGroups, to: sections)
-            
-            updateTableView(with: diff)
-            
-        } catch DiffError.duplicates {
-            
-            print("Duplicates found during updating. Updates will be will be performed without animation")
-            
-            tableView.reloadData()
-            
-        } catch {
-            
-            tableView.reloadData()
+        for g in sections {
+
+            if checkAreDuplicateObjectExist(objects: g.objects) {
+
+                tableView.reloadData()
+
+                return
+            }
+        }
+
+        for g in oldGroups {
+
+            if checkAreDuplicateObjectExist(objects: g.objects) {
+
+                tableView.reloadData()
+
+                return
+            }
         }
         
-//        for g in sections {
-//
-//            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
-//
-//                tableView.reloadData()
-//
-//                return
-//            }
-//        }
-//
-//        for g in oldGroups {
-//
-//            if checkAreDuplicateObjectExist(objects: g.rowObjects) {
-//
-//                tableView.reloadData()
-//
-//                return
-//            }
-//        }
-//        
-//        let color = tableView.separatorColor
-//
-//        tableView.separatorColor = .clear
-//
-//        tableView.beginUpdates()
-//
-//        updateSections(with: oldGroups)
-//
-//        updateRows(with: oldGroups)
-//
-//        tableView.endUpdates()
-//
-//        tableView.separatorColor = color
-    }
-    
-    private func updateTableView(with diff: GroupsDiff) {
-        
+        let color = tableView.separatorColor
+
+        tableView.separatorColor = .clear
+
         tableView.beginUpdates()
-        
-        tableView.insertSections(diff.sectionsDiff.inserts, with: animationType)
-//        diff.sectionsDiff.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
-        tableView.deleteSections(diff.sectionsDiff.deletes, with: animationType)
-        
-        tableView.deleteRows(at: diff.rowsDiff.deletes, with: animationType)
-        tableView.insertRows(at: diff.rowsDiff.inserts, with: animationType)
-        diff.rowsDiff.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
-        tableView.reloadRows(at: diff.rowsDiff.reloads, with: animationType)
-        
+
+        updateSections(with: oldGroups)
+
+        updateRows(with: oldGroups)
+
         tableView.endUpdates()
+
+        tableView.separatorColor = color
     }
     
     
@@ -335,7 +352,7 @@ extension TableAdapter {
         
         for (newIndex, newGroup) in sections.enumerated() {
             
-            guard let index = oldGroups.firstIndex(where: { newGroup.id.equal(any: $0.id) }) else {
+            guard let index = oldGroups.firstIndex(where: { newGroup.equal(any: $0) }) else {
                 
                 changeSection(at: newIndex, for: .insert)
                 
@@ -347,7 +364,7 @@ extension TableAdapter {
                 changeSection(at: newIndex, for: .move)
             }
             
-            if let deleteIndex = groupsToDelete.firstIndex(where: { newGroup.id.equal(any: $0.id) }) {
+            if let deleteIndex = groupsToDelete.firstIndex(where: { newGroup.equal(any: $0) }) {
                 
                 groupsToDelete.remove(at: deleteIndex)
             }
@@ -355,7 +372,7 @@ extension TableAdapter {
         
         for section in groupsToDelete {
             
-            guard let index = oldGroups.firstIndex(where: { section.id.equal(any: $0.id) })  else { continue }
+            guard let index = oldGroups.firstIndex(where: { section.equal(any: $0) })  else { continue }
             
             changeSection(at: index, for: .delete)
         }
@@ -416,16 +433,16 @@ extension TableAdapter {
         }
     }
     
-    private func updateRow(at indexPath: IndexPath, with newObject: AnyDifferentiable) {
+    private func updateRow(at indexPath: IndexPath, with newObject: AnyEquatable) {
         
         (tableView.cellForRow(at: indexPath) as? AnyConfigurable)?.anySetup(with: newObject)
     }
     
-    private func getIndexPath(for object: AnyDifferentiable, in groups: [Section]) -> IndexPath? {
+    private func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.objects.firstIndex(where: { object.id.equal(any: $0.id) }) {
+            if let objectIdx = group.objects.firstIndex(where: { object.equal(any: $0) }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -434,7 +451,7 @@ extension TableAdapter {
         return nil
     }
     
-    private func checkAreDuplicateObjectExist(objects: [AnyDifferentiable]) -> Bool {
+    private func checkAreDuplicateObjectExist(objects: [AnyEquatable]) -> Bool {
         
         let objects = objects.enumerated()
         
@@ -442,9 +459,9 @@ extension TableAdapter {
             
             for (secondIndex, secondObject) in objects {
                 
-                if object.id.equal(any: secondObject.id) && index != secondIndex {
+                if object.equal(any: secondObject) && index != secondIndex {
                     
-                    print("Error: there are duplicated ids \(object.id)")
+                    print("Error: there are duplicated objects \(object)")
                     
                     return true
                 }

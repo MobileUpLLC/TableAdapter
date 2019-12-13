@@ -17,7 +17,7 @@ class HeaderFooterViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    private let items: [AnyDifferentiable] = [
+    private let items: [AnyEquatable] = [
         1, 2, 3,
         "aaa", "bbb", "ccc",
         true, false,
@@ -73,7 +73,7 @@ class HeaderFooterViewController: UIViewController {
 
 extension HeaderFooterViewController: TableAdapterDataSource {
 
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
 
         switch object {
 
@@ -91,7 +91,7 @@ extension HeaderFooterViewController: TableAdapterDataSource {
         }
     }
 
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyDifferentiable) -> AnyDifferentiable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
 
         switch object {
 

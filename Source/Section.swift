@@ -7,11 +7,11 @@
 
 import Foundation
 
-public protocol Section: AnyDifferentiable {
+public protocol Section: AnyEquatable {
     
     var header: Any? { get }
     
     var footer: Any? { get }
     
-    var objects: [AnyDifferentiable] { get set }
+    var objects: [AnyEquatable] { get set }
 }

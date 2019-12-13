@@ -17,7 +17,7 @@ class DeleteObjectsViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
     
-    private let items: [AnyDifferentiable] = [
+    private let items: [AnyEquatable] = [
         "String",
         10001,
         100.1,
@@ -60,11 +60,11 @@ class DeleteObjectsViewController: UIViewController {
 
 extension DeleteObjectsViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyDifferentiable) {
+    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
         
         var sections = adapter.currentSections
         
-        sections[0].objects.removeAll(where: { $0.id.equal(any: object.id) })
+        sections[0].objects.removeAll(where: { $0.equal(any: object) })
         
         adapter.update(with: sections)
     }

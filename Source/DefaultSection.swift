@@ -1,37 +1,33 @@
 //
-//  DefaultSection.swift
-//  Pods-TableAdapterExample
+//  Group.swift
+//  TableAdapter
 //
-//  Created by Nikolai Timonin on 11.12.2019.
+//  Created by Nikolai Timonin on 03.12.2019.
 //
 
 import Foundation
 
-public struct DefaultSection: Section {
+public struct DefaultSection {
     
-    // MARK: Public properties
+    public let headerObject: AnyEquatable?
     
-    public var id: AnyEquatable
+    public let footerObject: AnyEquatable?
     
-    public let header: Any?
+    public var objects: [AnyEquatable]
+}
+
+// MARK: SectionGroup
+
+extension DefaultSection: Section {
     
-    public let footer: Any?
-    
-    public var objects: [AnyDifferentiable]
-    
-    // MARK: Public methods
-    
-    public init(
+    public var header: Any? {
+
+        return headerObject
+    }
+
+    public var footer: Any? {
         
-        id: AnyEquatable,
-        header: Any? = nil,
-        footer: Any? = nil,
-        objects: [AnyDifferentiable]
-    ) {
-        self.id = id
-        self.header = header
-        self.footer = footer
-        self.objects = objects
+        return footerObject
     }
 }
 
@@ -41,6 +37,22 @@ extension DefaultSection: Equatable {
     
     public static func == (lhs: DefaultSection, rhs: DefaultSection) -> Bool {
         
-        return lhs.id.equal(any: rhs.id)
+        return compare(lhs: lhs.headerObject, rhs: rhs.headerObject)
+            && compare(lhs: lhs.footerObject, rhs: rhs.footerObject)
+    }
+    
+    private static func compare(lhs: AnyEquatable?, rhs: AnyEquatable?) -> Bool {
+        
+        switch (lhs, rhs) {
+            
+        case let (l?, r?):
+            return l.equal(any: r)
+            
+        case (.none, .none):
+            return true
+        
+        case (.none, .some), (.some, .none):
+            return false
+        }
     }
 }

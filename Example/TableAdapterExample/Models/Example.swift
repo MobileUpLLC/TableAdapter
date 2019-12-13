@@ -16,19 +16,11 @@ struct Example {
     let controller: UIViewController.Type
 }
 
-extension Example: AnyDifferentiable {
-    
-    var id: AnyEquatable {
-        
-        return name
-    }
+extension Example: AnyEquatable {
     
     func equal(any: AnyEquatable?) -> Bool {
         
-        guard let any = any as? Example else {
-            
-            return false
-        }
+        guard let any = any as? Example else { return false }
         
         return name == any.name
     }
