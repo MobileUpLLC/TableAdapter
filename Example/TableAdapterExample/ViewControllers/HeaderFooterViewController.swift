@@ -73,9 +73,9 @@ class HeaderFooterViewController: UIViewController {
 
 extension HeaderFooterViewController: TableAdapterDataSource {
 
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
 
-        switch object {
+        switch cellObject {
 
         case is String:
             return "Strings start"
@@ -91,9 +91,9 @@ extension HeaderFooterViewController: TableAdapterDataSource {
         }
     }
 
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
 
-        switch object {
+        switch cellObject {
 
         case is String:
             return "Strings end"

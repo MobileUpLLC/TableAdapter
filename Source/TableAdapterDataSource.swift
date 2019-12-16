@@ -11,13 +11,13 @@ public protocol TableAdapterDataSource: AnyObject {
     
     // MARK: Cell
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String?
+    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String?
     
     // MARK: HeaderFooter
     
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable?
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable?
     
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable?
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable?
     
     func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String?
     
@@ -30,19 +30,19 @@ public extension TableAdapterDataSource {
     
     // MARK: Cell
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String? {
+    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String? {
         
         return nil
     }
     
     // MARK: HeaderFooter
     
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
         
         return nil
     }
     
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor object: AnyEquatable) -> AnyEquatable? {
+    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
         
         return nil
     }

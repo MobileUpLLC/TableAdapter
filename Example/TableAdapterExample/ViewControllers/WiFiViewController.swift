@@ -121,7 +121,7 @@ class WiFiViewController: UIViewController {
 
 extension WiFiViewController: TableAdapterDataSource {
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: Any) -> String? {
+    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String? {
         
         switch object {
             
