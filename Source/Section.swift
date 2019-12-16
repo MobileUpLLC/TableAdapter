@@ -9,9 +9,8 @@ import Foundation
 
 public protocol Section: AnyEquatable {
     
-    var header: Any? { get }
-    
-    var footer: Any? { get }
-    
     var objects: [AnyEquatable] { get set }
+    
+    var header: Any? { get }
+    var footer: Any? { get }
 }

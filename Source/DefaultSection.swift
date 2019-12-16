@@ -9,11 +9,10 @@ import Foundation
 
 public struct DefaultSection {
     
-    public let headerObject: AnyEquatable?
-    
-    public let footerObject: AnyEquatable?
-    
     public var objects: [AnyEquatable]
+    
+    public let headerObject: AnyEquatable?
+    public let footerObject: AnyEquatable?
 }
 
 // MARK: SectionGroup

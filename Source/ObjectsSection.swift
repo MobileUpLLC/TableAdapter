@@ -16,7 +16,6 @@ public struct ObjectsSection: Section {
     public var objects: [AnyEquatable]
     
     public let header: Any?
-    
     public let footer: Any?
     
     // MARK: Public methods
