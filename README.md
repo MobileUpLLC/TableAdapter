@@ -4,10 +4,11 @@ A lightweight data-driven library for animated updating UITableView. Our goal is
 ## Features
 - [x] Animated updates based on auto diffing
 - [x] Type-safe cell setup
-- [x] Cell initialization from xib, storyboard or code
-- [x] No need to subclass either cell, table or model
-- [x] Flexible sections
 - [x] No more `dequeReusabe...`
+- [x] No need to subclass either cell, table or model
+- [x] Cell initialization from xib, storyboard or code
+- [x] Flexible sections constructing
+- [x] Heterogeneous items in section
 
 ## Basic Usage
 
@@ -72,9 +73,9 @@ There are two ways of creating sections:
 
 ### Section objects
 Section object itself must conform `Section` protocol, i.e. 
+- be unique in terms of `AnyEquatable` protocol
 - provide row objects,
 - privide items for header and footer views setup (optionally) 
-- be unique in terms of `AnyEquatable` protocol
 
 In most cases you can use `ObjectsSection` which is basic adopting `Section` protocol. It's uniqueness based on `id`.
 
@@ -121,9 +122,9 @@ extension ViewController: TableAdapterDataSource {
 ```
 
 ### Header(Footer) View
-For default table view headers(footers) you should provide string header(footer) object usnig either corresponding varibles in `Section` model or implementing methods from `TableAdapterDataSource` protocol.
+For default table view headers(footers) you should only provide string header(footer) object usnig either corresponding varibles in `Section` model or implementing methods from `TableAdapterDataSource` protocol.
 
-For custom table header(footer) view usage at first you should register class or nib in table view. Header(footer) view must adopt either `Configurable` or `SenderConfigurable` to receive header object for setup.
+Custom header(footer) view must adopt either `Configurable` or `SenderConfigurable` to receive header object for setup. Then you should register class or nib.
 
  In case of similar header(footer) view for all sections you can use default header(footer) reuse identifier propertie in table adapter.
 ```swift
