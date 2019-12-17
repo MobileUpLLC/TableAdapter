@@ -17,7 +17,11 @@ class SortViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
     
-    private let sorter = SortUtil(items: [6, 5, 11, 8, 7, 12, 10, 9, 4, 3, 2, 1])
+    private let itemsCount = 20
+    
+    private lazy var hues: [Float] = (0..<itemsCount).map { Float($0) / Float(itemsCount) }.shuffled()
+    
+    private lazy var sorter = SortUtil(items: hues)
     
     // MARK: Override methods
 
@@ -42,7 +46,10 @@ class SortViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.rowHeight = 28
+        tableView.separatorStyle = .none
+        
+        tableView.register(ColorCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
     }
     
     private func setupNavBar() {
@@ -87,6 +94,16 @@ class SortViewController: UIViewController {
                 timer.invalidate()
             }
         }
+    }
+}
+
+// MARK: ColorCell
+
+class ColorCell: UITableViewCell, Configurable {
+    
+    func setup(with object: Float) {
+        
+        backgroundColor = UIColor(hue: CGFloat(object), saturation: 1.0, brightness: 1.0, alpha: 1.0)
     }
 }
 
