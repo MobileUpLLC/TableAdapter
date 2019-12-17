@@ -19,25 +19,7 @@ class SearchViewController: UIViewController {
     
     private lazy var adapter = TableAdapter(tableView: tableView)
     
-    private lazy var words: [String] = {
-        
-        let string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        
-        
-        var unique = Set<String>()
-        var words = [String]()
-        
-        string.enumerateSubstrings(in: string.startIndex..<string.endIndex, options: .byWords) { (word, _, _, _) in
-            
-            guard let word = word, unique.contains(word) == false else { return }
-            
-            unique.insert(word)
-            
-            words.append(word)
-        }
-        
-        return words
-    }()
+    private lazy var seas: [String] = seasRaw.components(separatedBy: CharacterSet.newlines)
     
     // MARK: Override methods
 
@@ -47,7 +29,7 @@ class SearchViewController: UIViewController {
         setupTableView()
         setupSearchController()
         
-        adapter.update(with: words, animated: false)
+        adapter.update(with: seas, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,6 +48,8 @@ class SearchViewController: UIViewController {
         
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
+        
+        tableView.tableFooterView = UIView()
     }
     
     private func setupSearchController() {
@@ -87,11 +71,193 @@ extension SearchViewController: UISearchResultsUpdating {
         
         guard let filter = searchController.searchBar.text, filter.isEmpty == false else {
             
-            return adapter.update(with: words, animated: true)
+            return adapter.update(with: seas, animated: true)
         }
         
-        let filteredWords = words.filter { $0.lowercased().contains(filter.lowercased()) }
+        let filteredWords = seas.filter { $0.lowercased().contains(filter.lowercased()) }
         
         adapter.update(with: filteredWords, animated: true)
     }
 }
+
+// MARK: Seas Raw Data
+
+let seasRaw = """
+Adriatic Sea
+Aegean Sea
+Aland Sea
+Aki-nada
+Alboran Sea
+Amakusa-nada
+Amundsen Sea
+Andaman Sea
+Arabian Sea
+Arafura Sea
+Aral Sea
+Arctic Ocean
+Atlantic Ocean
+Baie d'Hudson
+Bakor Sea
+Balearic Sea
+Bali Sea
+Baltic Sea
+Banda Sea
+Barents Sea
+Bay of Bengal
+Beaufort Sea
+Bellingshausen Sea
+Bering Sea
+Bingo-nada
+Bay of Biscay
+Bismarck Sea
+Black Sea
+Bohol Sea
+Bulkhead Rip
+Camotes Sea
+Cape Rip
+Caribbean Sea
+Caspian Sea
+Celebes Sea
+Celtic Sea
+Ceram Sea
+Chosŏndong-hae
+Chukchi Sea
+Clement Rapids
+Coral Sea
+Daryā-ye Khazar
+Daryā-ye Khezer
+Daryā-ye Māzandarān
+Daryā-ye ‘Ommān
+Davis Sea
+Dent Rapids
+Dicks Rip
+Dumont d'Urville, Mer
+East China Sea
+East Siberian Sea
+Eastern Chops
+Eastern Mediterranean
+English Channel
+Flores Sea
+Galloway Rapids
+Genkai-nada
+Greene Point Rapids
+Greenland Sea
+Cuanabara Bay
+Gulf of Guinea
+Gulf of Mexico
+Halmahera Sea
+Harima-nada
+Hibiki-nada
+Hiuchi-nada
+Hyŏnji-hae
+Hyūga-nada
+Indian River
+Indian Ocean
+Inland Sea
+Ionian Sea
+Irish Sea
+Itsuki-nada
+Iyo-nada
+Java Sea
+Jiuzhou Yang
+Kalupag Sea
+Kara Sea
+Kashima-nada
+Khalkidhikón Pélagos
+Kong Håkon VII Hav
+Koro Sea
+Kosmonavtov, more
+Kumano-nada
+Labrador Sea
+Laccadive Sea
+Landmeen
+Laptev Sea
+Laut Lepar
+Lazareva, more
+Leading Tickles
+Ligurian Sea
+Lincoln Sea
+Long Rip
+Luzon Sea
+Maotou Yang
+Mawson Sea
+McKinley Sea
+Mediterranean Sea
+Meiyu Yang
+Mer d' Emeraude
+Mer de Lincoln
+Mer du Labrador
+Mindanao Sea
+Mizushima-nada
+Molucca Sea
+Moore Rip
+Myrtóön Pélagos
+Nakwakto Rapids
+NORTH SEA
+Northwest Rip
+Northwest Straits
+Norwegian Sea
+Outer Bald Rip
+P'eng-hu Wan
+Pacific Ocean
+Pechorskoye More
+Persian Gulf
+Philippine Sea
+Pollock Rip
+Prince Gustaf Adolf Sea
+Putuo Yang
+Qizhou Yang
+Queen Victoria Sea
+Quoddy River
+Red Sea
+Riser-Larsena, more
+Ross Sea
+Saaristomeri
+Salish Sea
+Samar Sea
+Sargasso Sea
+Savu Sea
+Scotch Corner
+Scotia Sea
+Sea of Azov
+Sea of Crete
+Sea of Japan
+Sea of Marmara
+Sea of Okhotsk
+Sea of the Hebrides
+Shag Harbour Rip
+Shantarskoye More
+Short Rip
+Sibuyan Sea
+Sodruzhestva, more
+Solomon Sea
+Somova, more
+Soutch China Sea
+South Pacific Ocean
+Sulu Sea
+Suō-nada
+Tail of the Rip
+Tasman Sea
+Thálassa Cheimarras
+Thale Phuket
+The Hospital
+The Overfalls
+The Rip
+The Swirlers
+The Tittle
+Thimble Tickles
+Thrakikón Pelagós
+Timor Sea
+Tosa-wan
+Tyrrhenian Sea
+Uwa-kai
+Virsko More
+Visayan Sea
+Wandel Hav
+Weddell Sea
+Western Mediterranean
+Whirlpool Rapids
+White Sea
+Wilsons Rip
+Yellow Sea
+"""
