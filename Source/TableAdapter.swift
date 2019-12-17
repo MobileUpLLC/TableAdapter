@@ -112,7 +112,7 @@ open class TableAdapter: NSObject {
             let header = dataSource?.tableAdapter(self, headerObjectFor: object)
             let footer = dataSource?.tableAdapter(self, footerObjectFor: object)
             
-            let newSection = DefaultSection(headerObject: header, footerObject: footer, objects: [object])
+            let newSection = DefaultSection(objects: [object], headerObject: header, footerObject: footer)
             
             if let lastSection = result.last, lastSection.equal(any: newSection) {
                 

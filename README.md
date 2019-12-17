@@ -217,7 +217,21 @@ extension Cell: SenderConfigurable {
 
 
 ## Requirements
+- Swift 4.0+
+- iOS 9.0+
+
 
 ## Istallation
 
+### CocoaPods
+Add the following to `Podfile`:
+```ruby
+pod 'TableAdapter'
+```
+
+### Manual
+Download and drag files from Source folder into your Xcode project.
+
+
 ## License
+TableAdapter is distributed under the [MIT License](https://mobileup.ru/).
