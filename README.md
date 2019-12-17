@@ -3,8 +3,8 @@ A lightweight data-driven library for animated updating UITableView. Our goal is
 
 ## Features
 - [x] Animated updates based on auto diffing
-- [x] Type-safe cell setup
-- [x] No more `dequeReusabe...`
+- [x] Type-safe cell, header and footer setup
+- [x] No more `dequeReusable...`
 - [x] No need to subclass either cell, table or model
 - [x] Cell initialization from xib, storyboard or code
 - [x] Flexible sections constructing
@@ -34,7 +34,7 @@ struct Network: Equatable, AnyEquatable {
 }
 ```
 
-Cell should conform to `Configurable` protocol to receive item for config. The item type is generic associated type.
+Table cell should conform to `Configurable` protocol to receive cell item for config. The item type is generic associated type.
 ```swift
 class Cell: UITableViewCell, Configurable {
     
@@ -77,7 +77,7 @@ Section object itself must conform `Section` protocol, i.e.
 - provide row objects,
 - privide items for header and footer views setup (optionally) 
 
-In most cases you can use `ObjectsSection` which is basic adopting `Section` protocol. It's uniqueness based on `id`.
+For the most cases you can use `ObjectsSection` struct as basic adoptiong `Section` protocol. It's uniqueness based on `id`.
 
 ```swift
 let sections = [
@@ -90,7 +90,7 @@ adapter.update(with: sections, animated: true)
 ```
 
 ### Construct Autamatically
-You should set adapter `dataSource` and implement corresponding methods from `TableAdapterDataSource` protocol. For objects belong to same section you should provide same header(footer) object in terms of `AnyEquatable`. The uniqueness of that sections is based on uniqueness both header and footer items.
+Set adapter `dataSource` and implement corresponding methods from `TableAdapterDataSource` protocol. For cell objects belong to same section provide same header(footer) object in terms of `AnyEquatable`. The uniqueness of that sections is based on uniqueness both header and footer items.
 
 ```swift
 extension ViewController: TableAdapterDataSource {
@@ -124,7 +124,7 @@ extension ViewController: TableAdapterDataSource {
 ### Header(Footer) View
 For default table view headers(footers) you should only provide string header(footer) object usnig either corresponding varibles in `Section` model or implementing methods from `TableAdapterDataSource` protocol.
 
-Custom header(footer) view must adopt either `Configurable` or `SenderConfigurable` to receive header object for setup. Then you should register class or nib.
+Custom header(footer) view must adopt `Configurable` to receive header object for setup. Then you should register class or nib.
 
  In case of similar header(footer) view for all sections you can use default header(footer) reuse identifier propertie in table adapter.
 ```swift
@@ -149,8 +149,10 @@ extension ViewController: TableAdapterDataSource {
 ```
 
 
-## Advanced Cell
-### Multy-types cell
+## Cells
+
+### Multiple cell types
+
 To provide different cell types for different objects you must register cells:
 ```swift
 tableView.register(StringCell.self, forCellReuseIdentifier: "StringCellId")
@@ -158,7 +160,7 @@ tableView.register(NetworkCell.self, forCellReuseIdentifier: "NetworkCellId")
 tableView.register(GeneralCell.self, forCellReuseIdentifier: "GeneralCellId")
 ```
 
-And then implement corresponding method from `TableAdapterDataSource`:
+Set table adapter data source and implement corresponding method from `TableAdapterDataSource` protocol.
 ```swift
 extension ViewController: TableAdapterDataSource {
     
@@ -180,7 +182,7 @@ extension ViewController: TableAdapterDataSource {
 ```
 
 ### Handle Cell Selection
-For responding on cell selection you must implement `TableAdapterDelegate` protocol and set table adapter delegate.
+For handling cell selection set table adapter delegate and implement `TableAdapterDelegate` protocol.
 ```swift
 extension ViewController: TableAdapterDelegate {
     
@@ -191,10 +193,8 @@ extension ViewController: TableAdapterDelegate {
 }
 ```
 
-### Cell Setup with Sender
-Sometimes you need to set cell delegate, or for whatever reason provide `sender` object to cell.
-
-At first, create adapter with sender object or provide it later. More often case, that sender role is dedicated to view controller.
+## Sender
+Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which can be passed to configurable view. At first, init table adapter with sender parameter. Also you can set it later. In case of nill `sender`, table adapter itself will be passed to view setup method.
 ```swift
 class ViewController: UIViewController {
 
@@ -203,7 +203,7 @@ class ViewController: UIViewController {
     ...
 }
 ```
-Then adopt `SenderConfigurable` protocol:
+Then adopt `SenderConfigurable` protocol. The item and sender types are generic associated types.
 ```swift
 extension Cell: SenderConfigurable {
     
