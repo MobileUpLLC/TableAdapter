@@ -13,11 +13,11 @@ class SortViewController: UIViewController {
     
     // MARK: Private properties
     
-    private let tableView = UITableView(frame: .zero, style: .grouped)
+    private let tableView = UITableView()
     
     private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
     
-    private let itemsCount = 20
+    private let itemsCount = 50
     
     private lazy var hues: [Float] = (0..<itemsCount).map { Float($0) / Float(itemsCount) }.shuffled()
     
@@ -30,14 +30,23 @@ class SortViewController: UIViewController {
 
         setupTableView()
         setupNavBar()
-        
-        adapter.update(with: sorter.currentItems, animated: false)
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         tableView.frame = view.bounds
+        
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+
+        tableView.rowHeight = (tableView.frame.size.height - navBarHeight - statusBarHeight) / CGFloat(itemsCount)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        adapter.update(with: sorter.currentItems, animated: false)
     }
     
     // MARK: Private methods
@@ -46,8 +55,9 @@ class SortViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.rowHeight = 28
         tableView.separatorStyle = .none
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
         
         tableView.register(ColorCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
     }
@@ -55,7 +65,7 @@ class SortViewController: UIViewController {
     private func setupNavBar() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Run",
+            title: "Sort",
             style: .plain,
             target: self,
             action: #selector(SortViewController.runSort)
@@ -83,7 +93,7 @@ class SortViewController: UIViewController {
         
         navigationItem.rightBarButtonItem?.isEnabled = false
         
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: true) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
             
             self.adapter.update(with: self.sorter.nextStepSorted())
             
