@@ -195,7 +195,11 @@ open class TableAdapter: NSObject {
         super.init()
         
         tableView.dataSource = self
-        tableView.delegate = self
+        
+        if tableView.delegate == nil {
+            
+            tableView.delegate = self
+        }
     }
     
     public convenience init(tableView: UITableView, sender: AnyObject?) {
@@ -234,8 +238,6 @@ open class TableAdapter: NSObject {
 
 extension TableAdapter: UITableViewDataSource {
     
-    // MARK: Data setup
-    
     public func numberOfSections(in tableView: UITableView) -> Int {
         
         return sections.count
@@ -251,8 +253,6 @@ extension TableAdapter: UITableViewDataSource {
         return dequeueConfiguredCell(forRowAt: indexPath)
     }
     
-    // MARK: HeaderFooter setup
-    
     public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 
         return sections[section].header as? String
@@ -262,6 +262,11 @@ extension TableAdapter: UITableViewDataSource {
 
         return sections[section].footer as? String
     }
+}
+
+// MARK: UITableViewDelegate
+
+extension TableAdapter: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
@@ -280,16 +285,16 @@ extension TableAdapter: UITableViewDataSource {
             object: sections[section].footer
         )
     }
-}
-
-// MARK: UITableViewDelegate
-
-extension TableAdapter: UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
         delegate?.tableAdapter(self, didSelect: getObject(for: indexPath))
+    }
+    
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        delegate?.tableAdapter(self, didScroll: scrollView)
     }
 }

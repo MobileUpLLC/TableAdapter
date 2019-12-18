@@ -233,6 +233,9 @@ extension Cell: SenderConfigurable {
 }
 ```
 
+## Low-level Control
+You can set yours `UITableView` delegate for getting more control over row selection, header(footer) configuration, table editing, etc. In that case table adapter won't any called methods from `TableAdapterDelegate` protocol and display custom header and footer views.
+
 
 ## Requirements
 - Swift 4.0+
