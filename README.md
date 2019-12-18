@@ -35,7 +35,7 @@ public protocol AnyEquatable {
 }
 ```
 
-There is a default implementation of `AnyEquatable` protocol for types that conform to `Equitable` protocol.
+There is a default implementation of `AnyEquatable` protocol for type that conforms to `Equitable` protocol.
 ```swift
 struct Network: Equatable, AnyEquatable {
     
@@ -49,7 +49,7 @@ struct Network: Equatable, AnyEquatable {
 }
 ```
 
-Table cell should conform to `Configurable` protocol to receive cell item for config. The item type is generic associated type.
+Table cell should conform to `Configurable` protocol in oreder to receive cell item for setup. The item type is generic associated type.
 ```swift
 class Cell: UITableViewCell, Configurable {
     
@@ -84,28 +84,28 @@ class ViewController: UIViewController {
 ## Sections
 There are two ways of creating sections: 
 - Provide `Section` objects to `TableAdapter`
-- Automatically construct sections from flat items
+- Automatically construct sections from flat items.
 
 ### Section objects
 Section object itself must conform `Section` protocol, i.e. 
 - be unique in terms of `AnyEquatable` protocol
-- provide cell objects,
+- provide cell objects
 - privide items for header and footer views setup (optionally) 
 
 For the most cases you can use `ObjectsSection` struct as basic adoptiong `Section` protocol. It's uniqueness based on `id`.
 
 ```swift
 let sections = [
-    ObjectsSection(id: 0, objects: [...], header: "Section One",),
-    ObjectsSection(id: 1, objects: [...], header: "Section Two",),
+    ObjectsSection(id: 0, objects: [...], header: "Section One"),
+    ObjectsSection(id: 1, objects: [...], header: "Section Two"),
     ...
 ]
 
 adapter.update(with: sections, animated: true)
 ```
 
-### Construct Autamatically
-Set adapter `dataSource` and implement corresponding methods from `TableAdapterDataSource` protocol. For cell objects belong to same section provide same header(footer) object in terms of `AnyEquatable`. The uniqueness of that sections is based on uniqueness both header and footer items. The set flat `AnyEquatable` cell items to adapter.
+### Construct Automatically
+Provide flat `AnyEquatable` cell items to adapter. Set adapter `dataSource: TableAdapterDataSource` and implement corresponding methods from it. For cell items belong to same section provide same header(footer) item in terms of `AnyEquatable`. This data source methods will be called on each adapter update with cell items. As the result we get `DefaultSection` objects under the hood. The uniqueness of that sections is based on uniqueness of both header and footer items. 
 
 ```swift
 extension ViewController: TableAdapterDataSource {
@@ -137,17 +137,18 @@ extension ViewController: TableAdapterDataSource {
 ```
 
 ### Header(Footer) View
+
+#### Default
 For default table view headers(footers) you should only provide string header(footer) object usnig either corresponding varibles in `Section` model or implementing methods from `TableAdapterDataSource` protocol.
 
-Custom header(footer) view must adopt `Configurable` to receive header object for setup. Then you should register class or nib.
-
- In case of similar header(footer) view for all sections you can use default header(footer) reuse identifier propertie in table adapter.
+#### Custom
+Custom header(footer) view should adopt `Configurable` protocol in order to receive header(footer) item for setup. Then you should register class or nib. In case of similar header(footer) view for all sections you can use default header(footer) reuse identifier property in table adapter.
 ```swift
 tableView.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: adpter.defaultHeaderIdentifier)
 tableView.register(FooterView.self, forHeaderFooterViewReuseIdentifier: adpter.defaultFooterIdentifier)
 ```
 
-In case of different header(footer) views for different sections you must implement corresponding methods from `TableAdapterDataSource` protocol:
+In case of different header(footer) views for different sections you should implement corresponding methods from `TableAdapterDataSource` protocol:
 ```swift
 extension ViewController: TableAdapterDataSource {
     
@@ -197,7 +198,7 @@ extension ViewController: TableAdapterDataSource {
 ```
 
 ### Handle Cell Selection
-For handling cell selection set table adapter delegate and implement `TableAdapterDelegate` protocol.
+For handling cell selection set table adapter `delegate: TableAdapterDelegate` and implement it.
 ```swift
 extension ViewController: TableAdapterDelegate {
     
@@ -209,7 +210,7 @@ extension ViewController: TableAdapterDelegate {
 ```
 
 ## Sender
-Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which can be passed to configurable view. At first, init table adapter with sender parameter. Also you can set it later. In case of nill `sender`, table adapter itself will be passed to view setup method.
+Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender: AnyObject?` property, which will be passed to configurable view. At first, init table adapter with sender parameter or set it later. In case of nill `sender`, table adapter itself will be passed to view setup method.
 ```swift
 class ViewController: UIViewController {
 
