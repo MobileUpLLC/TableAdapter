@@ -15,7 +15,7 @@ public struct DefaultSection {
     public let footerObject: AnyEquatable?
 }
 
-// MARK: SectionGroup
+// MARK: DefaultSection
 
 extension DefaultSection: Section {
     

@@ -85,37 +85,37 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateSectionsDiff(from oldGroups: [Section], to newGroups: [Section]) throws -> Diff {
+    static func calculateSectionsDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
         
         guard
             
-            checkDuplicates(in: oldGroups) == false,
-            checkDuplicates(in: newGroups) == false
+            checkDuplicates(in: oldSections) == false,
+            checkDuplicates(in: newSections) == false
         
         else {
             
             throw DiffError.duplicates
         }
         
-        let sectionDiff = try DiffUtil.calculateDiff(from: oldGroups, to: newGroups)
+        let sectionDiff = try DiffUtil.calculateDiff(from: oldSections, to: newSections)
         
         var rowInserts = [IndexPath]()
         var rowDeletes = [IndexPath]()
         var rowMoves = [Move<IndexPath>]()
         
-        // Map groups to index pathes.
-        rowDeletes = oldGroups.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
+        // Map sections to index pathes.
+        rowDeletes = oldSections.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
 
             return group.objects.enumerated().map { IndexPath(row: $0.offset, section: groupIdx) }
         })
         
-        for (newGroupIdx, newGroup) in newGroups.enumerated() {
+        for (newSectionIdx, newSection) in newSections.enumerated() {
             
-            for (newRowObjectIdx, newRowObject) in newGroup.objects.enumerated() {
+            for (newRowObjectIdx, newRowObject) in newSection.objects.enumerated() {
                 
-                let newRowObjectIp = IndexPath(row: newRowObjectIdx, section: newGroupIdx)
+                let newRowObjectIp = IndexPath(row: newRowObjectIdx, section: newSectionIdx)
                 
-                if let oldRowObjectIp = getIndexPath(for: newRowObject, in: oldGroups) {
+                if let oldRowObjectIp = getIndexPath(for: newRowObject, in: oldSections) {
                     
                     rowDeletes.removeAll(where: { $0 == oldRowObjectIp })
                     
