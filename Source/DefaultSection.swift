@@ -1,5 +1,5 @@
 //
-//  Group.swift
+//  DefaultSection.swift
 //  TableAdapter
 //
 //  Created by Nikolai Timonin on 03.12.2019.

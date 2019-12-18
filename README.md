@@ -104,6 +104,8 @@ let sections = [
 adapter.update(with: sections, animated: true)
 ```
 
+Also you can obtain current adapter sections unisng `currentSections: [Section]` variable.
+
 ### Construct Automatically
 Provide flat `AnyEquatable` cell items to adapter. Set adapter `dataSource: TableAdapterDataSource` and implement corresponding methods from it. For cell items belong to same section provide same header(footer) item in terms of `AnyEquatable`. This data source methods will be called on each adapter update with cell items. As the result we get `DefaultSection` objects under the hood. The uniqueness of that sections is based on uniqueness of both header and footer items. 
 
