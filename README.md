@@ -7,7 +7,14 @@
 	<a href="https://mobileup.ru/"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
 </p>
 
-A lightweight data-driven library for animated updating UITableView. Our goal is to think in terms of objects, not in terms of index pathes while building table views.
+<img src="https://user-images.githubusercontent.com/26662065/71070476-eb4bb700-218b-11ea-9239-db6d822d327d.gif" width="" height="400" align="right" />
+<img src="https://user-images.githubusercontent.com/26662065/71070318-96a83c00-218b-11ea-9c0f-9015b63225e7.gif" width="" height="400" align="right" />
+<img src="https://user-images.githubusercontent.com/26662065/71070139-31544b00-218b-11ea-9512-5b2c519c0382.gif" width="" height="400" align="right" />
+
+A lightweight data-driven library for animated updating UITableView.
+
+<br clear="all">
+
 
 ## Features
 - [x] Animated updates based on auto diffing
@@ -76,21 +83,21 @@ class ViewController: UIViewController {
 
 ## Sections
 There are two ways of creating sections: 
-- Provide already constructed `Section` objects to `TableAdapter`
+- Provide `Section` objects to `TableAdapter`
 - Automatically construct sections from flat items
 
 ### Section objects
 Section object itself must conform `Section` protocol, i.e. 
 - be unique in terms of `AnyEquatable` protocol
-- provide row objects,
+- provide cell objects,
 - privide items for header and footer views setup (optionally) 
 
 For the most cases you can use `ObjectsSection` struct as basic adoptiong `Section` protocol. It's uniqueness based on `id`.
 
 ```swift
 let sections = [
-    ObjectsSection(id: 0, objects: [...]),
-    ObjectsSection(id: 1, objects: [...]),
+    ObjectsSection(id: 0, objects: [...], header: "Section One",),
+    ObjectsSection(id: 1, objects: [...], header: "Section Two",),
     ...
 ]
 
@@ -98,7 +105,7 @@ adapter.update(with: sections, animated: true)
 ```
 
 ### Construct Autamatically
-Set adapter `dataSource` and implement corresponding methods from `TableAdapterDataSource` protocol. For cell objects belong to same section provide same header(footer) object in terms of `AnyEquatable`. The uniqueness of that sections is based on uniqueness both header and footer items.
+Set adapter `dataSource` and implement corresponding methods from `TableAdapterDataSource` protocol. For cell objects belong to same section provide same header(footer) object in terms of `AnyEquatable`. The uniqueness of that sections is based on uniqueness both header and footer items. The set flat `AnyEquatable` cell items to adapter.
 
 ```swift
 extension ViewController: TableAdapterDataSource {
