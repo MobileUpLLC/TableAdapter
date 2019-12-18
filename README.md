@@ -11,7 +11,8 @@
 <img src="https://user-images.githubusercontent.com/26662065/71070318-96a83c00-218b-11ea-9c0f-9015b63225e7.gif" width="" height="400" align="right" />
 <img src="https://user-images.githubusercontent.com/26662065/71070139-31544b00-218b-11ea-9512-5b2c519c0382.gif" width="" height="400" align="right" />
 
-A lightweight data-driven library for animated updating UITableView.
+
+A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data but not in terms of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it needed. And configuring reusable views in a type-safe manner helps to keep code clean and stable.
 
 <br clear="all">
 
@@ -19,7 +20,7 @@ A lightweight data-driven library for animated updating UITableView.
 ## Features
 - [x] Animated updates based on auto diffing
 - [x] Type-safe cell, header and footer setup
-- [x] No more `dequeReusable...`
+- [x] No more `dequeReusable...` 
 - [x] No need to subclass either cell, table or model
 - [x] Cell initialization from xib, storyboard or code
 - [x] Flexible sections constructing
