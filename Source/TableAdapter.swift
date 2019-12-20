@@ -7,31 +7,6 @@
 
 import UIKit
 
-struct Reservation {
-    
-    let cellId: String
-    let row: Int
-    let section: Int
-    
-    var id: String {
-        
-        return "\(section)-\(row)"
-    }
-}
-
-extension Reservation: Hashable, AnyEquatable {
-    
-    func hash(into hasher: inout Hasher) {
-        
-        hasher.combine(id)
-    }
-    
-    static func == (lhs: Reservation, rhs: Reservation) -> Bool {
-        
-        return lhs.id == rhs.id
-    }
-}
-
 open class TableAdapter: NSObject {
     
     // MARK: Private properties
@@ -120,7 +95,7 @@ open class TableAdapter: NSObject {
     private func getCellIdetifier(for indexPath: IndexPath) -> String {
         
         // Check reservations for that index path.
-        if let reservation = getReseravation(for: indexPath.row, section: indexPath.section) {
+        if let reservation = getReseravation(for: indexPath.row, in: indexPath.section) {
             
             return reservation.cellId
         }
@@ -134,15 +109,12 @@ open class TableAdapter: NSObject {
         
         let resIndexPath = IndexPath(row: shiftedRow, section: indexPath.section)
         
-        return dataSource?.tableAdapter(
-            
-            self,
-            cellIdentifierFor: getObject(for: resIndexPath)
-            
-        ) ?? defaultCellIdentifier
+        let object = getObject(for: resIndexPath)
+        
+        return dataSource?.tableAdapter(self, cellIdentifierFor: object) ?? defaultCellIdentifier
     }
     
-    private func getReseravation(for row: Int, section: Int) -> Reservation? {
+    private func getReseravation(for row: Int, in section: Int) -> Reservation? {
         
         return reservations.first(where: { $0.section == section && $0.row == row })
     }
@@ -151,9 +123,10 @@ open class TableAdapter: NSObject {
         
         var newSections = sections
         
-        reservations.forEach { (reservation) in
+        // Reservations must be sorted in order to preserve correct reservation positions.
+        reservations.sorted().forEach { (reservation) in
                 
-            newSections[reservation.section].objects.insert(reservation.id, at: reservation.row)
+            newSections[reservation.section].objects.insert(reservation, at: reservation.row)
         }
         
         return newSections
@@ -310,10 +283,7 @@ open class TableAdapter: NSObject {
     
     public func removeReservation(at row: Int, section: Int = 0) {
         
-        guard let reservation = getReseravation(for: row, section: section) else {
-            
-            return
-        }
+        guard let reservation = getReseravation(for: row, in: section) else { return }
         
         reservations.remove(reservation)
     }
