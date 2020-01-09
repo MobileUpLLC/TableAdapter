@@ -15,6 +15,8 @@ open class TableAdapter: NSObject {
     
     private var sections: [Section] = []
     
+    private var reservations: Set<Reservation> = []
+    
     // MARK: Public properties
     
     public weak var sender: AnyObject?
@@ -40,7 +42,14 @@ open class TableAdapter: NSObject {
     
     public var currentSections: [Section] {
         
-        return sections
+        var resultSections = sections
+        
+        reservations.forEach { (reservation) in
+            
+            resultSections[reservation.section].objects.remove(at: reservation.row)
+        }
+        
+        return resultSections
     }
     
     public var animationType: UITableView.RowAnimation = .fade
@@ -82,10 +91,45 @@ open class TableAdapter: NSObject {
             view.anySetup(with: object)
         }
     }
-    
+
     private func getCellIdetifier(for indexPath: IndexPath) -> String {
         
-        return dataSource?.tableAdapter(self, cellIdentifierFor: getObject(for: indexPath)) ?? defaultCellIdentifier
+        // Check reservations for that index path.
+        if let reservation = getReseravation(for: indexPath.row, in: indexPath.section) {
+            
+            return reservation.cellId
+        }
+        
+        // Shift row indices up to row reservations count.
+        let reservationsBeforeIndexPath = reservations
+            
+            .filter { $0.section == indexPath.section && $0.row < indexPath.row }
+        
+        let shiftedRow = indexPath.row - reservationsBeforeIndexPath.count
+        
+        let resIndexPath = IndexPath(row: shiftedRow, section: indexPath.section)
+        
+        let object = getObject(for: resIndexPath)
+        
+        return dataSource?.tableAdapter(self, cellIdentifierFor: object) ?? defaultCellIdentifier
+    }
+    
+    private func getReseravation(for row: Int, in section: Int) -> Reservation? {
+        
+        return reservations.first(where: { $0.section == section && $0.row == row })
+    }
+    
+    private func insertReservations(to sections: [Section]) -> [Section] {
+        
+        var newSections = sections
+        
+        // Reservations must be sorted in order to preserve correct reservation positions.
+        reservations.sorted().forEach { (reservation) in
+                
+            newSections[reservation.section].objects.insert(reservation, at: reservation.row)
+        }
+        
+        return newSections
     }
     
     private func getHeaderIdentifier(for section: Int) -> String {
@@ -218,19 +262,35 @@ open class TableAdapter: NSObject {
     
     public func update(with sections: [Section], animated: Bool = true) {
         
+        let newSections = insertReservations(to: sections)
+        
         if animated {
             
-            updateTableAnimated(with: sections)
+            updateTableAnimated(with: newSections)
         
         } else {
             
-            updateTable(with: sections)
+            updateTable(with: newSections)
         }
     }
     
-    public func reserveCell(with id: String, at indexPath: IndexPath) {
+    public func reserveStaticCell(withIdentifier id: String, row: Int, section: Int = 0) {
         
-        assertionFailure("Not implemented yet")
+        let reservation = Reservation(cellId: id, row: row, section: section)
+        
+        reservations.insert(reservation)
+    }
+    
+    public func removeReservation(at row: Int, section: Int = 0) {
+        
+        guard let reservation = getReseravation(for: row, in: section) else { return }
+        
+        reservations.remove(reservation)
+    }
+    
+    public func removeAllReservations() {
+        
+        reservations.removeAll()
     }
 }
 
