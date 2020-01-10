@@ -197,12 +197,6 @@ open class TableAdapter: NSObject {
             
             tableView.reloadData()
             
-        } catch DiffError.moveSection {
-            
-            print("Moving sections is not dupported for now. Updates will be will be performed without animation")
-            
-            tableView.reloadData()
-            
         } catch {
             
             tableView.reloadData()

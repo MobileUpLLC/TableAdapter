@@ -10,7 +10,6 @@ import Foundation
 enum DiffError: Error {
     
     case duplicates
-    case moveSection
 }
 
 public class DiffUtil {
