@@ -195,11 +195,11 @@ open class TableAdapter: NSObject {
             
             print("Duplicates found during updating. Updates will be will be performed without animation")
             
-            tableView.reloadData()
+            updateTable(with: newSections)
             
         } catch {
             
-            tableView.reloadData()
+            updateTable(with: newSections)
         }
     }
     
