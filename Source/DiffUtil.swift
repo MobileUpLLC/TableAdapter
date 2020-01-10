@@ -10,19 +10,18 @@ import Foundation
 enum DiffError: Error {
     
     case duplicates
-    case moveSection
 }
 
 public class DiffUtil {
     
     // MARK: Private methods
     
-    private static func calculateDiff(
+    private static func calculateSectionsDiff(
         
         from oldObjects: [AnyEquatable],
         to newObjects: [AnyEquatable]
         
-    ) throws -> IndexSetDiff {
+    ) -> IndexSetDiff {
         
         var inserts = IndexSet()
         var moves = [Move<Int>]()
@@ -39,8 +38,6 @@ public class DiffUtil {
                 if oldIdx != newIdx {
                     
                     moves.append(Move<Int>(from: oldIdx, to: newIdx))
-                    
-                    throw DiffError.moveSection
                 }
                 
             } else {
@@ -52,52 +49,12 @@ public class DiffUtil {
         return IndexSetDiff(inserts: inserts, moves: moves, deletes: deletes)
     }
     
-    private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
+    private static func calculateRowsDiff(
         
-        for (groupIdx, group) in groups.enumerated() {
-            
-            if let objectIdx = group.objects.firstIndex(where: { object.equal(any: $0) }) {
-                
-                return IndexPath(row: objectIdx, section: groupIdx)
-            }
-        }
+        from oldSections: [Section],
+        to newSections: [Section]
         
-        return nil
-    }
-    
-    private static func checkDuplicates(in sections: [Section]) -> Bool {
-        
-        let allObjects = sections.flatMap { $0.objects }
-        
-        for (lhsIdx, lhsObj) in allObjects.enumerated() {
-            
-            for (rhsIdx, rhsObj) in allObjects.enumerated() {
-                
-                if lhsObj.equal(any: rhsObj) && lhsIdx != rhsIdx {
-                    
-                    return true
-                }
-            }
-        }
-        
-        return false
-    }
-    
-    // MARK: Public methods
-    
-    static func calculateSectionsDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
-        
-        guard
-            
-            checkDuplicates(in: oldSections) == false,
-            checkDuplicates(in: newSections) == false
-        
-        else {
-            
-            throw DiffError.duplicates
-        }
-        
-        let sectionDiff = try DiffUtil.calculateDiff(from: oldSections, to: newSections)
+    ) -> IndexPathDiff {
         
         var rowInserts = [IndexPath]()
         var rowDeletes = [IndexPath]()
@@ -131,8 +88,73 @@ public class DiffUtil {
             }
         }
         
-        let rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
+        return IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
+    }
+    
+    private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
         
-        return Diff(sections: sectionDiff, rows: rowsDiff)
+        for (groupIdx, group) in groups.enumerated() {
+            
+            if let objectIdx = group.objects.firstIndex(where: { object.equal(any: $0) }) {
+                
+                return IndexPath(row: objectIdx, section: groupIdx)
+            }
+        }
+        
+        return nil
+    }
+    
+    private static func checkDuplicates(in sections: [Section]) -> Bool {
+        
+        let allObjects = sections.flatMap { $0.objects }
+        
+        for i in 0..<allObjects.count {
+            
+            for j in i+1..<allObjects.count {
+                
+                if allObjects[i].equal(any: allObjects[j]) {
+                    
+                    return true
+                }
+            }
+        }
+        
+        return false
+    }
+    
+    // MARK: Public methods
+    
+    static func calculateDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
+        
+        guard
+            checkDuplicates(in: oldSections) == false,
+            checkDuplicates(in: newSections) == false
+        else {
+            
+            throw DiffError.duplicates
+        }
+        
+        // Sections diff.
+        let sectionsDiff = calculateSectionsDiff(from: oldSections, to: newSections)
+        
+        // Build intermediate sections data.
+        var intermediateSections: [Section] = []
+        
+        for newSection in newSections {
+            
+            let oldSection = oldSections.first(where: { $0.equal(any: newSection) })
+            
+            intermediateSections.append(oldSection ?? newSection)
+        }
+        
+        // Rows diff.
+        let rowsDiff = calculateRowsDiff(from: intermediateSections, to: newSections)
+        
+        return Diff(
+            sections: sectionsDiff,
+            rows: rowsDiff,
+            intermediateData: intermediateSections,
+            resultData: newSections
+        )
     }
 }
