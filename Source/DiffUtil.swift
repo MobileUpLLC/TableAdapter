@@ -108,11 +108,11 @@ public class DiffUtil {
         
         let allObjects = sections.flatMap { $0.objects }
         
-        for (lhsIdx, lhsObj) in allObjects.enumerated() {
+        for i in 0..<allObjects.count {
             
-            for (rhsIdx, rhsObj) in allObjects.enumerated() {
+            for j in i+1..<allObjects.count {
                 
-                if lhsObj.equal(any: rhsObj) && lhsIdx != rhsIdx {
+                if allObjects[i].equal(any: allObjects[j]) {
                     
                     return true
                 }
