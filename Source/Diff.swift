@@ -41,12 +41,15 @@ public struct IndexSetDiff {
     var deletes: IndexSet
 }
 
-// MARK: GroupsDiff
+// MARK: Diff
 
 struct Diff {
     
     let sections: IndexSetDiff
     let rows: IndexPathDiff
+    
+    let intermediateData: [Section]
+    let resultData: [Section]
 }
 
 extension Diff: CustomStringConvertible {

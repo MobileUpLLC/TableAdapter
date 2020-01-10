@@ -17,12 +17,12 @@ public class DiffUtil {
     
     // MARK: Private methods
     
-    private static func calculateDiff(
+    private static func calculateSectionsDiff(
         
         from oldObjects: [AnyEquatable],
         to newObjects: [AnyEquatable]
         
-    ) throws -> IndexSetDiff {
+    ) -> IndexSetDiff {
         
         var inserts = IndexSet()
         var moves = [Move<Int>]()
@@ -39,8 +39,6 @@ public class DiffUtil {
                 if oldIdx != newIdx {
                     
                     moves.append(Move<Int>(from: oldIdx, to: newIdx))
-                    
-                    throw DiffError.moveSection
                 }
                 
             } else {
@@ -50,6 +48,48 @@ public class DiffUtil {
         }
         
         return IndexSetDiff(inserts: inserts, moves: moves, deletes: deletes)
+    }
+    
+    private static func calculateRowsDiff(
+        
+        from oldSections: [Section],
+        to newSections: [Section]
+        
+    ) -> IndexPathDiff {
+        
+        var rowInserts = [IndexPath]()
+        var rowDeletes = [IndexPath]()
+        var rowMoves = [Move<IndexPath>]()
+        
+        // Map sections to index pathes.
+        rowDeletes = oldSections.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
+
+            return group.objects.enumerated().map { IndexPath(row: $0.offset, section: groupIdx) }
+        })
+        
+        for (newSectionIdx, newSection) in newSections.enumerated() {
+            
+            for (newRowObjectIdx, newRowObject) in newSection.objects.enumerated() {
+                
+                let newRowObjectIp = IndexPath(row: newRowObjectIdx, section: newSectionIdx)
+                
+                if let oldRowObjectIp = getIndexPath(for: newRowObject, in: oldSections) {
+                    
+                    rowDeletes.removeAll(where: { $0 == oldRowObjectIp })
+                    
+                    if newRowObjectIp != oldRowObjectIp {
+                        
+                        rowMoves.append(Move<IndexPath>(from: oldRowObjectIp, to: newRowObjectIp))
+                    }
+                    
+                } else {
+                    
+                    rowInserts.append(newRowObjectIp)
+                }
+            }
+        }
+        
+        return IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
     }
     
     private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
@@ -85,54 +125,37 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateSectionsDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
+    static func calculateDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
         
         guard
-            
             checkDuplicates(in: oldSections) == false,
             checkDuplicates(in: newSections) == false
-        
         else {
             
             throw DiffError.duplicates
         }
         
-        let sectionDiff = try DiffUtil.calculateDiff(from: oldSections, to: newSections)
+        // Sections diff.
+        let sectionsDiff = calculateSectionsDiff(from: oldSections, to: newSections)
         
-        var rowInserts = [IndexPath]()
-        var rowDeletes = [IndexPath]()
-        var rowMoves = [Move<IndexPath>]()
+        // Build intermediate sections data.
+        var intermediateSections: [Section] = []
         
-        // Map sections to index pathes.
-        rowDeletes = oldSections.enumerated().flatMap({ (groupIdx, group) -> [IndexPath] in
-
-            return group.objects.enumerated().map { IndexPath(row: $0.offset, section: groupIdx) }
-        })
-        
-        for (newSectionIdx, newSection) in newSections.enumerated() {
+        for newSection in newSections {
             
-            for (newRowObjectIdx, newRowObject) in newSection.objects.enumerated() {
-                
-                let newRowObjectIp = IndexPath(row: newRowObjectIdx, section: newSectionIdx)
-                
-                if let oldRowObjectIp = getIndexPath(for: newRowObject, in: oldSections) {
-                    
-                    rowDeletes.removeAll(where: { $0 == oldRowObjectIp })
-                    
-                    if newRowObjectIp != oldRowObjectIp {
-                        
-                        rowMoves.append(Move<IndexPath>(from: oldRowObjectIp, to: newRowObjectIp))
-                    }
-                    
-                } else {
-                    
-                    rowInserts.append(newRowObjectIp)
-                }
-            }
+            let oldSection = oldSections.first(where: { $0.equal(any: newSection) })
+            
+            intermediateSections.append(oldSection ?? newSection)
         }
         
-        let rowsDiff = IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
+        // Rows diff.
+        let rowsDiff = calculateRowsDiff(from: intermediateSections, to: newSections)
         
-        return Diff(sections: sectionDiff, rows: rowsDiff)
+        return Diff(
+            sections: sectionsDiff,
+            rows: rowsDiff,
+            intermediateData: intermediateSections,
+            resultData: newSections
+        )
     }
 }

@@ -24,7 +24,8 @@ class ViewController: UIViewController {
         Example(name: "Wi-Fi", controller: WiFiViewController.self),
         Example(name: "Delete objects", controller: DeleteObjectsViewController.self),
         Example(name: "HeaderFooter", controller: HeaderFooterViewController.self),
-        Example(name: "Sort", controller: SortViewController.self)
+        Example(name: "Sort", controller: SortViewController.self),
+        Example(name: "Reservations", controller: ReservationsViewController.self)
     ]
     
     // MARK: Override methods

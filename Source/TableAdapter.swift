@@ -184,14 +184,10 @@ open class TableAdapter: NSObject {
     }
     
     private func updateTableAnimated(with newSections: [Section]) {
-            
-        let oldSection = sections
-        
-        sections = newSections
         
         do {
             
-            let diff = try DiffUtil.calculateSectionsDiff(from: oldSection, to: newSections)
+            let diff = try DiffUtil.calculateDiff(from: sections, to: newSections)
             
             updateTableView(with: diff)
             
@@ -215,19 +211,21 @@ open class TableAdapter: NSObject {
     
     private func updateTableView(with diff: Diff) {
         
-        tableView.beginUpdates()
-        performBatchUpdates(with: diff)
-        tableView.endUpdates()
-    }
-    
-    private func performBatchUpdates(with diff: Diff) {
+        sections = diff.intermediateData
         
+        tableView.beginUpdates()
         tableView.insertSections(diff.sections.inserts, with: animationType)
         tableView.deleteSections(diff.sections.deletes, with: animationType)
+        diff.sections.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+        tableView.endUpdates()
         
+        sections = diff.resultData
+        
+        tableView.beginUpdates()
         tableView.deleteRows(at: diff.rows.deletes, with: animationType)
         tableView.insertRows(at: diff.rows.inserts, with: animationType)
         diff.rows.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+        tableView.endUpdates()
     }
     
     // MARK: Public methods
