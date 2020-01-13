@@ -1,5 +1,5 @@
 PODS:
-  - TableAdapter (1.0.0)
+  - TableAdapter (0.1.0)
 
 DEPENDENCIES:
   - TableAdapter (from `../`)
@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  TableAdapter: 251d930a8e3382ecb3cc18000f88f0ec6d5f8ab7
+  TableAdapter: 54aadcd8ab0f4b33b130ca2d4aeaf0c166e6f1d5
 
 PODFILE CHECKSUM: 461bade39ec31c2c038543f9478ca919be17a50e
 

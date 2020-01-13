@@ -1,58 +1,20 @@
 Pod::Spec.new do |spec|
 
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.name         = "TableAdapter"
-  spec.version      = "1.0.0"
-  spec.summary      = "Data-driven fully-animatable table view adapter"
-  spec.description  = "Data-driven table view adapter for flexible and animatable table views"
-  spec.homepage     = "http://EXAMPLE/TableAdapter"
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  spec.version      = "0.1.0"
+  spec.summary      = "A data-driven library for building complex table views"
+  spec.description  = "A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data but not in terms of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it needed. And configuring reusable views in a type-safe manner helps to keep code clean and stable"
+  spec.homepage     = "https://gitlab.com/mobileup/mobileup/mu-libs"
 
-
-  # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.license      = "MIT"
   spec.license      = { :type => "MIT", :file => "LICENSE" }
 
-
-  # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.author             = { "Nikolai Timonin" => "nikki.timonin@gmail.com" }
-  # spec.authors            = { "Nikolai Timonin" => "nikki.timonin@gmail.com" }
-  # spec.social_media_url   = "https://twitter.com/Nikolai Timonin"
 
-  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   spec.platform     = :ios, "9.0"
   spec.ios.frameworks = 'UIKit'
-#  spec.ios.deployment_target = "9.0"
   spec.swift_version = '4.0'
   
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  spec.source       = { :path => '.' }
-
-
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+  spec.source = { :git => 'https://gitlab.com/mobileup/mobileup/mu-libs.git', :tag => spec.version.to_s }
   spec.source_files  = "Source/"
-  #  spec.exclude_files = "Classes/Exclude"
-  # spec.public_header_files = "Classes/**/*.h"
-
-
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  # spec.resource  = "icon.png"
-  # spec.resources = "Resources/*.png"
-  # spec.preserve_paths = "FilesToSave", "MoreFilesToSave"
-
-
-  # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  # spec.framework  = "SomeFramework"
-  # spec.frameworks = "SomeFramework", "AnotherFramework"
-
-  # spec.library   = "iconv"
-  # spec.libraries = "iconv", "xml2"
-
-
-  # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  # spec.requires_arc = true
-
-  # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # spec.dependency "JSONKit", "~> 1.4"
-
 end
