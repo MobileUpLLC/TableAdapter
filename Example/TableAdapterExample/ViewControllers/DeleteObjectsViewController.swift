@@ -49,7 +49,7 @@ class DeleteObjectsViewController: UIViewController {
 
 // MARK: TableAdapterDelegate
 
-extension DeleteObjectsViewController: MyTableAdapterDelegate {
+extension DeleteObjectsViewController: TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter<Int, Int>, didSelect object: Int) {
         

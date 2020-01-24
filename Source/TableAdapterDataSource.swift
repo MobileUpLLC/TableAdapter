@@ -7,13 +7,16 @@
 
 import UIKit
 
-public protocol TableAdapterDataSource: AnyObject {
+// MARK: AnyTableAdapterDataSource
+
+public protocol AnyTableAdapterDataSource: AnyObject {
     
     func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String?
 }
 
+// MARK: TableAdapterDataSource
 
-public protocol MyTableAdapterDataSource: TableAdapterDataSource {
+public protocol TableAdapterDataSource: AnyTableAdapterDataSource {
     
     associatedtype O: AnyEquatable
     
@@ -22,7 +25,9 @@ public protocol MyTableAdapterDataSource: TableAdapterDataSource {
     func tableAdapter(_ adapter: TableAdapter<O, S>, cellIdentifierFor object: O) -> String?
 }
 
-public extension MyTableAdapterDataSource {
+// MARK: AnyTableAdapterDataSource Implementation
+
+public extension TableAdapterDataSource {
     
     func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String? {
         

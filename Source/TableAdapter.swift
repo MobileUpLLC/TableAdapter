@@ -162,7 +162,7 @@ open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: Ta
     
     private var cellIdentifierProvider: CellIdentifierProvider?
     
-    private weak var dataSource: TableAdapterDataSource?
+    private weak var dataSource: AnyTableAdapterDataSource?
     
     // MARK: Public properties
     
@@ -214,7 +214,7 @@ open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: Ta
     
     // MARK: Public methods
     
-    public convenience init<DataSource: MyTableAdapterDataSource>(
+    public convenience init<DataSource: TableAdapterDataSource>(
         tableView: UITableView,
         sender: AnyObject? = nil,
         dataSource: DataSource? = nil,
@@ -293,7 +293,7 @@ open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEqua
     
     // MARK: Private properties
     
-    private weak var delegate: TableAdapterDelegate?
+    private weak var delegate: AnyTableAdapterDelegate?
     
     // MARK: Public properties
     
@@ -337,7 +337,7 @@ open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEqua
     // MARK: Public methods
     
     
-    public convenience init<Delegate: MyTableAdapterDelegate, DataSource: MyTableAdapterDataSource>(
+    public convenience init<Delegate: TableAdapterDelegate, DataSource: TableAdapterDataSource>(
         tableView: UITableView,
         sender: AnyObject? = nil,
         dataSource: DataSource? = nil,
@@ -359,7 +359,7 @@ open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEqua
         self.delegate = delegate
     }
     
-    public convenience init<Delegate: MyTableAdapterDelegate>(
+    public convenience init<Delegate: TableAdapterDelegate>(
         tableView: UITableView,
         sender: AnyObject? = nil,
         delegate: Delegate? = nil,

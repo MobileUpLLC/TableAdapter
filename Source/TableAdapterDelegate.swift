@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol TableAdapterDelegate: AnyObject {
+public protocol AnyTableAdapterDelegate: AnyObject {
     
     func tableAdapter(_ adapter: Any, didSelect object: Any)
     
@@ -16,7 +16,7 @@ public protocol TableAdapterDelegate: AnyObject {
     func tableAdapter(_ adapter: Any, footerIdentifierFor section: Int) -> String?
 }
 
-public protocol MyTableAdapterDelegate: TableAdapterDelegate {
+public protocol TableAdapterDelegate: AnyTableAdapterDelegate {
     
     associatedtype O: AnyEquatable
     associatedtype S: AnyEquatable
@@ -29,9 +29,9 @@ public protocol MyTableAdapterDelegate: TableAdapterDelegate {
     
 }
 
-// MARK: TableAdapterDelegate Implementation
+// MARK: AnyTableAdapterDelegate Implementation
 
-public extension MyTableAdapterDelegate {
+public extension TableAdapterDelegate {
     
     func tableAdapter(_ adapter: Any, didSelect object: Any) {
         
@@ -51,7 +51,7 @@ public extension MyTableAdapterDelegate {
 
 // MARK: MyTableAdapterDelegate Default Implementation
 
-public extension MyTableAdapterDelegate {
+public extension TableAdapterDelegate {
     
     func tableAdapter(_ adapter: TableAdapter<O, S>, didSelect object: O) {}
     

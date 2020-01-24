@@ -54,7 +54,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: MyTableAdapterDataSource {
+extension ViewController: TableAdapterDataSource {
         
     func tableAdapter(_ adapter: TableAdapter<Example, Int>, cellIdentifierFor object: Example) -> String? {
 
@@ -64,7 +64,7 @@ extension ViewController: MyTableAdapterDataSource {
 
 // MARK: TableAdapterDelegate
 
-extension ViewController: MyTableAdapterDelegate {
+extension ViewController: TableAdapterDelegate {
 
     func tableAdapter(_ adapter: TableAdapter<Example, Int>, didSelect object: Example) {
         
