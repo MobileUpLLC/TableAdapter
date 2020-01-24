@@ -7,7 +7,14 @@
 
 import Foundation
 
-public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable>: AnyEquatable {
+public protocol Sectionable: AnyEquatable {
+    
+    associatedtype ItemType: AnyEquatable
+    
+    var objects: [ItemType] { get set }
+}
+
+public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: AnyEquatable {
     
     // MARK: Public properties
     
@@ -15,8 +22,8 @@ public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable>: AnyEqu
     
     public var objects: [ItemType]
     
-    public let header: Any?
-    public let footer: Any?
+    public let header: HeaderType?
+    public let footer: HeaderType?
     
     // MARK: Public methods
     
@@ -24,8 +31,8 @@ public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable>: AnyEqu
         
         id: SectionType,
         objects: [ItemType],
-        header: Any? = nil,
-        footer: Any? = nil
+        header: HeaderType? = nil,
+        footer: HeaderType? = nil
     ) {
         self.id = id
         self.objects = objects
@@ -44,3 +51,5 @@ extension Section: Equatable {
         return lhs.id.equal(any: rhs.id)
     }
 }
+
+extension Section: Sectionable { }

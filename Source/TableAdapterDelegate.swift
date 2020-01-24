@@ -18,14 +18,15 @@ public protocol AnyTableAdapterDelegate: AnyObject {
 
 public protocol TableAdapterDelegate: AnyTableAdapterDelegate {
     
-    associatedtype O: AnyEquatable
-    associatedtype S: AnyEquatable
+    associatedtype ItemType: AnyEquatable
+    associatedtype SectionType: AnyEquatable
+    associatedtype HeaderType: Any
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, didSelect object: O)
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, didSelect object: ItemType)
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, headerIdentifierFor section: Int) -> String?
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, headerIdentifierFor section: Int) -> String?
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, footerIdentifierFor section: Int) -> String?
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, footerIdentifierFor section: Int) -> String?
     
 }
 
@@ -35,17 +36,17 @@ public extension TableAdapterDelegate {
     
     func tableAdapter(_ adapter: Any, didSelect object: Any) {
         
-        tableAdapter(adapter as! TableAdapter<O, S>, didSelect: object as! O)
+        tableAdapter(adapter as! TableAdapter<ItemType, SectionType, HeaderType>, didSelect: object as! ItemType)
     }
     
     func tableAdapter(_ adapter: Any, headerIdentifierFor section: Int) -> String? {
         
-        tableAdapter(adapter as! TableAdapter<O, S>, headerIdentifierFor: section)
+        tableAdapter(adapter as! TableAdapter<ItemType, SectionType, HeaderType>, headerIdentifierFor: section)
     }
     
     func tableAdapter(_ adapter: Any, footerIdentifierFor section: Int) -> String? {
         
-        tableAdapter(adapter as! TableAdapter<O, S>, footerIdentifierFor: section)
+        tableAdapter(adapter as! TableAdapter<ItemType, SectionType, HeaderType>, footerIdentifierFor: section)
     }
 }
 
@@ -53,14 +54,14 @@ public extension TableAdapterDelegate {
 
 public extension TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, didSelect object: O) {}
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, didSelect object: ItemType) {}
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, headerIdentifierFor section: Int) -> String? {
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, headerIdentifierFor section: Int) -> String? {
         
         return nil
     }
     
-    func tableAdapter(_ adapter: TableAdapter<O, S>, footerIdentifierFor section: Int) -> String? {
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, footerIdentifierFor section: Int) -> String? {
         
         return nil
     }

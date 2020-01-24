@@ -7,10 +7,17 @@
 
 import Foundation
 
-public protocol Section: AnyEquatable {
+public protocol OldSection: AnyEquatable {
     
-    var objects: [AnyEquatable] { get set }
+    associatedtype ItemType: AnyEquatable
+    associatedtype SectionType: AnyEquatable
+    associatedtype HeaderType: Any
+    associatedtype FooterType: Any
     
-    var header: Any? { get }
-    var footer: Any? { get }
+    var id: SectionType { get set }
+    var objects: [ItemType] { get set }
+    
+    var header: HeaderType? { get set }
+    var footer: FooterType? { get set }
 }
+

@@ -9,13 +9,13 @@ import UIKit
 
 // MARK: TableAdapter
 
-open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: NSObject, UITableViewDataSource {
+open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: NSObject, UITableViewDataSource {
     
     // MARK: Types
     
     public typealias CellProvider = (UITableView, IndexPath, ItemType) -> UITableViewCell
     
-    public typealias Sec = Section<ItemType, SectionType>
+    public typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     // MARK: Private properties
     
@@ -63,7 +63,7 @@ open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: NSOb
         }
     }
     
-    private func updateTableView(with diff: Diff<ItemType, SectionType>) {
+    private func updateTableView(with diff: Diff<ItemType, SectionType, HeaderType>) {
 
         sections = diff.intermediateData
 
@@ -152,7 +152,7 @@ open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: NSOb
 
 // MARK: DSTableAdapter
 
-open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: TableAdapter<ItemType, SectionType> {
+open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: TableAdapter<ItemType, SectionType, HeaderType> {
 
     // MARK: Types
     
@@ -289,7 +289,7 @@ open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: Ta
 
 // MARK: HeaderFooterTableAdapter
 
-open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable>: DSTableAdapter<ItemType, SectionType>, UITableViewDelegate {
+open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: DSTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
     
     // MARK: Private properties
     
@@ -336,6 +336,12 @@ open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEqua
     
     // MARK: Public methods
     
+    public override init(tableView: UITableView) {
+        
+        super.init(tableView: tableView)
+        
+        tableView.delegate = self
+    }
     
     public convenience init<Delegate: TableAdapterDelegate, DataSource: TableAdapterDataSource>(
         tableView: UITableView,

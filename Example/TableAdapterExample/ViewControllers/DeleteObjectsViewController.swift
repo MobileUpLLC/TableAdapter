@@ -15,7 +15,7 @@ class DeleteObjectsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = HeaderFooterTableAdapter<Int, Int>(tableView: tableView, delegate: self)
+    private lazy var adapter = HeaderFooterTableAdapter<Int, Int, String>(tableView: tableView, delegate: self)
     
     private let items: [Int] = [1, 2, 3, 4, 5]
     
@@ -26,7 +26,7 @@ class DeleteObjectsViewController: UIViewController {
 
         setupTableView()
         
-        let section = Section(id: 1, objects: items)
+        let section = Section(id: 1, objects: items, header: "")
         
         adapter.update(with: [section], animated: false)
     }
@@ -51,7 +51,7 @@ class DeleteObjectsViewController: UIViewController {
 
 extension DeleteObjectsViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter<Int, Int>, didSelect object: Int) {
+    func tableAdapter(_ adapter: TableAdapter<Int, Int, String>, didSelect object: Int) {
         
         var sections = adapter.currentSections
         

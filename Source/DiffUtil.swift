@@ -28,9 +28,9 @@ enum DiffError: Error {
     case duplicates
 }
 
-public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable> {
+public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any> {
     
-    typealias Sec = Section<ItemType, SectionType>
+    typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     // MARK: Private methods
     
@@ -175,7 +175,7 @@ public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable> {
     static func calculateDiff(
         from oldSections: [Sec],
         to newSections: [Sec]
-    ) throws -> Diff<ItemType, SectionType> {
+    ) throws -> Diff<ItemType, SectionType, HeaderType> {
         
         guard
             checkDuplicates(in: oldSections) == false,

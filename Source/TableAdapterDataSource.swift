@@ -18,11 +18,11 @@ public protocol AnyTableAdapterDataSource: AnyObject {
 
 public protocol TableAdapterDataSource: AnyTableAdapterDataSource {
     
-    associatedtype O: AnyEquatable
+    associatedtype ItemType: AnyEquatable
+    associatedtype SectionType: AnyEquatable
+    associatedtype HeaderType: Any
     
-    associatedtype S: AnyEquatable
-    
-    func tableAdapter(_ adapter: TableAdapter<O, S>, cellIdentifierFor object: O) -> String?
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, cellIdentifierFor object: ItemType) -> String?
 }
 
 // MARK: AnyTableAdapterDataSource Implementation
@@ -31,7 +31,7 @@ public extension TableAdapterDataSource {
     
     func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String? {
         
-        tableAdapter(adapter as! TableAdapter<O, S>, cellIdentifierFor: object as! O)
+        tableAdapter(adapter as! TableAdapter<ItemType, SectionType, HeaderType>, cellIdentifierFor: object as! ItemType)
     }
 }
 

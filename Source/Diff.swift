@@ -43,9 +43,9 @@ public struct IndexSetDiff {
 
 // MARK: Diff
 
-struct Diff<ItemType: AnyEquatable, SectionType: AnyEquatable> {
+struct Diff<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any> {
     
-    typealias Sec = Section<ItemType, SectionType>
+    typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     let sections: IndexSetDiff
     let rows: IndexPathDiff
