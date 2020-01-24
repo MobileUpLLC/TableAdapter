@@ -15,14 +15,9 @@ class DeleteObjectsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
+    private lazy var adapter = HeaderFooterTableAdapter<Int, Int>(tableView: tableView, delegate: self)
     
-    private let items: [AnyEquatable] = [
-        "String",
-        10001,
-        100.1,
-        true
-    ]
+    private let items: [Int] = [1, 2, 3, 4, 5]
     
     // MARK: Override methods
 
@@ -30,9 +25,10 @@ class DeleteObjectsViewController: UIViewController {
         super.viewDidLoad()
 
         setupTableView()
-        setupTableAdapter()
         
-        adapter.update(with: items, animated: false)
+        let section = Section(id: 1, objects: items)
+        
+        adapter.update(with: [section], animated: false)
     }
 
     override func viewDidLayoutSubviews() {
@@ -42,11 +38,6 @@ class DeleteObjectsViewController: UIViewController {
     }
     
     // MARK: Private methods
-    
-    private func setupTableAdapter() {
-        
-        adapter.delegate = self
-    }
     
     private func setupTableView() {
         
@@ -58,13 +49,13 @@ class DeleteObjectsViewController: UIViewController {
 
 // MARK: TableAdapterDelegate
 
-extension DeleteObjectsViewController: TableAdapterDelegate {
+extension DeleteObjectsViewController: MyTableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
+    func tableAdapter(_ adapter: TableAdapter<Int, Int>, didSelect object: Int) {
         
         var sections = adapter.currentSections
         
-        sections[0].objects.removeAll(where: { $0.equal(any: object) })
+        sections[0].objects.removeAll(where: { $0 == object })
         
         adapter.update(with: sections)
     }

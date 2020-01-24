@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter(tableView: tableView)
+    private lazy var adapter = DSTableAdapter<String, Int>(tableView: tableView)
     
     private lazy var seas: [String] = seasRaw.components(separatedBy: CharacterSet.newlines)
     
@@ -29,7 +29,7 @@ class SearchViewController: UIViewController {
         setupTableView()
         setupSearchController()
         
-        adapter.update(with: seas, animated: false)
+        update(with: seas, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,6 +61,13 @@ class SearchViewController: UIViewController {
         
         navigationItem.searchController = searchController
     }
+    
+    private func update(with items: [String], animated: Bool) {
+        
+        let section = Section(id: 0, objects: items)
+        
+        adapter.update(with: [section], animated: animated)
+    }
 }
 
 // MARK: UISearchResultsUpdating
@@ -71,14 +78,25 @@ extension SearchViewController: UISearchResultsUpdating {
         
         guard let filter = searchController.searchBar.text, filter.isEmpty == false else {
             
-            return adapter.update(with: seas, animated: true)
+            return update(with: seas, animated: true)
         }
         
         let filteredWords = seas.filter { $0.lowercased().contains(filter.lowercased()) }
         
-        adapter.update(with: filteredWords, animated: true)
+        update(with: filteredWords, animated: true)
     }
 }
+
+// MARK: AnyObjectCell
+
+class AnyObjectCell: UITableViewCell, Configurable {
+    
+    public func setup(with object: Any) {
+        
+        textLabel?.text = "\(object)"
+    }
+}
+
 
 // MARK: Seas Raw Data
 

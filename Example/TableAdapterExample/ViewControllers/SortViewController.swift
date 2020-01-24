@@ -15,7 +15,7 @@ class SortViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
+    private lazy var adapter = DSTableAdapter<Float, Int>(tableView: tableView)
     
     private let itemsCount = 50
     
@@ -46,10 +46,17 @@ class SortViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        adapter.update(with: sorter.currentItems, animated: false)
+        update(items: sorter.currentItems, animated: false)
     }
     
     // MARK: Private methods
+    
+    private func update(items: [Float], animated: Bool) {
+        
+        let section = Section(id: 0, objects: items)
+        
+        adapter.update(with: [section], animated: animated)
+    }
     
     private func setupTableView() {
         
@@ -86,7 +93,7 @@ class SortViewController: UIViewController {
             sorter.refresh()
         }
         
-        adapter.update(with: sorter.currentItems, animated: true)
+        update(items: sorter.currentItems, animated: true)
     }
     
     private func sort() {
@@ -95,7 +102,7 @@ class SortViewController: UIViewController {
         
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
             
-            self.adapter.update(with: self.sorter.nextStepSorted())
+            self.update(items: self.sorter.nextStepSorted(), animated: true)
             
             if self.sorter.isSorted {
                 

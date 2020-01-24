@@ -7,13 +7,13 @@
 
 import Foundation
 
-public struct ObjectsSection: Section {
+public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable>: AnyEquatable {
     
     // MARK: Public properties
     
-    public var id: AnyEquatable
+    public var id: SectionType
     
-    public var objects: [AnyEquatable]
+    public var objects: [ItemType]
     
     public let header: Any?
     public let footer: Any?
@@ -22,8 +22,8 @@ public struct ObjectsSection: Section {
     
     public init(
         
-        id: AnyEquatable,
-        objects: [AnyEquatable],
+        id: SectionType,
+        objects: [ItemType],
         header: Any? = nil,
         footer: Any? = nil
     ) {
@@ -37,9 +37,9 @@ public struct ObjectsSection: Section {
 
 // MARK: Equatable
 
-extension ObjectsSection: Equatable {
+extension Section: Equatable {
     
-    public static func == (lhs: ObjectsSection, rhs: ObjectsSection) -> Bool {
+    public static func == (lhs: Section, rhs: Section) -> Bool {
         
         return lhs.id.equal(any: rhs.id)
     }

@@ -9,7 +9,7 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  TableAdapter: 54aadcd8ab0f4b33b130ca2d4aeaf0c166e6f1d5
+  TableAdapter: dc1902f452f27c59dc0dd28546dc9e51065f5114
 
 PODFILE CHECKSUM: 461bade39ec31c2c038543f9478ca919be17a50e
 

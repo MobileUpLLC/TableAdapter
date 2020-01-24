@@ -10,22 +10,20 @@
 		3B967099B905CFDDF9125291 /* Pods_TableAdapterExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */; };
 		A11869DC239EE18C003827B3 /* RedHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869DB239EE18C003827B3 /* RedHeaderFooterView.swift */; };
 		A11869DE239EE242003827B3 /* RedHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11869DD239EE242003827B3 /* RedHeaderFooterView.xib */; };
-		A11869E1239FD635003827B3 /* WiFiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E0239FD635003827B3 /* WiFiViewController.swift */; };
 		A11869E423A01000003827B3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E323A01000003827B3 /* Network.swift */; };
 		A11869E623A10F8D003827B3 /* BlueHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E523A10F8D003827B3 /* BlueHeaderFooterView.swift */; };
 		A11869E823A10FC8003827B3 /* BlueHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11869E723A10FC8003827B3 /* BlueHeaderFooterView.xib */; };
 		A11869FC23A145BD003827B3 /* Example.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869FB23A145BD003827B3 /* Example.swift */; };
-		A11869FE23A14AE4003827B3 /* DeleteObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */; };
-		A156903F23A23E2D0078F3F1 /* HeaderFooterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156903E23A23E2D0078F3F1 /* HeaderFooterViewController.swift */; };
-		A156904723A272AE0078F3F1 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156904623A272AE0078F3F1 /* SortViewController.swift */; };
+		A11CDC5423D9EDAD00332B17 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */; };
+		A11CDC5723DA120900332B17 /* DeleteObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */; };
+		A11CDC5823DAFEF400332B17 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156904623A272AE0078F3F1 /* SortViewController.swift */; };
+		A11CDC5923DB014900332B17 /* MixedObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */; };
+		A11CDC5B23DB070B00332B17 /* PrimitiveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */; };
 		A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */; };
 		A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79B2238FE8EF00B4E62A /* ViewController.swift */; };
 		A19C79B6238FE8EF00B4E62A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B4238FE8EF00B4E62A /* Main.storyboard */; };
 		A19C79B8238FE8F400B4E62A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B7238FE8F400B4E62A /* Assets.xcassets */; };
 		A19C79BB238FE8F400B4E62A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B9238FE8F400B4E62A /* LaunchScreen.storyboard */; };
-		A1F3DD8E23C87C9E0094DA00 /* ReservationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1F3DD8D23C87C9E0094DA00 /* ReservationsViewController.swift */; };
-		A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */; };
-		A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +38,7 @@
 		A11869E723A10FC8003827B3 /* BlueHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BlueHeaderFooterView.xib; sourceTree = "<group>"; };
 		A11869FB23A145BD003827B3 /* Example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Example.swift; sourceTree = "<group>"; };
 		A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteObjectsViewController.swift; sourceTree = "<group>"; };
+		A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveItem.swift; sourceTree = "<group>"; };
 		A156903E23A23E2D0078F3F1 /* HeaderFooterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderFooterViewController.swift; sourceTree = "<group>"; };
 		A156904623A272AE0078F3F1 /* SortViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		A19C79AB238FE8EE00B4E62A /* TableAdapterExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableAdapterExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,6 +79,7 @@
 			children = (
 				A11869E323A01000003827B3 /* Network.swift */,
 				A11869FB23A145BD003827B3 /* Example.swift */,
+				A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -284,16 +284,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11CDC5723DA120900332B17 /* DeleteObjectsViewController.swift in Sources */,
 				A11869DC239EE18C003827B3 /* RedHeaderFooterView.swift in Sources */,
-				A11869E1239FD635003827B3 /* WiFiViewController.swift in Sources */,
-				A156904723A272AE0078F3F1 /* SortViewController.swift in Sources */,
-				A11869FE23A14AE4003827B3 /* DeleteObjectsViewController.swift in Sources */,
-				A1F3DD8E23C87C9E0094DA00 /* ReservationsViewController.swift in Sources */,
-				A1FD84A8239A64CD009AB5E7 /* SearchViewController.swift in Sources */,
+				A11CDC5823DAFEF400332B17 /* SortViewController.swift in Sources */,
+				A11CDC5B23DB070B00332B17 /* PrimitiveItem.swift in Sources */,
+				A11CDC5423D9EDAD00332B17 /* SearchViewController.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
 				A11869E623A10F8D003827B3 /* BlueHeaderFooterView.swift in Sources */,
-				A1FD84AA239A9A0B009AB5E7 /* MixedObjectsViewController.swift in Sources */,
-				A156903F23A23E2D0078F3F1 /* HeaderFooterViewController.swift in Sources */,
+				A11CDC5923DB014900332B17 /* MixedObjectsViewController.swift in Sources */,
 				A11869E423A01000003827B3 /* Network.swift in Sources */,
 				A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */,
 				A11869FC23A145BD003827B3 /* Example.swift in Sources */,

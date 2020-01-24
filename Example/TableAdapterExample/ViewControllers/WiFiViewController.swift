@@ -64,7 +64,26 @@ class WiFiViewController: UIViewController {
     
     private func setupTableAdapter() {
         
-        adapter.dataSource = self
+        adapter = TableAdapter(tableView: tableView, sender: self) { [weak self] (object) -> String? in
+            
+            guard let self = self else { return nil }
+            
+            switch object {
+                
+            case is String:
+                return self.wifiSwitchCellIdentifier
+                
+            case is Network:
+                return self.networkCellIdentifier
+                
+            default:
+                assertionFailure("Undefind cell identifier for \(object)")
+                
+                return nil
+            }
+        }
+        
+//        adapter.dataSource = self
         adapter.delegate = self
     }
     

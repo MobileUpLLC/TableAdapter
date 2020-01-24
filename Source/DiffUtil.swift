@@ -7,14 +7,59 @@
 
 import Foundation
 
+struct SymbolEntry {
+    
+    let key: AnyEquatable
+    let oc: Int
+    let nc: Int
+    let onlo: Int
+}
+
+typealias Position = Int
+
+enum Entry {
+    
+    case symbol(s: SymbolEntry)
+    case position(p: Position)
+}
+
 enum DiffError: Error {
     
     case duplicates
 }
 
-public class DiffUtil {
+public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable> {
+    
+    typealias Sec = Section<ItemType, SectionType>
     
     // MARK: Private methods
+    
+    private static func calculatePhDiff(
+        
+        form oldObjects: [AnyEquatable],
+        to newObjects: [AnyEquatable]
+        
+    ) -> IndexSetDiff? {
+        
+        var symbolTable: [SymbolEntry] = []
+        var oa: [Entry] = []
+        var na: [Entry] = []
+        
+        // Pass 1.
+        for (i, obj) in oldObjects.enumerated() {
+            
+        }
+        
+        // Pass 2.
+        for (j, obj) in newObjects.enumerated() {
+            
+        }
+        
+        // Pass 3.
+        
+        
+        return nil
+    }
     
     private static func calculateSectionsDiff(
         
@@ -51,8 +96,8 @@ public class DiffUtil {
     
     private static func calculateRowsDiff(
         
-        from oldSections: [Section],
-        to newSections: [Section]
+        from oldSections: [Sec],
+        to newSections: [Sec]
         
     ) -> IndexPathDiff {
         
@@ -91,7 +136,10 @@ public class DiffUtil {
         return IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
     }
     
-    private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
+    private static func getIndexPath(
+        for object: AnyEquatable,
+        in groups: [Sec]
+    ) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
@@ -104,7 +152,7 @@ public class DiffUtil {
         return nil
     }
     
-    private static func checkDuplicates(in sections: [Section]) -> Bool {
+    private static func checkDuplicates(in sections: [Sec]) -> Bool {
         
         let allObjects = sections.flatMap { $0.objects }
         
@@ -124,7 +172,10 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
+    static func calculateDiff(
+        from oldSections: [Sec],
+        to newSections: [Sec]
+    ) throws -> Diff<ItemType, SectionType> {
         
         guard
             checkDuplicates(in: oldSections) == false,
@@ -138,7 +189,7 @@ public class DiffUtil {
         let sectionsDiff = calculateSectionsDiff(from: oldSections, to: newSections)
         
         // Build intermediate sections data.
-        var intermediateSections: [Section] = []
+        var intermediateSections: [Sec] = []
         
         for newSection in newSections {
             

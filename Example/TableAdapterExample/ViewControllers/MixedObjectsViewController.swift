@@ -15,19 +15,22 @@ class MixedObjectsViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter(tableView: tableView)
+    private lazy var adapter = DSTableAdapter<PrimitiveItem, Int>(tableView: tableView)
     
-    private let items: [AnyEquatable] = [
-        1, 2, 3,
-        "aaa", "bbb", "ccc",
-        true, false, 
-        1.1, 2.2, 3.3
-    ]
+    private var items: [PrimitiveItem] = {
+        
+        let ints = [1, 2, 3].map { PrimitiveItem(type: .integer, value: $0) }
+        let strings = ["foo", "bar"].map { PrimitiveItem(type: .string, value: $0) }
+        let bools = [true, false].map { PrimitiveItem(type: .bool, value: $0) }
+        let floats = [1.1, 2.2, 3.3].map { PrimitiveItem(type: .float, value: $0) }
+        
+        return ints + strings + bools + floats
+    }()
     
-    let segments: [String: Any.Type?] = [
-        "Int": Int.self,
-        "String": String.self,
-        "Bool": Bool.self,
+    let segments: [String: PrimitiveItem.ItemType?] = [
+        "Int": .integer,
+        "String": .string,
+        "Bool": .bool,
         "Any": nil
     ]
     
@@ -38,8 +41,8 @@ class MixedObjectsViewController: UIViewController {
         
         setupTableView()
         setupSegmentedControl()
-        
-        adapter.update(with: items)
+
+        update(items: items, animated: false)
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,14 +53,18 @@ class MixedObjectsViewController: UIViewController {
     
     // MARK: Private methods
     
+    private func update(items: [PrimitiveItem], animated: Bool) {
+        
+        let section = Section(id: 0, objects: items)
+        
+        adapter.update(with: [section], animated: animated)
+    }
+    
     private func setupTableView() {
         
         view.addSubview(tableView)
         
-        tableView.estimatedSectionHeaderHeight = 0
-        tableView.estimatedSectionFooterHeight = 0
-        
-        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(PrimitiveItemCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
     }
     
     private func setupSegmentedControl() {
@@ -77,27 +84,27 @@ class MixedObjectsViewController: UIViewController {
         
         let selectedTypeName = segments.keys.sorted()[sender.selectedSegmentIndex]
         
-        var newItems: [AnyEquatable]
+        var newItems: [PrimitiveItem]
         
         if let selectedType = segments[selectedTypeName], selectedType != nil {
             
-            newItems = items.filter { type(of: $0) == selectedType }
+            newItems = items.filter { $0.type == selectedType }
             
         } else {
             
             newItems = items
         }
         
-        adapter.update(with: newItems, animated: true)
+        update(items: newItems, animated: true)
     }
 }
 
-// MARK: AnyObjectCell
+// MARK: PrimitiveItemCell
 
-class AnyObjectCell: UITableViewCell, Configurable {
+class PrimitiveItemCell: UITableViewCell, Configurable {
     
-    public func setup(with object: Any) {
+    public func setup(with object: PrimitiveItem) {
         
-        textLabel?.text = "\(object)"
+        textLabel?.text = "\(object.value)"
     }
 }

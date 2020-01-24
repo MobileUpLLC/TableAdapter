@@ -9,51 +9,24 @@ import UIKit
 
 public protocol TableAdapterDataSource: AnyObject {
     
-    // MARK: Cell
-    
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String?
-    
-    // MARK: HeaderFooter
-    
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable?
-    
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable?
-    
-    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String?
-    
-    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String?
+    func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String?
 }
 
-// MARK: Default implementation
 
-public extension TableAdapterDataSource {
+public protocol MyTableAdapterDataSource: TableAdapterDataSource {
     
-    // MARK: Cell
+    associatedtype O: AnyEquatable
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String? {
+    associatedtype S: AnyEquatable
+    
+    func tableAdapter(_ adapter: TableAdapter<O, S>, cellIdentifierFor object: O) -> String?
+}
+
+public extension MyTableAdapterDataSource {
+    
+    func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String? {
         
-        return nil
-    }
-    
-    // MARK: HeaderFooter
-    
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
-        
-        return nil
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
-        
-        return nil
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
-        
-        return nil
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
-        
-        return nil
+        tableAdapter(adapter as! TableAdapter<O, S>, cellIdentifierFor: object as! O)
     }
 }
+
