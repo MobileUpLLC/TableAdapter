@@ -325,13 +325,13 @@ open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEqua
     }
         
     private func getHeaderIdentifier(for section: Int) -> String {
-
-        return delegate?.tableAdapter(self, headerIdentifierFor: section) ?? defaultHeaderIdentifier
+        
+        return sections[section].headerIdentifier ?? defaultHeaderIdentifier
     }
 
     private func getFooterIdentifier(for section: Int) -> String {
         
-        return delegate?.tableAdapter(self, footerIdentifierFor: section) ?? defaultFooterIdentifier
+        return sections[section].footerIdentifier ?? defaultFooterIdentifier
     }
     
     // MARK: Public methods
