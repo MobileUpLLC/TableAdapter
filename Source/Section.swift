@@ -7,10 +7,10 @@
 
 import Foundation
 
-public protocol OldSection: AnyEquatable {
+public protocol OldSection: Hashable {
     
-    associatedtype ItemType: AnyEquatable
-    associatedtype SectionType: AnyEquatable
+    associatedtype ItemType: Hashable
+    associatedtype SectionType: Hashable
     associatedtype HeaderType: Any
     associatedtype FooterType: Any
     

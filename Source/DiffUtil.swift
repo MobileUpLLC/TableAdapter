@@ -7,64 +7,64 @@
 
 import Foundation
 
-struct SymbolEntry {
-    
-    let key: AnyEquatable
-    let oc: Int
-    let nc: Int
-    let onlo: Int
-}
-
-typealias Position = Int
-
-enum Entry {
-    
-    case symbol(s: SymbolEntry)
-    case position(p: Position)
-}
+//struct SymbolEntry {
+//
+//    let key: Hashable
+//    let oc: Int
+//    let nc: Int
+//    let onlo: Int
+//}
+//
+//typealias Position = Int
+//
+//enum Entry {
+//
+//    case symbol(s: SymbolEntry)
+//    case position(p: Position)
+//}
 
 enum DiffError: Error {
-    
+
     case duplicates
 }
 
-public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any> {
+public class DiffUtil<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
     
     typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     // MARK: Private methods
     
-    private static func calculatePhDiff(
-        
-        form oldObjects: [AnyEquatable],
-        to newObjects: [AnyEquatable]
-        
-    ) -> IndexSetDiff? {
-        
-        var symbolTable: [SymbolEntry] = []
-        var oa: [Entry] = []
-        var na: [Entry] = []
-        
-        // Pass 1.
-        for (i, obj) in oldObjects.enumerated() {
-            
-        }
-        
-        // Pass 2.
-        for (j, obj) in newObjects.enumerated() {
-            
-        }
-        
-        // Pass 3.
-        
-        
-        return nil
-    }
+//    private static func calculatePhDiff(
+//
+//        form oldObjects: [Hashable],
+//        to newObjects: [Hashable]
+//
+//    ) -> IndexSetDiff? {
+//
+//        var symbolTable: [SymbolEntry] = []
+//        var oa: [Entry] = []
+//        var na: [Entry] = []
+//
+//        // Pass 1.
+//        for (i, obj) in oldObjects.enumerated() {
+//
+//        }
+//
+//        // Pass 2.
+//        for (j, obj) in newObjects.enumerated() {
+//
+//        }
+//
+//        // Pass 3.
+//
+//
+//        return nil
+//    }
     
     private static func calculateSectionsDiff(
         
-        from oldObjects: [AnyEquatable],
-        to newObjects: [AnyEquatable]
+        from oldObjects: [Sec],
+        to newObjects: [Sec]
         
     ) -> IndexSetDiff {
         
@@ -76,7 +76,7 @@ public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderT
         
         for (newIdx, newObject) in newObjects.enumerated() {
             
-            if let oldIdx = oldObjects.firstIndex(where: { newObject.equal(any: $0) }) {
+            if let oldIdx = oldObjects.firstIndex(where: { newObject == $0 }) {
                 
                 deletes.remove(oldIdx)
                 
@@ -137,13 +137,13 @@ public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderT
     }
     
     private static func getIndexPath(
-        for object: AnyEquatable,
+        for object: ItemType,
         in groups: [Sec]
     ) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.objects.firstIndex(where: { object.equal(any: $0) }) {
+            if let objectIdx = group.objects.firstIndex(where: { object == $0 }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -160,7 +160,7 @@ public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderT
             
             for j in i+1..<allObjects.count {
                 
-                if allObjects[i].equal(any: allObjects[j]) {
+                if allObjects[i] == allObjects[j] {
                     
                     return true
                 }
@@ -193,7 +193,7 @@ public class DiffUtil<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderT
         
         for newSection in newSections {
             
-            let oldSection = oldSections.first(where: { $0.equal(any: newSection) })
+            let oldSection = oldSections.first(where: { $0 == newSection })
             
             intermediateSections.append(oldSection ?? newSection)
         }

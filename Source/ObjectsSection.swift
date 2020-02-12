@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: AnyEquatable {
+public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
     
     // MARK: Public properties
     
@@ -42,12 +42,18 @@ public struct Section<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderT
     }
 }
 
-// MARK: Equatable
-
-extension Section: Equatable {
+extension Section: Hashable {
     
-    public static func == (lhs: Section, rhs: Section) -> Bool {
+    public static func == (
+        lhs: Section<ItemType, SectionType, HeaderType>,
+        rhs: Section<ItemType, SectionType, HeaderType>
+    ) -> Bool {
         
-        return lhs.id.equal(any: rhs.id)
+        return lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(id)
     }
 }

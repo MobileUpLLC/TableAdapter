@@ -17,9 +17,10 @@
 		A11CDC5423D9EDAD00332B17 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */; };
 		A11CDC5723DA120900332B17 /* DeleteObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */; };
 		A11CDC5823DAFEF400332B17 /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156904623A272AE0078F3F1 /* SortViewController.swift */; };
-		A11CDC5923DB014900332B17 /* MixedObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */; };
-		A11CDC5B23DB070B00332B17 /* PrimitiveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */; };
-		A11CDC5D23DB35C600332B17 /* HeaderFooterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156903E23A23E2D0078F3F1 /* HeaderFooterViewController.swift */; };
+		A123326C23F448E800FE1BC8 /* WiFiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E0239FD635003827B3 /* WiFiViewController.swift */; };
+		A123326D23F45A5200FE1BC8 /* PrimitiveItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */; };
+		A123326E23F45A5C00FE1BC8 /* MixedObjectsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */; };
+		A123326F23F45A6700FE1BC8 /* HeaderFooterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A156903E23A23E2D0078F3F1 /* HeaderFooterViewController.swift */; };
 		A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */; };
 		A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79B2238FE8EF00B4E62A /* ViewController.swift */; };
 		A19C79B6238FE8EF00B4E62A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A19C79B4238FE8EF00B4E62A /* Main.storyboard */; };
@@ -288,15 +289,16 @@
 				A11CDC5723DA120900332B17 /* DeleteObjectsViewController.swift in Sources */,
 				A11869DC239EE18C003827B3 /* RedHeaderFooterView.swift in Sources */,
 				A11CDC5823DAFEF400332B17 /* SortViewController.swift in Sources */,
-				A11CDC5B23DB070B00332B17 /* PrimitiveItem.swift in Sources */,
+				A123326D23F45A5200FE1BC8 /* PrimitiveItem.swift in Sources */,
 				A11CDC5423D9EDAD00332B17 /* SearchViewController.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
+				A123326E23F45A5C00FE1BC8 /* MixedObjectsViewController.swift in Sources */,
 				A11869E623A10F8D003827B3 /* BlueHeaderFooterView.swift in Sources */,
-				A11CDC5923DB014900332B17 /* MixedObjectsViewController.swift in Sources */,
-				A11CDC5D23DB35C600332B17 /* HeaderFooterViewController.swift in Sources */,
+				A123326F23F45A6700FE1BC8 /* HeaderFooterViewController.swift in Sources */,
 				A11869E423A01000003827B3 /* Network.swift in Sources */,
 				A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */,
 				A11869FC23A145BD003827B3 /* Example.swift in Sources */,
+				A123326C23F448E800FE1BC8 /* WiFiViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

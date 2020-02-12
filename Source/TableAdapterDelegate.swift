@@ -18,8 +18,8 @@ public protocol AnyTableAdapterDelegate: AnyObject {
 
 public protocol TableAdapterDelegate: AnyTableAdapterDelegate {
     
-    associatedtype ItemType: AnyEquatable
-    associatedtype SectionType: AnyEquatable
+    associatedtype ItemType: Hashable
+    associatedtype SectionType: Hashable
     associatedtype HeaderType: Any
     
     func tableAdapter(

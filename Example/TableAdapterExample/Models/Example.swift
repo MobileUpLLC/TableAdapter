@@ -16,12 +16,17 @@ struct Example {
     let controller: UIViewController.Type
 }
 
-extension Example: AnyEquatable {
+// MARK: Hashable
+
+extension Example: Hashable {
     
-    func equal(any: AnyEquatable?) -> Bool {
+    static func == (lhs: Example, rhs: Example) -> Bool {
         
-        guard let any = any as? Example else { return false }
+        return lhs.name == rhs.name
+    }
+    
+    func hash(into hasher: inout Hasher) {
         
-        return name == any.name
+        hasher.combine(name)
     }
 }

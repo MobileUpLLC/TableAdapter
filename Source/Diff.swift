@@ -43,7 +43,7 @@ public struct IndexSetDiff {
 
 // MARK: Diff
 
-struct Diff<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any> {
+struct Diff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
     
     typealias Sec = Section<ItemType, SectionType, HeaderType>
     

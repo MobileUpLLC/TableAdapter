@@ -24,7 +24,7 @@ struct Reservation {
 
 // MARK: AnyEquatable
 
-extension Reservation: Hashable, AnyEquatable {
+extension Reservation: Hashable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         

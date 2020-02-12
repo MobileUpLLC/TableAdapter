@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: TableAdapter
 
-open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: NSObject, UITableViewDataSource {
+open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: NSObject, UITableViewDataSource {
     
     // MARK: Types
     
@@ -152,7 +152,7 @@ open class TableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, Heade
 
 // MARK: DSTableAdapter
 
-open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: TableAdapter<ItemType, SectionType, HeaderType> {
+open class DSTableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: TableAdapter<ItemType, SectionType, HeaderType> {
 
     // MARK: Types
     
@@ -289,7 +289,7 @@ open class DSTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, Hea
 
 // MARK: HeaderFooterTableAdapter
 
-open class HeaderFooterTableAdapter<ItemType: AnyEquatable, SectionType: AnyEquatable, HeaderType: Any>: DSTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
+open class HeaderFooterTableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: DSTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
     
     // MARK: Private properties
     

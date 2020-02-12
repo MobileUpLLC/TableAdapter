@@ -18,9 +18,9 @@ struct Network {
     let identifier = UUID()
 }
 
-// MARK: AnyDifferentiable
+// MARK: Hashable
 
-extension Network: Equatable, AnyEquatable {
+extension Network: Hashable {
     
     static func == (lhs: Network, rhs: Network) -> Bool {
         

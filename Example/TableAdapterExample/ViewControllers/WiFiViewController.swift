@@ -10,7 +10,7 @@ import UIKit
 import TableAdapter
 
 class WiFiViewController: UIViewController {
-    
+        
     // MARK: Private properties
     
     private let networks: [Network] = [
@@ -29,15 +29,27 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
+    private lazy var adapter = HeaderFooterTableAdapter<Item, Int, String>(
+        tableView: tableView,
+        sender: self,
+        delegate: self
+    ) { [unowned self] (item) -> String? in
+        
+        switch item {
+           
+        case .net(_):
+            return self.networkCellIdentifier
+            
+        case .config(_):
+            return self.wifiSwitchCellIdentifier
+        }
+    }
     
     private var currentNetwork: Network?
     
     private let wifiSwitchCellIdentifier = "WifiSettings"
     
     private let networkCellIdentifier = "Network"
-    
-    private let wifiItem = "Wi-Fi"
     
     // MARK: Public properties
     
@@ -49,7 +61,6 @@ class WiFiViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
-        setupTableAdapter()
         
         updateUI()
     }
@@ -62,31 +73,6 @@ class WiFiViewController: UIViewController {
     
     // MARK: Private methods
     
-    private func setupTableAdapter() {
-        
-        adapter = TableAdapter(tableView: tableView, sender: self) { [weak self] (object) -> String? in
-            
-            guard let self = self else { return nil }
-            
-            switch object {
-                
-            case is String:
-                return self.wifiSwitchCellIdentifier
-                
-            case is Network:
-                return self.networkCellIdentifier
-                
-            default:
-                assertionFailure("Undefind cell identifier for \(object)")
-                
-                return nil
-            }
-        }
-        
-//        adapter.dataSource = self
-        adapter.delegate = self
-    }
-    
     private func setupTableView() {
         
         view.addSubview(tableView)
@@ -97,30 +83,33 @@ class WiFiViewController: UIViewController {
     
     private func updateUI() {
         
-        let sections: [Section]
+        let sections: [Section<Item, Int, String>]
+        
+        var configItems: [Item] = [.config("Wi-Fi")]
         
         if isWifiEnabled {
             
             var networkItems = networks
             
-            var configItems: [AnyEquatable] = [wifiItem]
-            
             if let net = currentNetwork {
                 
-                configItems.append(net)
+                configItems.append(.net(net))
                 
                 networkItems.removeAll(where: { $0 == net })
             }
             
+            let nets: [Item] = networkItems.map { .net($0) }
+            
             sections = [
-                
-                ObjectsSection(id: 0, objects: configItems),
-                ObjectsSection(id: 1, objects: networkItems)
+                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network"),
+                Section<Item, Int, String>(id: 1, objects: nets, header: "Available networks"),
             ]
             
         } else {
             
-            sections = [ObjectsSection(id: 0, objects: [wifiItem])]
+            sections = [
+                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network")
+            ]
         }
         
         adapter.update(with: sections, animated: true)
@@ -136,40 +125,26 @@ class WiFiViewController: UIViewController {
     }
 }
 
-// MARK: TableAdapterDataSource
+// MARK: Item
 
-extension WiFiViewController: TableAdapterDataSource {
+enum Item: Hashable {
     
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String? {
-        
-        switch object {
-            
-        case is String:
-            return wifiSwitchCellIdentifier
-            
-        case is Network:
-            return networkCellIdentifier
-            
-        default:
-            assertionFailure("Undefind cell identifier for \(object)")
-            
-            return nil
-        }
-        
-    }
+    case net(Network)
+    case config(String)
 }
 
 // MARK: TableAdapterDelegate
 
 extension WiFiViewController: TableAdapterDelegate {
     
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
+    func tableAdapter(_ adapter: TableAdapter<Item, Int, String>, didSelect object: Item) {
         
-        guard let net = object as? Network else { return }
-        
-        currentNetwork = net
-        
-        updateUI()
+        if case let Item.net(net) = object {
+            
+            currentNetwork = net
+            
+            updateUI()
+        }
     }
 }
 
@@ -196,9 +171,9 @@ class NetworkCell: UITableViewCell {
 
 extension NetworkCell: Configurable {
     
-    func setup(with object: Network) {
+    func setup(with object: Item) {
         
-        textLabel?.text = object.name
+        if case let Item.net(net) = object { textLabel?.text = net.name }
     }
 }
 
@@ -224,11 +199,11 @@ class WiFiSwitchCell: UITableViewCell {
 
 extension WiFiSwitchCell: SenderConfigurable {
     
-    func setup(with object: String, sender: WiFiViewController) {
-        
-        textLabel?.text = object
+    func setup(with object: Item, sender: WiFiViewController) {
         
         guard let wifiSwitch = accessoryView as? UISwitch else { return }
+        
+        if case let Item.config(str) = object { textLabel?.text = str }
         
         wifiSwitch.isOn = sender.isWifiEnabled
         

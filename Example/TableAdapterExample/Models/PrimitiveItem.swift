@@ -11,6 +11,8 @@ import TableAdapter
 
 struct PrimitiveItem {
     
+    // MARK: Types
+    
     enum ItemType {
         
         case integer
@@ -19,13 +21,29 @@ struct PrimitiveItem {
         case float
     }
     
+    // MARK: Public properties
+    
+    var id: String {
+        
+        return String(describing: value)
+    }
+    
     let type: ItemType
-    let value: AnyEquatable
+    
+    let value: CustomStringConvertible
 }
 
-extension PrimitiveItem: AnyEquatable {
+// MARK: Hashable
+
+extension PrimitiveItem: Hashable {
     
-    func equal(any: AnyEquatable?) -> Bool {
-        return value.equal(any: any)
+    static func == (lhs: PrimitiveItem, rhs: PrimitiveItem) -> Bool {
+        
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(id)
     }
 }
