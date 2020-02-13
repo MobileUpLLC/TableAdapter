@@ -11,13 +11,15 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
     
     // MARK: Types
     
-    public typealias CellDidSelectedHandler = (UITableView, IndexPath, ItemType) -> Void
+    public typealias CellDidSelectHandler = (UITableView, IndexPath, ItemType) -> Void
     
     // MARK: Private properties
     
     private weak var delegate: AnyTableAdapterDelegate?
     
     // MARK: Public properties
+    
+    public var cellDidSelectHandler: CellDidSelectHandler?
     
     public var defaultHeaderIdentifier = "Header" {
         
@@ -28,8 +30,6 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
         
         didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
     }
-    
-    public var cellDidSelectedHandler: CellDidSelectedHandler?
     
     // MARK: Private methods
     
@@ -67,26 +67,17 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
         tableView.delegate = self
     }
     
-    public convenience init<Delegate: TableAdapterDelegate, DataSource: TableAdapterDataSource>(
+    public convenience init(
         tableView: UITableView,
         sender: AnyObject? = nil,
-        dataSource: DataSource? = nil,
-        delegate: Delegate? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
+        cellIdentifierProvider: CellReuseIdentifierProvider? = nil,
+        cellDidSelectHandler: CellDidSelectHandler? = nil
     ) {
-        self.init(
-            tableView: tableView,
-            sender: sender,
-            dataSource: dataSource,
-            cellIdentifierProvider: cellIdentifierProvider
-        )
+        self.init(tableView: tableView)
         
-        if tableView.delegate == nil {
-            
-            tableView.delegate = self
-        }
-        
-        self.delegate = delegate
+        self.sender = sender
+        self.cellIdentifierProvider = cellIdentifierProvider
+        self.cellDidSelectHandler = cellDidSelectHandler
     }
     
     public convenience init<Delegate: TableAdapterDelegate>(
@@ -101,11 +92,25 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
             cellIdentifierProvider: cellIdentifierProvider
         )
         
-        if tableView.delegate == nil {
-            
-            tableView.delegate = self
-        }
+        self.delegate = delegate
+    }
+    
+    public convenience init<Delegate: TableAdapterDelegate, DataSource: TableAdapterDataSource>(
+        tableView: UITableView,
+        sender: AnyObject? = nil,
+        dataSource: DataSource? = nil,
+        delegate: Delegate? = nil,
+        cellIdentifierProvider: CellReuseIdentifierProvider? = nil,
+        cellDidSelectHandler: CellDidSelectHandler? = nil
+    ) {
+        self.init(
+            tableView: tableView,
+            sender: sender,
+            dataSource: dataSource,
+            cellIdentifierProvider: cellIdentifierProvider
+        )
         
+        self.cellDidSelectHandler = cellDidSelectHandler
         self.delegate = delegate
     }
     
@@ -134,7 +139,7 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
         
         let item = getItem(for: indexPath)
         
-        if let handler = cellDidSelectedHandler {
+        if let handler = cellDidSelectHandler {
             
             handler(tableView, indexPath, item)
             

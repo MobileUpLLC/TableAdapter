@@ -9,6 +9,16 @@
 import Foundation
 import TableAdapter
 
+// MARK: Item
+
+enum Item: Hashable {
+    
+    case net(Network)
+    case config(String)
+}
+
+// MARK: Network
+
 struct Network {
     
     // MARK: Public properties

@@ -59,7 +59,7 @@ class WiFiViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        adapter.cellDidSelectedHandler = { [weak self] (table, indexPath, item) in
+        adapter.cellDidSelectHandler = { [weak self] (table, indexPath, item) in
             
             table.deselectRow(at: indexPath, animated: true)
             
@@ -133,80 +133,5 @@ class WiFiViewController: UIViewController {
         isWifiEnabled = wifiSwitch.isOn
         
         updateUI()
-    }
-}
-
-// MARK: Item
-
-enum Item: Hashable {
-    
-    case net(Network)
-    case config(String)
-}
-
-// MARK: NetworkCell
-
-class NetworkCell: UITableViewCell {
-    
-    // MARK: Override methods
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        accessoryView = nil
-        accessoryType = .detailButton
-    }
-    
-    required init?(coder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: Configurable
-
-extension NetworkCell: Configurable {
-    
-    func setup(with object: Item) {
-        
-        if case let Item.net(net) = object { textLabel?.text = net.name }
-    }
-}
-
-// MARK: WiFiSwitchCell
-
-class WiFiSwitchCell: UITableViewCell {
-    
-    // MARK: Override methods
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        accessoryView = UISwitch()
-    }
-    
-    required init?(coder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: SenderConfigurable
-
-extension WiFiSwitchCell: SenderConfigurable {
-    
-    func setup(with object: Item, sender: WiFiViewController) {
-        
-        guard let wifiSwitch = accessoryView as? UISwitch else { return }
-        
-        if case let Item.config(str) = object { textLabel?.text = str }
-        
-        wifiSwitch.isOn = sender.isWifiEnabled
-        
-        wifiSwitch.addTarget(
-            sender,
-            action: #selector(WiFiViewController.toggleWifi(_:)),
-            for: .touchUpInside
-        )
     }
 }

@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3B967099B905CFDDF9125291 /* Pods_TableAdapterExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */; };
+		A108620523F5570A00988FEC /* NetworkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620423F5570A00988FEC /* NetworkCell.swift */; };
+		A108620723F5571600988FEC /* WiFiSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620623F5571600988FEC /* WiFiSwitchCell.swift */; };
+		A108620923F5579100988FEC /* AnyObjectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620823F5579100988FEC /* AnyObjectCell.swift */; };
+		A108620B23F557B500988FEC /* ColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620A23F557B500988FEC /* ColorCell.swift */; };
+		A108620D23F557ED00988FEC /* PrimitiveItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620C23F557ED00988FEC /* PrimitiveItemCell.swift */; };
+		A108621023F5586C00988FEC /* SortUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108620F23F5586C00988FEC /* SortUtil.swift */; };
+		A108621223F558F200988FEC /* Seas.swift in Sources */ = {isa = PBXBuildFile; fileRef = A108621123F558F200988FEC /* Seas.swift */; };
 		A11869DC239EE18C003827B3 /* RedHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869DB239EE18C003827B3 /* RedHeaderFooterView.swift */; };
 		A11869DE239EE242003827B3 /* RedHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A11869DD239EE242003827B3 /* RedHeaderFooterView.xib */; };
 		A11869E423A01000003827B3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11869E323A01000003827B3 /* Network.swift */; };
@@ -32,6 +39,13 @@
 		24429E11EFDF5BB60D1A9AB4 /* Pods-TableAdapterExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.release.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.release.xcconfig"; sourceTree = "<group>"; };
 		2ADEF947A4DCE10EAF780A96 /* Pods-TableAdapterExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.debug.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.debug.xcconfig"; sourceTree = "<group>"; };
 		3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableAdapterExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A108620423F5570A00988FEC /* NetworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCell.swift; sourceTree = "<group>"; };
+		A108620623F5571600988FEC /* WiFiSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiSwitchCell.swift; sourceTree = "<group>"; };
+		A108620823F5579100988FEC /* AnyObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObjectCell.swift; sourceTree = "<group>"; };
+		A108620A23F557B500988FEC /* ColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCell.swift; sourceTree = "<group>"; };
+		A108620C23F557ED00988FEC /* PrimitiveItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimitiveItemCell.swift; sourceTree = "<group>"; };
+		A108620F23F5586C00988FEC /* SortUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortUtil.swift; sourceTree = "<group>"; };
+		A108621123F558F200988FEC /* Seas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Seas.swift; sourceTree = "<group>"; };
 		A11869DB239EE18C003827B3 /* RedHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedHeaderFooterView.swift; sourceTree = "<group>"; };
 		A11869DD239EE242003827B3 /* RedHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RedHeaderFooterView.xib; sourceTree = "<group>"; };
 		A11869E0239FD635003827B3 /* WiFiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiViewController.swift; sourceTree = "<group>"; };
@@ -67,6 +81,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A108620323F556F900988FEC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				A108620423F5570A00988FEC /* NetworkCell.swift */,
+				A108620623F5571600988FEC /* WiFiSwitchCell.swift */,
+				A108620823F5579100988FEC /* AnyObjectCell.swift */,
+				A108620A23F557B500988FEC /* ColorCell.swift */,
+				A108620C23F557ED00988FEC /* PrimitiveItemCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		A108620E23F5586200988FEC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A108620F23F5586C00988FEC /* SortUtil.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		A11869DA239EE13A003827B3 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +116,7 @@
 				A11869E323A01000003827B3 /* Network.swift */,
 				A11869FB23A145BD003827B3 /* Example.swift */,
 				A11CDC5A23DB070B00332B17 /* PrimitiveItem.swift */,
+				A108621123F558F200988FEC /* Seas.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -122,8 +157,10 @@
 		A19C79AD238FE8EF00B4E62A /* TableAdapterExample */ = {
 			isa = PBXGroup;
 			children = (
-				A11869E223A00FE0003827B3 /* Models */,
+				A108620E23F5586200988FEC /* Utils */,
 				A11869DA239EE13A003827B3 /* Headers */,
+				A108620323F556F900988FEC /* Cells */,
+				A11869E223A00FE0003827B3 /* Models */,
 				A11869FF23A14E4D003827B3 /* ViewControllers */,
 				A19C79BC238FE8F400B4E62A /* Info.plist */,
 				A19C79AE238FE8EF00B4E62A /* AppDelegate.swift */,
@@ -287,16 +324,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A11CDC5723DA120900332B17 /* DeleteObjectsViewController.swift in Sources */,
+				A108620723F5571600988FEC /* WiFiSwitchCell.swift in Sources */,
 				A11869DC239EE18C003827B3 /* RedHeaderFooterView.swift in Sources */,
 				A11CDC5823DAFEF400332B17 /* SortViewController.swift in Sources */,
+				A108621023F5586C00988FEC /* SortUtil.swift in Sources */,
 				A123326D23F45A5200FE1BC8 /* PrimitiveItem.swift in Sources */,
 				A11CDC5423D9EDAD00332B17 /* SearchViewController.swift in Sources */,
+				A108620D23F557ED00988FEC /* PrimitiveItemCell.swift in Sources */,
 				A19C79B3238FE8EF00B4E62A /* ViewController.swift in Sources */,
 				A123326E23F45A5C00FE1BC8 /* MixedObjectsViewController.swift in Sources */,
 				A11869E623A10F8D003827B3 /* BlueHeaderFooterView.swift in Sources */,
+				A108620523F5570A00988FEC /* NetworkCell.swift in Sources */,
+				A108620B23F557B500988FEC /* ColorCell.swift in Sources */,
+				A108621223F558F200988FEC /* Seas.swift in Sources */,
 				A123326F23F45A6700FE1BC8 /* HeaderFooterViewController.swift in Sources */,
 				A11869E423A01000003827B3 /* Network.swift in Sources */,
 				A19C79AF238FE8EF00B4E62A /* AppDelegate.swift in Sources */,
+				A108620923F5579100988FEC /* AnyObjectCell.swift in Sources */,
 				A11869FC23A145BD003827B3 /* Example.swift in Sources */,
 				A123326C23F448E800FE1BC8 /* WiFiViewController.swift in Sources */,
 			);

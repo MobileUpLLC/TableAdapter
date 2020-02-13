@@ -15,11 +15,11 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
     
     // MARK: Private properties
     
-    private var cellIdentifierProvider: CellReuseIdentifierProvider?
-    
     private weak var dataSource: AnyTableAdapterDataSource?
     
     // MARK: Public properties
+    
+    public var cellIdentifierProvider: CellReuseIdentifierProvider?
     
     public weak var sender: AnyObject?
     

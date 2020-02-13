@@ -98,13 +98,3 @@ class MixedObjectsViewController: UIViewController {
         update(items: newItems, animated: true)
     }
 }
-
-// MARK: PrimitiveItemCell
-
-class PrimitiveItemCell: UITableViewCell, Configurable {
-    
-    public func setup(with object: PrimitiveItem) {
-        
-        textLabel?.text = "\(object.value)"
-    }
-}

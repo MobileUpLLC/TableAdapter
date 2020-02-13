@@ -15,7 +15,14 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var adapter = SupplementaryTableAdapter<Example, Int, String>(tableView: tableView)
+    private lazy var adapter = SupplementaryTableAdapter<Example, Int, String>(
+        tableView: tableView,
+        cellDidSelectHandler: { [weak self] (table, indexPath, item) in
+        
+            table.deselectRow(at: indexPath, animated: true)
+            
+            self?.open(item)
+    })
     
     private let items: [Example] = [
         
@@ -32,13 +39,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        adapter.cellDidSelectedHandler = { [weak self] (table, indexPath, item) in
-            
-            table.deselectRow(at: indexPath, animated: true)
-            
-            self?.open(item)
-        }
         
         let sec = Section<Example, Int, String>(id: 0, objects: items)
         
