@@ -10,10 +10,6 @@ import UIKit
 public protocol AnyTableAdapterDelegate: AnyObject {
     
     func tableAdapter(_ adapter: Any, didSelect object: Any)
-    
-    func tableAdapter(_ adapter: Any, headerIdentifierFor section: Int) -> String?
-    
-    func tableAdapter(_ adapter: Any, footerIdentifierFor section: Int) -> String?
 }
 
 public protocol TableAdapterDelegate: AnyTableAdapterDelegate {
@@ -26,16 +22,6 @@ public protocol TableAdapterDelegate: AnyTableAdapterDelegate {
         _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
         didSelect object: ItemType
     )
-    
-    func tableAdapter(
-        _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
-        headerIdentifierFor section: Int
-    ) -> String?
-    
-    func tableAdapter(
-        _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
-        footerIdentifierFor section: Int
-    ) -> String?
 }
 
 // MARK: AnyTableAdapterDelegate Implementation
@@ -44,26 +30,21 @@ public extension TableAdapterDelegate {
     
     func tableAdapter(_ adapter: Any, didSelect object: Any) {
         
-        tableAdapter(
-            adapter as! TableAdapter<ItemType, SectionType, HeaderType>,
-            didSelect: object as! ItemType
-        )
-    }
-    
-    func tableAdapter(_ adapter: Any, headerIdentifierFor section: Int) -> String? {
+        guard let resultAdapter = adapter as? TableAdapter<ItemType, SectionType, HeaderType> else {
+            
+            assertionFailure("Could not cast table adapter of type '\(type(of: adapter))' to expected type '\(TableAdapter<ItemType, SectionType, HeaderType>.self)'.")
+            
+            return
+        }
         
-        tableAdapter(
-            adapter as! TableAdapter<ItemType, SectionType, HeaderType>,
-            headerIdentifierFor: section
-        )
-    }
-    
-    func tableAdapter(_ adapter: Any, footerIdentifierFor section: Int) -> String? {
+        guard let resultItem = object as? ItemType else {
+            
+            assertionFailure("Could not cast cell item of type '\(type(of: object))' to expected type '\(ItemType.self)'.")
+            
+            return
+        }
         
-        tableAdapter(
-            adapter as! TableAdapter<ItemType, SectionType, HeaderType>,
-            footerIdentifierFor: section
-        )
+        tableAdapter(resultAdapter, didSelect: resultItem)
     }
 }
 
@@ -71,24 +52,5 @@ public extension TableAdapterDelegate {
 
 public extension TableAdapterDelegate {
     
-    func tableAdapter(
-        _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
-        didSelect object: ItemType
-    ) {}
-    
-    func tableAdapter(
-        _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
-        headerIdentifierFor section: Int
-    ) -> String? {
-        
-        return nil
-    }
-    
-    func tableAdapter(
-        _ adapter: TableAdapter<ItemType, SectionType, HeaderType>,
-        footerIdentifierFor section: Int
-    ) -> String? {
-        
-        return nil
-    }
+    func tableAdapter(_ adapter: TableAdapter<ItemType, SectionType, HeaderType>, didSelect object: ItemType) {}
 }

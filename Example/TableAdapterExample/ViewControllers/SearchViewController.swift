@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = DSTableAdapter<String, Int, String>(tableView: tableView)
+    private lazy var adapter = ConfigCellTableAdapter<String, Int, String>(tableView: tableView)
     
     private lazy var seas: [String] = seasRaw.components(separatedBy: CharacterSet.newlines)
     

@@ -29,11 +29,10 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = HeaderFooterTableAdapter<Item, Int, String>(
+    private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
         tableView: tableView,
-        sender: self,
-        delegate: self
-    ) { [unowned self] (item) -> String? in
+        sender: self
+    ) { [unowned self] (indexPath, item) -> String? in
         
         switch item {
            
@@ -59,6 +58,18 @@ class WiFiViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        adapter.cellDidSelectedHandler = { [weak self] (table, indexPath, item) in
+            
+            table.deselectRow(at: indexPath, animated: true)
+            
+            if case let Item.net(net) = item {
+                
+                self?.currentNetwork = net
+                
+                self?.updateUI()
+            }
+        }
         
         setupTableView()
         
@@ -131,21 +142,6 @@ enum Item: Hashable {
     
     case net(Network)
     case config(String)
-}
-
-// MARK: TableAdapterDelegate
-
-extension WiFiViewController: TableAdapterDelegate {
-    
-    func tableAdapter(_ adapter: TableAdapter<Item, Int, String>, didSelect object: Item) {
-        
-        if case let Item.net(net) = object {
-            
-            currentNetwork = net
-            
-            updateUI()
-        }
-    }
 }
 
 // MARK: NetworkCell

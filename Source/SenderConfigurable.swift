@@ -15,7 +15,7 @@ public protocol AnySenderConfigurable {
     
     var anyObjectType: Any.Type { get }
     
-    func anySetup(with object: Any, sender: Any)
+    func anySetup(with object: Any, sender: Any?)
 }
 
 // MARK: SenderConfigurable
@@ -43,7 +43,7 @@ public extension SenderConfigurable {
         return S.self
     }
     
-    func anySetup(with object: Any, sender: Any) {
+    func anySetup(with object: Any, sender: Any?) {
         
         guard let obj = object as? T else {
             

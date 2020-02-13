@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var adapter = HeaderFooterTableAdapter<Example, Int, String>(tableView: tableView, delegate: self)
+    private lazy var adapter = SupplementaryTableAdapter<Example, Int, String>(tableView: tableView)
     
     private let items: [Example] = [
         
@@ -33,6 +33,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        adapter.cellDidSelectedHandler = { [weak self] (table, indexPath, item) in
+            
+            table.deselectRow(at: indexPath, animated: true)
+            
+            self?.open(item)
+        }
+        
         let sec = Section<Example, Int, String>(id: 0, objects: items)
         
         adapter.update(with: [sec])
@@ -48,17 +55,6 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(controller, animated: true)
     }
 }
-
-// MARK: TableAdapterDelegate
-
-extension ViewController: TableAdapterDelegate {
-
-    func tableAdapter(_ adapter: TableAdapter<Example, Int, String>, didSelect object: Example) {
-        
-        open(object)
-    }
-}
-
 
 // MARK: Cell
 

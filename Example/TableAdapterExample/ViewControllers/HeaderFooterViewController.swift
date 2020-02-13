@@ -15,7 +15,7 @@ class HeaderFooterViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = HeaderFooterTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = SupplementaryTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
     
     private var sections: [Section<PrimitiveItem, Int, String>] = {
         

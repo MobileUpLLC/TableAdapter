@@ -34,10 +34,20 @@ public extension TableAdapterDataSource {
     
     func tableAdapter(_ adapter: Any, cellIdentifierFor object: Any) -> String? {
         
-        tableAdapter(
-            adapter as! TableAdapter<ItemType, SectionType, HeaderType>,
-            cellIdentifierFor: object as! ItemType
-        )
+        guard let resultAdapter = adapter as? TableAdapter<ItemType, SectionType, HeaderType> else {
+            
+            assertionFailure("Could not cast table adapter of type '\(type(of: adapter))' to expected type '\(TableAdapter<ItemType, SectionType, HeaderType>.self)'.")
+            
+            return nil
+        }
+        
+        guard let resultItem = object as? ItemType else {
+            
+            assertionFailure("Could not cast cell item of type '\(type(of: object))' to expected type '\(ItemType.self)'.")
+            
+            return nil
+        }
+        
+        return tableAdapter(resultAdapter, cellIdentifierFor: resultItem)
     }
 }
-

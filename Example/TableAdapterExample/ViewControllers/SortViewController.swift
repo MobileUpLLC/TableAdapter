@@ -15,7 +15,7 @@ class SortViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = DSTableAdapter<Float, Int, String>(tableView: tableView)
+    private lazy var adapter = ConfigCellTableAdapter<Float, Int, String>(tableView: tableView)
     
     private let itemsCount = 50
     
