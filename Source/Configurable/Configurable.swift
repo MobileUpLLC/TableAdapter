@@ -11,38 +11,31 @@ import Foundation
 
 public protocol AnyConfigurable {
     
-    var anyObjectType: Any.Type { get }
-    
-    func anySetup(with object: Any)
+    func anySetup(with item: Any)
 }
 
 // MARK: Configurable
 
 public protocol Configurable: AnyConfigurable {
     
-    associatedtype T: Any
+    associatedtype ItemType: Any
     
-    func setup(with object: T)
+    func setup(with item: ItemType)
 }
 
 // MARK: AnyConfigurable Implementation
 
 public extension Configurable {
     
-    var anyObjectType: Any.Type {
+    func anySetup(with item: Any) {
         
-        return T.self
-    }
-    
-    func anySetup(with object: Any) {
-        
-        if let object = object as? T {
+        if let item = item as? ItemType {
             
-            setup(with: object)
+            setup(with: item)
             
         } else {
             
-            assertionFailure("Could not cast value of type '\(type(of: object))' to expected type '\(T.self)'. '\(type(of: self))' must provide correct jeneric type for Configurable protocol")
+            assertionFailure("Could not cast value of type '\(type(of: item))' to expected type '\(ItemType.self)'. '\(type(of: self))' must provide correct jeneric type for Configurable protocol")
         }
     }
 }
