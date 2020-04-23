@@ -16,18 +16,168 @@ A data-driven library for building complex table views. Easy updating table view
 </div>
 
 ## Features
-- [x] Animated updates based on auto diffing
-- [x] Type-safe cell, header and footer setup
-- [x] No more `dequeReusable...` 
-- [x] No need to subclass either cell, table or model
-- [x] Cell initialization from xib, storyboard or code
-- [x] Simple yet flexible sections constructing
+- Animated updates based on auto diffing
+- Declarative type-safe cell, header and footer setup
+- No more `dequeReusable...` 
+- No need to subclass either cell, table or model
+- Cell initialization from xib, storyboard or code
+- Simple yet flexible sections constructing
+
+
+
+
+
+## Usage
+
+#### 1. Setup items and reusable views.
+
+Item for cells must adopt `Hashable` protocol.
+
+Table view cell should conform to `Configurable` protocol in order to receive cell item for setup.
+
+```swift
+class Cell: UITableViewCell, Configurable {
+    
+    public func setup(with item: Item) {
+        
+        textLabel?.text = item.name
+    }
+}
+```
+
+Header/Footer view also should adopt `Configurable` protocol to receive config item.
+
+```swift
+class Header: UITableViewHeaderFooterView, Configurable {
+
+    public func setup(with item: String) {
+        
+        textLabel?.text = item
+    }
+}
+```
+
+#### 2. Create sections. 
+Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`. 
+
+Section `Section<ItemType, SectionType, HeaderType>`  is generic type and developer should provide cell items type, section id type and header/footer setup object type.
+
+
+#### 3. Create adapter and fill it with section.
+Create `SupplementaryTableAdapter<ItemType, SectionType, HeaderType>` which is generic type to, with item, section id and header/footer assosiated types, just like in `Section`.
+
+Then update adapter with sections.
+
+```swift
+class ViewController: UIViewController {
+
+    let tableView = ...
+    
+    private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
+        tableView: tableView,
+        cellIdentifierProvider: { (indexPath, item) -> String? in
+            return "Cell"
+        },
+        cellDidSelectHandler: { [weak self] (table, indexPath, item) in
+            // Handle cell selection for item at indexPath
+        }
+    )
+
+    let items: [Item] = [...]
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
+        
+        tableView.register(Header.self, forHeaderFooterViewReuseIdentifier identifier: "HeaderId")
+        tableView.register(Footer.self, forHeaderFooterViewReuseIdentifier identifier: "FooterId")
+
+        let section = Section<Item, Int, String>(
+            id: 0, 
+            items: items, 
+            header: "Begin", 
+            footer: "End",
+            headerIdentifier: "HedaerId",
+            footerIdentifier: "FooterId"
+        )
+
+        adapter.update(with: [section]], animated: true)
+    }
+}
+```
+
+**Note**: this type of adapter set table view delegate to itself. To handle other table view delegate methods, you must inherit `SupplementaryTableAdapter` and implement them. Or you can use `ConfigCellTableAdapter`.
+
+## Sender
+Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
+
+```swift
+extension Cell: SenderConfigurable {
+    
+    func setup(with item: Item, sender: ViewController) {
+        
+        textLabel?.text = object.name
+        delegate = sender
+    }
+}
+```
+
+## Default Header/Footer
+To use default header/footer view in section create `Section` with `String` header/footer object type and **without** reuse identifiers.
+
+```swift
+let section = Section<Item, Int, String>(
+    id: 0, 
+    items: [...], 
+    header: "Begin", 
+    footer: "End"
+)
+```
+
+## One cell type
+To use only one cell type, create adapter **without** `CellReuserIdentifierProvider`
+
+```swift
+ lazy var adapter = ConfigCellTableAdapter<Item, Int, String>(tableView: tableView)
+ ```
+
+ and register cell via storyboard or code for default cell reuse identifier, which is "Cell" under the hood
+
+ ```swift
+tableView.register(Cell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+ ```
+
+## Requirements
+- Swift 4.0+
+- iOS 9.0+
+
+## Istallation
+
+### CocoaPods
+Add the following to `Podfile`:
+```ruby
+pod 'TableAdapter'
+```
+
+### Manual
+Download and drag files from Source folder into your Xcode project.
+
+
+## License
+TableAdapter is distributed under the [MIT License](https://mobileup.ru/).
+
+
+
+
+
+------------------
 
 ## Basic Usage
 
-Items must adopt `Hashable` protocol.
+Item for cells must adopt `Hashable` protocol.
 
-Table cell should conform to `Configurable` protocol in oreder to receive cell item for setup. The item type is generic associated type.
+Table cell should conform to `Configurable` protocol in order to receive cell item for setup. The item type is generic associated type.
 ```swift
 class Cell: UITableViewCell, Configurable {
     
@@ -94,10 +244,7 @@ private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
 })
 ```
 
-**Note**: this type of adapter set table view delegate to itself. So in order to handle other table delegate methods, you must inherit `SupplementaryTableAdapter` and implement them.
-
-
-
+**Note**: this type of adapter set table view delegate to itself. So in order to handle other table view delegate methods, you must inherit `SupplementaryTableAdapter` and implement them.
 
 ## Custom Header/Footer
 
@@ -135,27 +282,7 @@ extension ViewController: TableAdapterDataSource {
 
 
 
-## Sender
-Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender: AnyObject?` property, which will be passed to configurable view. At first, init table adapter with sender parameter or set it later. In case of nill `sender`, table adapter itself will be passed to view setup method.
-```swift
-class ViewController: UIViewController {
 
-    lazy var adapter = TableAdapter(tableView: tableView, sender: self)
-
-    ...
-}
-```
-Then adopt `SenderConfigurable` protocol. The item and sender types are generic associated types.
-```swift
-extension Cell: SenderConfigurable {
-    
-    func setup(with object: Network, sender: ViewController) {
-        
-        textLabel?.text = object.name
-        delegate = sender
-    }
-}
-```
 
 
 
@@ -261,24 +388,3 @@ extension ViewController: TableAdapterDataSource {
 
 ## Low-level Control
 You can set yours `UITableView` delegate for getting more control over row selection, header(footer) configuration, table editing, etc. In that case table adapter won't any called methods from `TableAdapterDelegate` protocol and display custom header and footer views.
-
-
-## Requirements
-- Swift 4.0+
-- iOS 9.0+
-
-
-## Istallation
-
-### CocoaPods
-Add the following to `Podfile`:
-```ruby
-pod 'TableAdapter'
-```
-
-### Manual
-Download and drag files from Source folder into your Xcode project.
-
-
-## License
-TableAdapter is distributed under the [MIT License](https://mobileup.ru/).
