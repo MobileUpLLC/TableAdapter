@@ -10,7 +10,7 @@ import UIKit
 import TableAdapter
 
 class WiFiViewController: UIViewController {
-    
+        
     // MARK: Private properties
     
     private let networks: [Network] = [
@@ -29,15 +29,26 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
+    private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
+        tableView: tableView,
+        sender: self
+    ) { [unowned self] (indexPath, item) -> String? in
+        
+        switch item {
+           
+        case .net(_):
+            return self.networkCellIdentifier
+            
+        case .config(_):
+            return self.wifiSwitchCellIdentifier
+        }
+    }
     
     private var currentNetwork: Network?
     
     private let wifiSwitchCellIdentifier = "WifiSettings"
     
     private let networkCellIdentifier = "Network"
-    
-    private let wifiItem = "Wi-Fi"
     
     // MARK: Public properties
     
@@ -48,8 +59,19 @@ class WiFiViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        adapter.cellDidSelectHandler = { [weak self] (table, indexPath, item) in
+            
+            table.deselectRow(at: indexPath, animated: true)
+            
+            if case let Item.net(net) = item {
+                
+                self?.currentNetwork = net
+                
+                self?.updateUI()
+            }
+        }
+        
         setupTableView()
-        setupTableAdapter()
         
         updateUI()
     }
@@ -62,12 +84,6 @@ class WiFiViewController: UIViewController {
     
     // MARK: Private methods
     
-    private func setupTableAdapter() {
-        
-        adapter.dataSource = self
-        adapter.delegate = self
-    }
-    
     private func setupTableView() {
         
         view.addSubview(tableView)
@@ -78,30 +94,33 @@ class WiFiViewController: UIViewController {
     
     private func updateUI() {
         
-        let sections: [Section]
+        let sections: [Section<Item, Int, String>]
+        
+        var configItems: [Item] = [.config("Wi-Fi")]
         
         if isWifiEnabled {
             
             var networkItems = networks
             
-            var configItems: [AnyEquatable] = [wifiItem]
-            
             if let net = currentNetwork {
                 
-                configItems.append(net)
+                configItems.append(.net(net))
                 
                 networkItems.removeAll(where: { $0 == net })
             }
             
+            let nets: [Item] = networkItems.map { .net($0) }
+            
             sections = [
-                
-                ObjectsSection(id: 0, objects: configItems),
-                ObjectsSection(id: 1, objects: networkItems)
+                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network"),
+                Section<Item, Int, String>(id: 1, objects: nets, header: "Available networks"),
             ]
             
         } else {
             
-            sections = [ObjectsSection(id: 0, objects: [wifiItem])]
+            sections = [
+                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network")
+            ]
         }
         
         adapter.update(with: sections, animated: true)
@@ -114,109 +133,5 @@ class WiFiViewController: UIViewController {
         isWifiEnabled = wifiSwitch.isOn
         
         updateUI()
-    }
-}
-
-// MARK: TableAdapterDataSource
-
-extension WiFiViewController: TableAdapterDataSource {
-    
-    func tableAdapter(_ adapter: TableAdapter, cellIdentifierFor object: AnyEquatable) -> String? {
-        
-        switch object {
-            
-        case is String:
-            return wifiSwitchCellIdentifier
-            
-        case is Network:
-            return networkCellIdentifier
-            
-        default:
-            assertionFailure("Undefind cell identifier for \(object)")
-            
-            return nil
-        }
-        
-    }
-}
-
-// MARK: TableAdapterDelegate
-
-extension WiFiViewController: TableAdapterDelegate {
-    
-    func tableAdapter(_ adapter: TableAdapter, didSelect object: AnyEquatable) {
-        
-        guard let net = object as? Network else { return }
-        
-        currentNetwork = net
-        
-        updateUI()
-    }
-}
-
-// MARK: NetworkCell
-
-class NetworkCell: UITableViewCell {
-    
-    // MARK: Override methods
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        accessoryView = nil
-        accessoryType = .detailButton
-    }
-    
-    required init?(coder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: Configurable
-
-extension NetworkCell: Configurable {
-    
-    func setup(with object: Network) {
-        
-        textLabel?.text = object.name
-    }
-}
-
-// MARK: WiFiSwitchCell
-
-class WiFiSwitchCell: UITableViewCell {
-    
-    // MARK: Override methods
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        accessoryView = UISwitch()
-    }
-    
-    required init?(coder: NSCoder) {
-        
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-// MARK: SenderConfigurable
-
-extension WiFiSwitchCell: SenderConfigurable {
-    
-    func setup(with object: String, sender: WiFiViewController) {
-        
-        textLabel?.text = object
-        
-        guard let wifiSwitch = accessoryView as? UISwitch else { return }
-        
-        wifiSwitch.isOn = sender.isWifiEnabled
-        
-        wifiSwitch.addTarget(
-            sender,
-            action: #selector(WiFiViewController.toggleWifi(_:)),
-            for: .touchUpInside
-        )
     }
 }

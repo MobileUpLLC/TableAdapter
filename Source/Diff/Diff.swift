@@ -43,13 +43,15 @@ public struct IndexSetDiff {
 
 // MARK: Diff
 
-struct Diff {
+struct Diff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
+    
+    typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     let sections: IndexSetDiff
     let rows: IndexPathDiff
     
-    let intermediateData: [Section]
-    let resultData: [Section]
+    let intermediateData: [Sec]
+    let resultData: [Sec]
 }
 
 extension Diff: CustomStringConvertible {

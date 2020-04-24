@@ -7,10 +7,55 @@
 
 import Foundation
 
-public protocol Section: AnyEquatable {
+public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
     
-    var objects: [AnyEquatable] { get set }
+    // MARK: Public properties
     
-    var header: Any? { get }
-    var footer: Any? { get }
+    public var id: SectionType
+    
+    public var objects: [ItemType]
+    
+    public let header: HeaderType?
+    public let footer: HeaderType?
+    
+    public let headerIdentifier: String?
+    public let footerIdentifier: String?
+    
+    // MARK: Public methods
+    
+    public init(
+        id: SectionType,
+        objects: [ItemType],
+        header: HeaderType? = nil,
+        footer: HeaderType? = nil,
+        headerIdentifier: String? = nil,
+        footerIdentifier: String? = nil
+    ) {
+        self.id = id
+        self.objects = objects
+        
+        self.header = header
+        self.footer = footer
+        
+        self.headerIdentifier = headerIdentifier
+        self.footerIdentifier = footerIdentifier
+    }
+}
+
+// MARK: Hashable
+
+extension Section: Hashable {
+    
+    public static func == (
+        lhs: Section<ItemType, SectionType, HeaderType>,
+        rhs: Section<ItemType, SectionType, HeaderType>
+    ) -> Bool {
+        
+        return lhs.id == rhs.id
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        
+        hasher.combine(id)
+    }
 }

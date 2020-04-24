@@ -15,17 +15,24 @@ class HeaderFooterViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter(tableView: tableView)
+    private lazy var adapter = SupplementaryTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
     
-    private let items: [AnyEquatable] = [
-        1, 2, 3,
-        "aaa", "bbb", "ccc",
-        true, false,
-        1.1, 2.2, 3.3
-    ]
-    
-    private let redHeaderFooterIdentifier = "RedHeaderFooterIdentifier"
-    private let blueHeaderFooterIdentifier = "BlueHeaderFooterIdentifier"
+    private var sections: [Section<PrimitiveItem, Int, String>] = {
+        
+        let ints = [1, 2, 3].map { PrimitiveItem(type: .integer, value: $0) }
+        let sectionInts = Section(id: 0, objects: ints, header: "Ints begin", footer: "Ints end")
+        
+        let strings = ["foo", "bar"].map { PrimitiveItem(type: .string, value: $0) }
+        let sectionStrings = Section(id: 1, objects: strings, header: "Strings begin", footer: "Strings end")
+        
+        let bools = [true, false].map { PrimitiveItem(type: .bool, value: $0) }
+        let sectionBools = Section(id: 2, objects: bools, header: "Bools begin", footer: "Bools end")
+        
+        let floats = [1.1, 2.2, 3.3].map { PrimitiveItem(type: .float, value: $0) }
+        let sectionFloats = Section(id: 3, objects: floats, header: "Floats begin", footer: "Floats end")
+        
+        return [sectionInts, sectionStrings, sectionBools, sectionFloats]
+    }()
     
     // MARK: Override methods
 
@@ -33,9 +40,8 @@ class HeaderFooterViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
-        setupTableAdapter()
         
-        adapter.update(with: items)
+        adapter.update(with: sections)
     }
     
     override func viewDidLayoutSubviews() {
@@ -46,76 +52,20 @@ class HeaderFooterViewController: UIViewController {
     
     // MARK: Private methods
     
-    private func setupTableAdapter() {
-        
-        adapter.dataSource = self
-    }
-    
     private func setupTableView() {
         
         view.addSubview(tableView)
         
-        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(PrimitiveItemCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
         
         tableView.register(
             UINib(nibName: "RedHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: redHeaderFooterIdentifier
+            forHeaderFooterViewReuseIdentifier: adapter.defaultHeaderIdentifier
         )
 
         tableView.register(
             UINib(nibName: "BlueHeaderFooterView", bundle: nil),
-            forHeaderFooterViewReuseIdentifier: blueHeaderFooterIdentifier
+            forHeaderFooterViewReuseIdentifier: adapter.defaultFooterIdentifier
         )
-    }
-}
-
-// MARK: TableSectionsSource
-
-extension HeaderFooterViewController: TableAdapterDataSource {
-
-    func tableAdapter(_ adapter: TableAdapter, headerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
-
-        switch cellObject {
-
-        case is String:
-            return "Strings start"
-
-        case is Int:
-            return "Ints start"
-            
-        case is Bool:
-            return "Bools start"
-
-        default:
-            return "Any start"
-        }
-    }
-
-    func tableAdapter(_ adapter: TableAdapter, footerObjectFor cellObject: AnyEquatable) -> AnyEquatable? {
-
-        switch cellObject {
-
-        case is String:
-            return "Strings end"
-
-        case is Int:
-            return "Ints end"
-            
-        case is Bool:
-            return "Bools end"
-
-        default:
-            return "Any end"
-        }
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, headerIdentifierFor section: Int) -> String? {
-        
-        return (section % 2 == 0) ? redHeaderFooterIdentifier : blueHeaderFooterIdentifier
-    }
-    
-    func tableAdapter(_ adapter: TableAdapter, footerIdentifierFor section: Int) -> String? {
-        
-        return (section % 2 == 0) ? redHeaderFooterIdentifier : blueHeaderFooterIdentifier
     }
 }

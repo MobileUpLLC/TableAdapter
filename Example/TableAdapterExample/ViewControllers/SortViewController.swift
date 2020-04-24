@@ -15,7 +15,7 @@ class SortViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter(tableView: tableView, sender: self)
+    private lazy var adapter = ConfigCellTableAdapter<Float, Int, String>(tableView: tableView)
     
     private let itemsCount = 50
     
@@ -46,10 +46,17 @@ class SortViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        adapter.update(with: sorter.currentItems, animated: false)
+        update(items: sorter.currentItems, animated: false)
     }
     
     // MARK: Private methods
+    
+    private func update(items: [Float], animated: Bool) {
+        
+        let section = Section(id: 0, objects: items, header: "")
+        
+        adapter.update(with: [section], animated: animated)
+    }
     
     private func setupTableView() {
         
@@ -86,7 +93,7 @@ class SortViewController: UIViewController {
             sorter.refresh()
         }
         
-        adapter.update(with: sorter.currentItems, animated: true)
+        update(items: sorter.currentItems, animated: true)
     }
     
     private func sort() {
@@ -95,7 +102,7 @@ class SortViewController: UIViewController {
         
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: true) { (timer) in
             
-            self.adapter.update(with: self.sorter.nextStepSorted())
+            self.update(items: self.sorter.nextStepSorted(), animated: true)
             
             if self.sorter.isSorted {
                 
@@ -104,72 +111,5 @@ class SortViewController: UIViewController {
                 timer.invalidate()
             }
         }
-    }
-}
-
-// MARK: ColorCell
-
-class ColorCell: UITableViewCell, Configurable {
-    
-    func setup(with object: Float) {
-        
-        backgroundColor = UIColor(hue: CGFloat(object), saturation: 1.0, brightness: 1.0, alpha: 1.0)
-    }
-}
-
-// MARK: SortUtil
-
-final class SortUtil<T: Comparable> {
-    
-    // MARK: Private properties
-    
-    private let originItems: [T]
-    
-    private var items: [T]
-    private var currentIndex: Int
-    
-    // MARK: Public properties
-    
-    var currentItems: [T] {
-        
-        return items
-    }
-    
-    var isSorted: Bool {
-        
-        return currentIndex >= items.count
-    }
-    
-    // MARK: Public methods
-    
-    init(items: [T]) {
-        
-        self.items = items
-        originItems = items
-        currentIndex = 1
-    }
-    
-    func refresh() {
-        
-        items = originItems
-        currentIndex = 1
-    }
-    
-    func nextStepSorted() -> [T] {
-        
-        let item = items[currentIndex]
-        var index = currentIndex - 1
-        
-        while index >= 0 && item < items[index] {
-            
-            items[index + 1] = items[index]
-            items[index] = item
-            
-            index -= 1
-        }
-        
-        currentIndex += 1
-        
-        return items
     }
 }

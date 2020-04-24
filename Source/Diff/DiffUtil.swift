@@ -7,19 +7,64 @@
 
 import Foundation
 
+//struct SymbolEntry {
+//
+//    let key: Hashable
+//    let oc: Int
+//    let nc: Int
+//    let onlo: Int
+//}
+//
+//typealias Position = Int
+//
+//enum Entry {
+//
+//    case symbol(s: SymbolEntry)
+//    case position(p: Position)
+//}
+
 enum DiffError: Error {
-    
+
     case duplicates
 }
 
-public class DiffUtil {
+public class DiffUtil<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
+    
+    typealias Sec = Section<ItemType, SectionType, HeaderType>
     
     // MARK: Private methods
     
+//    private static func calculatePhDiff(
+//
+//        form oldObjects: [Hashable],
+//        to newObjects: [Hashable]
+//
+//    ) -> IndexSetDiff? {
+//
+//        var symbolTable: [SymbolEntry] = []
+//        var oa: [Entry] = []
+//        var na: [Entry] = []
+//
+//        // Pass 1.
+//        for (i, obj) in oldObjects.enumerated() {
+//
+//        }
+//
+//        // Pass 2.
+//        for (j, obj) in newObjects.enumerated() {
+//
+//        }
+//
+//        // Pass 3.
+//
+//
+//        return nil
+//    }
+    
     private static func calculateSectionsDiff(
         
-        from oldObjects: [AnyEquatable],
-        to newObjects: [AnyEquatable]
+        from oldObjects: [Sec],
+        to newObjects: [Sec]
         
     ) -> IndexSetDiff {
         
@@ -31,7 +76,7 @@ public class DiffUtil {
         
         for (newIdx, newObject) in newObjects.enumerated() {
             
-            if let oldIdx = oldObjects.firstIndex(where: { newObject.equal(any: $0) }) {
+            if let oldIdx = oldObjects.firstIndex(where: { newObject == $0 }) {
                 
                 deletes.remove(oldIdx)
                 
@@ -51,8 +96,8 @@ public class DiffUtil {
     
     private static func calculateRowsDiff(
         
-        from oldSections: [Section],
-        to newSections: [Section]
+        from oldSections: [Sec],
+        to newSections: [Sec]
         
     ) -> IndexPathDiff {
         
@@ -91,11 +136,14 @@ public class DiffUtil {
         return IndexPathDiff(inserts: rowInserts, moves: rowMoves, deletes: rowDeletes)
     }
     
-    private static func getIndexPath(for object: AnyEquatable, in groups: [Section]) -> IndexPath? {
+    private static func getIndexPath(
+        for object: ItemType,
+        in groups: [Sec]
+    ) -> IndexPath? {
         
         for (groupIdx, group) in groups.enumerated() {
             
-            if let objectIdx = group.objects.firstIndex(where: { object.equal(any: $0) }) {
+            if let objectIdx = group.objects.firstIndex(where: { object == $0 }) {
                 
                 return IndexPath(row: objectIdx, section: groupIdx)
             }
@@ -104,7 +152,7 @@ public class DiffUtil {
         return nil
     }
     
-    private static func checkDuplicates(in sections: [Section]) -> Bool {
+    private static func checkDuplicates(in sections: [Sec]) -> Bool {
         
         let allObjects = sections.flatMap { $0.objects }
         
@@ -112,7 +160,7 @@ public class DiffUtil {
             
             for j in i+1..<allObjects.count {
                 
-                if allObjects[i].equal(any: allObjects[j]) {
+                if allObjects[i] == allObjects[j] {
                     
                     return true
                 }
@@ -124,7 +172,10 @@ public class DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateDiff(from oldSections: [Section], to newSections: [Section]) throws -> Diff {
+    static func calculateDiff(
+        from oldSections: [Sec],
+        to newSections: [Sec]
+    ) throws -> Diff<ItemType, SectionType, HeaderType> {
         
         guard
             checkDuplicates(in: oldSections) == false,
@@ -138,11 +189,11 @@ public class DiffUtil {
         let sectionsDiff = calculateSectionsDiff(from: oldSections, to: newSections)
         
         // Build intermediate sections data.
-        var intermediateSections: [Section] = []
+        var intermediateSections: [Sec] = []
         
         for newSection in newSections {
             
-            let oldSection = oldSections.first(where: { $0.equal(any: newSection) })
+            let oldSection = oldSections.first(where: { $0 == newSection })
             
             intermediateSections.append(oldSection ?? newSection)
         }

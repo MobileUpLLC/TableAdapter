@@ -16,5 +16,5 @@ Pod::Spec.new do |spec|
   spec.swift_version = '4.0'
   
   spec.source = { :git => 'https://gitlab.com/mobileup/mobileup/mu-libs.git', :tag => spec.version.to_s }
-  spec.source_files  = "Source/"
+  spec.source_files  = "Source/", "Source/**/*.{swift}"
 end

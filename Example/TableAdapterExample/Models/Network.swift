@@ -9,6 +9,16 @@
 import Foundation
 import TableAdapter
 
+// MARK: Item
+
+enum Item: Hashable {
+    
+    case net(Network)
+    case config(String)
+}
+
+// MARK: Network
+
 struct Network {
     
     // MARK: Public properties
@@ -18,9 +28,9 @@ struct Network {
     let identifier = UUID()
 }
 
-// MARK: AnyDifferentiable
+// MARK: Hashable
 
-extension Network: Equatable, AnyEquatable {
+extension Network: Hashable {
     
     static func == (lhs: Network, rhs: Network) -> Bool {
         
