@@ -29,6 +29,7 @@ enum DiffError: Error {
 
     case duplicates
     case invalidItemsCount(String)
+    case unknown(String)
 }
 
 public class DiffUtil {
@@ -38,7 +39,7 @@ public class DiffUtil {
         form oldItems: [T],
         to newItems: [T]
 
-    ) -> IndexSetDiff {
+    ) throws -> IndexSetDiff {
 
         var symbolTable: [T: SymbolEntry] = [:]
         
@@ -90,14 +91,18 @@ public class DiffUtil {
             case .pointer(let p):
                 if let symbolEntry = symbolTable[p], symbolEntry.isUnque {
                     
-                    na[i] = .position(p: symbolEntry.onlo!)
-                    oa[symbolEntry.onlo!] = .position(p: i)
+                    guard let olno = symbolEntry.onlo else {
+                        
+                        throw DiffError.unknown("OLNO sholuld be specified for unique pointer entry in symbol table")
+                    }
+                    
+                    na[i] = .position(p: olno)
+                    oa[olno] = .position(p: i)
                 }
                 
                 
             case .position(_):
-                assertionFailure("No positions here")
-                break
+                throw DiffError.unknown("No position entry should be in NA on 3 pass")
             }
         }
         
@@ -113,6 +118,7 @@ public class DiffUtil {
             deletes: IndexSet()
         )
         
+        // Insets & Moves
         
         for (i, entry) in na.enumerated() {
             
@@ -130,6 +136,8 @@ public class DiffUtil {
                 }
             }
         }
+        
+        // Deletes
         
         for (j, entry) in oa.enumerated() {
             

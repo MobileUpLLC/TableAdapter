@@ -25,7 +25,7 @@ public class SectionedDiffUtil: DiffUtil {
         
         for i in 0..<oldSections.count {
             
-            let indexSetDiff = calculateDiff(form: oldSections[i].items, to: newSections[i].items)
+            let indexSetDiff = try calculateDiff(form: oldSections[i].items, to: newSections[i].items)
             
             let indexPathDiff = indexSetDiff.convertToIndexPathDiff(section: i)
             
@@ -64,7 +64,7 @@ public class SectionedDiffUtil: DiffUtil {
         
     ) throws -> Diff<ItemType, SectionType, HeaderType> {
         
-        let sectionsDiff = calculateDiff(form: oldSections, to: newSections)
+        let sectionsDiff = try calculateDiff(form: oldSections, to: newSections)
         
         let intermediateSections = applyDiff(sectionsDiff, from: oldSections) { newSections[$0] }
         

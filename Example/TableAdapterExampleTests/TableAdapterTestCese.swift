@@ -29,21 +29,28 @@ class TableAdapterTestCase: XCTestCase {
     
     func check<T: Hashable>(old: [T], new: [T]) {
         
-        let diff = DiffUtil.calculateDiff(form: old, to: new)
-        
-        let newDiffed = DiffUtil.applyDiff(diff, from: old) { new[$0] }
-        
-        let msg = """
-        Original new and diffed new mismatch.
+        do {
+            
+            let diff = try DiffUtil.calculateDiff(form: old, to: new)
+            
+            let newDiffed = DiffUtil.applyDiff(diff, from: old) { new[$0] }
+            
+            let msg = """
+            Original new and diffed new mismatch.
 
-        Old:    \(old)
-        New:    \(new)
-        Diffed: \(newDiffed)
-        
-        Diff: \(diff)
-        """
-        print(msg)
-        
-        XCTAssert(newDiffed == new, msg)
+            Old:    \(old)
+            New:    \(new)
+            Diffed: \(newDiffed)
+            
+            Diff: \(diff)
+            """
+            print(msg)
+            
+            XCTAssert(newDiffed == new, msg)
+            
+        } catch {
+            
+            XCTAssert(false, "During calculationd diff an error occured: \(error)")
+        }
     }
 }
