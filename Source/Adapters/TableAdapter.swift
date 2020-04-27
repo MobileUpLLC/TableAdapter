@@ -113,7 +113,7 @@ open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: A
     
     public func getItem(for indexPath: IndexPath) -> ItemType {
         
-        return sections[indexPath.section].objects[indexPath.row]
+        return sections[indexPath.section].items[indexPath.row]
     }
     
     
@@ -126,7 +126,7 @@ open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: A
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return sections[section].objects.count
+        return sections[section].items.count
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

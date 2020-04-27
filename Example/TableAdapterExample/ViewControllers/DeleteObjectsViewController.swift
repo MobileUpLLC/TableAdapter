@@ -55,7 +55,7 @@ extension DeleteObjectsViewController: TableAdapterDelegate {
         
         var sections = adapter.currentSections
         
-        sections[0].objects.removeAll(where: { $0 == object })
+        sections[0].items.removeAll(where: { $0 == object })
         
         adapter.update(with: sections)
     }

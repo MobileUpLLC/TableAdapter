@@ -13,7 +13,7 @@ public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any
     
     public var id: SectionType
     
-    public var objects: [ItemType]
+    public var items: [ItemType]
     
     public let header: HeaderType?
     public let footer: HeaderType?
@@ -32,7 +32,7 @@ public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any
         footerIdentifier: String? = nil
     ) {
         self.id = id
-        self.objects = objects
+        self.items = objects
         
         self.header = header
         self.footer = footer
