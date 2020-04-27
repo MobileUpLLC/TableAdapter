@@ -67,4 +67,12 @@ class TableAdapterExampleTests: TableAdapterTestCase {
             check(old: old, new: new)
         }        
     }
+    
+    func testDuplicates() {
+        
+        let old = [1, 3, 4, 3, 3, 2]
+        let new = [1, 4]
+        
+        check(old: old, new: new)
+    }
 }

@@ -15,9 +15,9 @@ class DeleteObjectsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = SupplementaryTableAdapter<Int, Int, String>(tableView: tableView, delegate: self)
+    private lazy var adapter = SupplementaryTableAdapter<Int, Int, String>(tableView: tableView)
     
-    private let items: [Int] = [1, 2, 3, 4, 5]
+    private let items: [Int] = [1, 1, 2, 3, 4, 5]
     
     // MARK: Override methods
 
@@ -25,6 +25,15 @@ class DeleteObjectsViewController: UIViewController {
         super.viewDidLoad()
 
         setupTableView()
+        
+        adapter.cellDidSelectHandler = { (table, indexPath, item) in
+            
+            var sections = self.adapter.currentSections
+            
+            sections[indexPath.section].items.remove(at: indexPath.row)
+            
+            self.adapter.update(with: sections)
+        }
         
         let section = Section(id: 1, objects: items, header: "")
         
@@ -44,19 +53,5 @@ class DeleteObjectsViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
-    }
-}
-
-// MARK: TableAdapterDelegate
-
-extension DeleteObjectsViewController: TableAdapterDelegate {
-    
-    func tableAdapter(_ adapter: TableAdapter<Int, Int, String>, didSelect object: Int) {
-        
-        var sections = adapter.currentSections
-        
-        sections[0].items.removeAll(where: { $0 == object })
-        
-        adapter.update(with: sections)
     }
 }

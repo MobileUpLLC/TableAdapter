@@ -45,7 +45,7 @@ open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: A
         
         do {
 
-            let diff = try DiffUtil.calculateDiff(from: sections, to: newSections)
+            let diff = try SectionedDiffUtil.calculateSectionDiff(from: sections, to: newSections)
 
             updateTableView(with: diff)
 

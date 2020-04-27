@@ -29,9 +29,9 @@ class TableAdapterTestCase: XCTestCase {
     
     func check<T: Hashable>(old: [T], new: [T]) {
         
-        let diff = DiffUtil<Int, Int, Any>.calculatePhDiff(form: old, to: new)
+        let diff = DiffUtil.calculateDiff(form: old, to: new)
         
-        let newDiffed = DiffUtil<Int, Int, Any>.applyDiff(diff, from: old) { new[$0] }
+        let newDiffed = DiffUtil.applyDiff(diff, from: old) { new[$0] }
         
         let msg = """
         Original new and diffed new mismatch.
@@ -42,6 +42,7 @@ class TableAdapterTestCase: XCTestCase {
         
         Diff: \(diff)
         """
+        print(msg)
         
         XCTAssert(newDiffed == new, msg)
     }
