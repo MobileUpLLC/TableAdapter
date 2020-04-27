@@ -5,3 +5,10 @@ target 'TableAdapterExample' do
 	
   pod 'TableAdapter', :path => '../'
 end
+
+
+target 'TableAdapterExampleTests' do
+  use_frameworks!
+  
+  pod 'TableAdapter', :path => '../'
+end
