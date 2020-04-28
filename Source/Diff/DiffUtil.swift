@@ -8,21 +8,29 @@
 import Foundation
 
 struct SymbolEntry {
-
-    var oc: Int
-    var nc: Int
-    var onlo: Int?
     
-    var isUnque: Bool {
+    /// Number of item copies in Old file.
+    var oc: Int
+    
+    /// Number of item copies in New file.
+    var nc: Int
+    
+    /// Item position in Old file.
+    var olno: Int?
+    
+    var isMutualUnqueLine: Bool {
         
-        return oc == 1 && nc == 1
+        return oc == 1 && oc == nc
     }
 }
 
 enum Entry<T: Hashable> {
-
-    case pointer(p: T)
-    case position(p: Int)
+    
+    // Pointer to item SymbolTable entry.
+    case stPointer(p: T)
+    
+    // Item position in oppposite file. For N it's position in O, and back.
+    case oppositePosition(p: Int)
 }
 
 enum DiffError: Error {
@@ -46,8 +54,9 @@ public class DiffUtil {
         var na: [Entry<T>] = []
         var oa: [Entry<T>] = []
 
-        // Pass 1.
-        for (i, item) in newItems.enumerated() {
+        // Pass 1
+        
+        for item in newItems {
             
             if var symbolEntry = symbolTable[item] {
                 
@@ -57,58 +66,95 @@ public class DiffUtil {
                 
             } else {
                 
-                symbolTable[item] = SymbolEntry(oc: 0, nc: 1, onlo: nil)
+                symbolTable[item] = SymbolEntry(oc: 0, nc: 1, olno: nil)
             }
             
-            na.append(.pointer(p: item))
+            na.append(.stPointer(p: item))
         }
 
-        // Pass 2.
+        // Pass 2
+        
         for (j, item) in oldItems.enumerated() {
             
             if var symbolEntry = symbolTable[item] {
                 
                 symbolEntry.oc += 1
-                symbolEntry.onlo = j
+                symbolEntry.olno = j
                 
                 symbolTable[item] = symbolEntry
                 
             } else {
                 
-                symbolTable[item] = SymbolEntry(oc: 1, nc: 0, onlo: j)
+                symbolTable[item] = SymbolEntry(oc: 1, nc: 0, olno: j)
             }
             
-            
-            oa.append(.pointer(p: item))
+            oa.append(.stPointer(p: item))
         }
         
-
-        // Pass 3.
+        // Pass 3
+        
         for (i, entry) in na.enumerated() {
             
             switch entry {
                 
-            case .pointer(let p):
-                if let symbolEntry = symbolTable[p], symbolEntry.isUnque {
+            case .stPointer(let p):
+                if let symbolEntry = symbolTable[p], symbolEntry.isMutualUnqueLine {
                     
-                    guard let olno = symbolEntry.onlo else {
+                    guard let olno = symbolEntry.olno else {
                         
-                        throw DiffError.unknown("OLNO sholuld be specified for unique pointer entry in symbol table")
+                        throw DiffError.unknown("OLNO sholuld be specified for pointer entry `\(p)` in symbol table")
                     }
                     
-                    na[i] = .position(p: olno)
-                    oa[olno] = .position(p: i)
+                    na[i] = .oppositePosition(p: olno)
+                    oa[olno] = .oppositePosition(p: i)
                 }
                 
-                
-            case .position(_):
-                throw DiffError.unknown("No position entry should be in NA on 3 pass")
+            case .oppositePosition(let p):
+                throw DiffError.unknown("No position entry `\(p)` should be in NA array on 3 pass")
             }
         }
         
         // Pass 4
         
+        for i in 0..<na.count {
+            
+            if
+                case let Entry.oppositePosition(p) = na[i],
+                case let Entry.oppositePosition(j) = oa[p],
+                i == j,
+                
+                na.count > i + 1,
+                oa.count > j + 1,
+                case let Entry.stPointer(ip) = na[i + 1],
+                case let Entry.stPointer(jp) = oa[j + 1],
+                ip == jp
+            {
+                na[i + 1] = .oppositePosition(p: j + 1)
+                oa[j + 1] = .oppositePosition(p: i + 1)
+            }
+        }
+        
         // Pass 5
+        
+        for i in (0..<na.count).reversed() {
+            
+            if
+                case let Entry.oppositePosition(p) = na[i],
+                case let Entry.oppositePosition(j) = oa[p],
+                i == j,
+                
+                i > 0,
+                j > 0,
+                na.count > i,
+                oa.count > j,
+                case let Entry.stPointer(ip) = na[i - 1],
+                case let Entry.stPointer(jp) = oa[j - 1],
+                ip == jp
+            {
+                na[i - 1] = .oppositePosition(p: j - 1)
+                oa[j - 1] = .oppositePosition(p: i - 1)
+            }
+        }
         
         // Collect Result
         
@@ -124,15 +170,14 @@ public class DiffUtil {
             
             switch entry {
                 
-            case .pointer(let p):
+            case .stPointer(_):
                 result.inserts.insert(i)
                 
-            case .position(let p):
+            case .oppositePosition(let p):
                 
                 if p != i {
                     
-                    let m = Move<Int>(from: p, to: i)
-                    result.moves.append(m)
+                    result.moves.append(Move<Int>(from: p, to: i))
                 }
             }
         }
@@ -143,10 +188,10 @@ public class DiffUtil {
             
             switch entry {
                 
-            case .pointer(let p):
+            case .stPointer(_):
                 result.deletes.insert(j)
                 
-            case .position(let p):
+            case .oppositePosition(_):
                 break
             }
             

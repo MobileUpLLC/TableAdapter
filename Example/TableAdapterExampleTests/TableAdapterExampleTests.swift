@@ -70,8 +70,8 @@ class TableAdapterExampleTests: TableAdapterTestCase {
     
     func testDuplicates() {
         
-        let old = [1, 3, 4, 3, 3, 2]
-        let new = [1, 4]
+        let old = [1, 1, 4, 5]
+        let new = [1, 1]
         
         check(old: old, new: new)
     }

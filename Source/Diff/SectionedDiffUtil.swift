@@ -37,24 +37,6 @@ public class SectionedDiffUtil: DiffUtil {
         return result
     }
     
-//    private static func checkDuplicates(in sections: [Sec]) -> Bool {
-//        
-//        let allObjects = sections.flatMap { $0.items }
-//        
-//        for i in 0..<allObjects.count {
-//            
-//            for j in i+1..<allObjects.count {
-//                
-//                if allObjects[i] == allObjects[j] {
-//                    
-//                    return true
-//                }
-//            }
-//        }
-//        
-//        return false
-//    }
-    
     // MARK: Public methods
     
     static func calculateSectionDiff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>(
