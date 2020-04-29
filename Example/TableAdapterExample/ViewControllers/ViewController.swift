@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sec = Section<Example, Int, String>(id: 0, objects: items)
+        let sec = Section<Example, Int, String>(id: 0, items: items)
         
         adapter.update(with: [sec])
     }

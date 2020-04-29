@@ -55,7 +55,7 @@ class MixedObjectsViewController: UIViewController {
     
     private func update(items: [PrimitiveItem], animated: Bool) {
         
-        let section = Section(id: 0, objects: items, header: "", footer: "")
+        let section = Section(id: 0, items: items, header: "", footer: "")
         
         adapter.update(with: [section], animated: animated)
     }

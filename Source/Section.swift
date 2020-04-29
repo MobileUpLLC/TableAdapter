@@ -12,7 +12,6 @@ public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any
     // MARK: Public properties
     
     public var id: SectionType
-    
     public var items: [ItemType]
     
     public let header: HeaderType?
@@ -25,14 +24,14 @@ public struct Section<ItemType: Hashable, SectionType: Hashable, HeaderType: Any
     
     public init(
         id: SectionType,
-        objects: [ItemType],
+        items: [ItemType],
         header: HeaderType? = nil,
         footer: HeaderType? = nil,
         headerIdentifier: String? = nil,
         footerIdentifier: String? = nil
     ) {
         self.id = id
-        self.items = objects
+        self.items = items
         
         self.header = header
         self.footer = footer

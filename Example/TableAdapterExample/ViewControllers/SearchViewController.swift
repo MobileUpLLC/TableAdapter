@@ -64,7 +64,7 @@ class SearchViewController: UIViewController {
     
     private func update(with items: [String], animated: Bool) {
         
-        let section = Section<String, Int, String>(id: 0, objects: items)
+        let section = Section<String, Int, String>(id: 0, items: items)
         
         adapter.update(with: [section], animated: animated)
     }

@@ -35,7 +35,7 @@ class DeleteObjectsViewController: UIViewController {
             self.adapter.update(with: sections)
         }
         
-        let section = Section(id: 1, objects: items, header: "")
+        let section = Section(id: 1, items: items, header: "")
         
         adapter.update(with: [section], animated: false)
     }
