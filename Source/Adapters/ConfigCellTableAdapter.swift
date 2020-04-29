@@ -32,31 +32,22 @@ open class ConfigCellTableAdapter<
             )
         }
     }
-
-    // MARK: Override methods
-    
-    override open func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
-    ) -> UITableViewCell {
-        
-        return dequeueConfiguredCell(forRowAt: indexPath)
-    }
     
     // MARK: Private methods
     
-    private func dequeueConfiguredCell(forRowAt indexPath: IndexPath) -> UITableViewCell {
+    private func dequeueConfiguredCell(
+        for item: ItemType,
+        at indexPath: IndexPath
+    ) -> UITableViewCell {
         
-        let cellObject = getItem(for: indexPath)
-        
-        let cellIdentifier = getCellIdetifier(for: indexPath)
+        let cellIdentifier = getCellIdetifier(for: item, at: indexPath)
         
         let cell = tableView.dequeueReusableCell(
             withIdentifier: cellIdentifier,
             for: indexPath
         )
         
-        setupConfigurableView(cell, with: cellObject)
+        setupConfigurableView(cell, with: item)
         
         return cell
     }
@@ -70,13 +61,16 @@ open class ConfigCellTableAdapter<
     ) {
         super.init(tableView: tableView, cellProvider: nil)
         
+        self.cellProvider = { (table, indexPath, item) in
+            
+            return self.dequeueConfiguredCell(for: item, at: indexPath)
+        }
+        
         self.sender = sender
         self.cellIdentifierProvider = cellIdentifierProvider
     }
     
-    open func getCellIdetifier(for indexPath: IndexPath) -> String {
-        
-        let item = getItem(for: indexPath)
+    open func getCellIdetifier(for item: ItemType, at indexPath: IndexPath) -> String {
         
         if let cellId = cellIdentifierProvider?(indexPath, item) {
         
