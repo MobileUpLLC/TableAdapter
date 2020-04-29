@@ -42,7 +42,10 @@ open class TableAdapter<
         
         do {
             
-            let diff = try SectionedDiffUtil.calculateSectionDiff(from: sections, to: newSections)
+            let diff = try SectionedDiffUtil.calculateSectionDiff(
+                from: sections,
+                to: newSections
+            )
 
             updateTable(with: diff)
 
@@ -77,16 +80,11 @@ open class TableAdapter<
     
     // MARK: Public methods
     
-    public convenience init(tableView: UITableView, cellProvider: @escaping CellProvider) {
-        
-        self.init(tableView: tableView)
-        
-        self.cellProvider = cellProvider
-    }
-    
-    public init(tableView: UITableView) {
+    public init(tableView: UITableView, cellProvider: CellProvider?) {
         
         self.tableView = tableView
+        
+        self.cellProvider = cellProvider
         
         super.init()
         
@@ -117,24 +115,43 @@ open class TableAdapter<
         return sections.count
     }
     
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    open func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         
         return sections[section].items.count
     }
     
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    open func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
+        
+        guard let provider = cellProvider else {
+            
+            assertionFailure("CellProvider not found")
+            
+            return UITableViewCell()
+        }
         
         let item = getItem(for: indexPath)
         
-        return cellProvider?(tableView, indexPath, item) ?? UITableViewCell()
+        return provider(tableView, indexPath, item)
     }
     
-    open func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    open func tableView(
+        _ tableView: UITableView,
+        titleForHeaderInSection section: Int
+    ) -> String? {
 
         return sections[section].header as? String
     }
 
-    open func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+    open func tableView(
+        _ tableView: UITableView,
+        titleForFooterInSection section: Int
+    ) -> String? {
 
         return sections[section].footer as? String
     }

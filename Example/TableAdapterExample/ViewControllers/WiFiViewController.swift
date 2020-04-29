@@ -31,18 +31,19 @@ class WiFiViewController: UIViewController {
     
     private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
         tableView: tableView,
-        sender: self
-    ) { [unowned self] (indexPath, item) -> String? in
+        sender: self,
+        cellIdentifierProvider: { [unowned self] (indexPath, item) -> String? in
         
-        switch item {
-           
-        case .net(_):
-            return self.networkCellIdentifier
-            
-        case .config(_):
-            return self.wifiSwitchCellIdentifier
+            switch item {
+               
+            case .net(_):
+                return self.networkCellIdentifier
+                
+            case .config(_):
+                return self.wifiSwitchCellIdentifier
+            }
         }
-    }
+    )
     
     private var currentNetwork: Network?
     

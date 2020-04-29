@@ -7,7 +7,11 @@
 
 import Foundation
 
-open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: ConfigCellTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
+open class SupplementaryTableAdapter<
+        ItemType: Hashable,
+        SectionType: Hashable,
+        HeaderType: Any
+    >: ConfigCellTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
     
     // MARK: Types
     
@@ -19,26 +23,39 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
     
     public var defaultHeaderIdentifier = "Header" {
         
-        didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Header reuse identifier must not be empty string") }
+        didSet {
+            assert(
+                defaultHeaderIdentifier.isEmpty == false,
+                "Header reuse identifier must not be empty string"
+            )
+        }
     }
     
     public var defaultFooterIdentifier = "Footer" {
         
-        didSet { assert(defaultHeaderIdentifier.isEmpty == false, "Footer reuse identifier must not be empty string") }
+        didSet {
+            assert(
+                defaultHeaderIdentifier.isEmpty == false,
+                "Footer reuse identifier must not be empty string"
+            )
+        }
     }
     
     // MARK: Private methods
     
-    private func dequeueConfiguredHeaderFooterView(withIdentifier id: String, object: Any?) -> UIView? {
+    private func dequeueConfiguredHeaderFooterView(
+        withIdentifier id: String,
+        configItem: Any?
+    ) -> UIView? {
         
         guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) else {
             
             return nil
         }
         
-        if let object = object {
+        if let item = configItem {
             
-            setupConfigurableView(view, with: object)
+            setupConfigurableView(view, with: item)
         }
         
         return view
@@ -56,43 +73,46 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
     
     // MARK: Public methods
     
-    public override init(tableView: UITableView) {
-        
-        super.init(tableView: tableView)
-        
-        tableView.delegate = self
-    }
-    
-    public convenience init(
+    public init(
         tableView: UITableView,
         sender: AnyObject? = nil,
         cellIdentifierProvider: CellReuseIdentifierProvider? = nil,
         cellDidSelectHandler: CellDidSelectHandler? = nil
     ) {
-        self.init(tableView: tableView)
+        super.init(
+            tableView: tableView,
+            sender: sender,
+            cellIdentifierProvider: cellIdentifierProvider
+        )
         
-        self.sender = sender
-        self.cellIdentifierProvider = cellIdentifierProvider
         self.cellDidSelectHandler = cellDidSelectHandler
+        
+        tableView.delegate = self
     }
     
     // MARK: UITableViewDelegate
     
-    open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    open func tableView(
+        _ tableView: UITableView,
+        viewForHeaderInSection section: Int
+    ) -> UIView? {
 
         return dequeueConfiguredHeaderFooterView(
 
             withIdentifier: getHeaderIdentifier(for: section),
-            object: sections[section].header
+            configItem: sections[section].header
         )
     }
 
-    open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    open func tableView(
+        _ tableView: UITableView,
+        viewForFooterInSection section: Int
+    ) -> UIView? {
 
         return dequeueConfiguredHeaderFooterView(
 
             withIdentifier: getFooterIdentifier(for: section),
-            object: sections[section].footer
+            configItem: sections[section].footer
         )
     }
     

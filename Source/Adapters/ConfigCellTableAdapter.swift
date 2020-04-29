@@ -7,7 +7,11 @@
 
 import Foundation
 
-open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: TableAdapter<ItemType, SectionType, HeaderType> {
+open class ConfigCellTableAdapter<
+        ItemType: Hashable,
+        SectionType: Hashable,
+        HeaderType: Any
+    >: TableAdapter<ItemType, SectionType, HeaderType> {
 
     // MARK: Types
     
@@ -21,12 +25,20 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
     
     public var defaultCellIdentifier = "Cell" {
         
-        didSet { assert(defaultCellIdentifier.isEmpty == false, "Cell reuse identifier must not be empty string") }
+        didSet {
+            assert(
+                defaultCellIdentifier.isEmpty == false,
+                "Cell reuse identifier must not be empty string"
+            )
+        }
     }
 
     // MARK: Override methods
     
-    override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override open func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         
         return dequeueConfiguredCell(forRowAt: indexPath)
     }
@@ -39,36 +51,26 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
         
         let cellIdentifier = getCellIdetifier(for: indexPath)
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: cellIdentifier,
+            for: indexPath
+        )
         
         setupConfigurableView(cell, with: cellObject)
         
         return cell
     }
     
-    public func setupConfigurableView(_ view: UIView, with object: Any) {
-        
-        if let view = view as? AnySenderConfigurable {
-            
-            view.anySetup(with: object, sender: sender)
-            
-        } else if let view = view as? AnyConfigurable {
-            
-            view.anySetup(with: object)
-        }
-    }
-    
     // MARK: Public methods
     
-    public convenience init(
+    public init(
         tableView: UITableView,
         sender: AnyObject? = nil,
         cellIdentifierProvider: CellReuseIdentifierProvider? = nil
     ) {
-        self.init(tableView: tableView)
+        super.init(tableView: tableView, cellProvider: nil)
         
         self.sender = sender
-        
         self.cellIdentifierProvider = cellIdentifierProvider
     }
     
@@ -83,6 +85,18 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
         } else {
             
             return defaultCellIdentifier
+        }
+    }
+    
+    public func setupConfigurableView(_ view: UIView, with object: Any) {
+        
+        if let view = view as? AnySenderConfigurable {
+            
+            view.anySetup(with: object, sender: sender)
+            
+        } else if let view = view as? AnyConfigurable {
+            
+            view.anySetup(with: object)
         }
     }
 }
