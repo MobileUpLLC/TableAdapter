@@ -35,7 +35,6 @@ enum Entry<T: Hashable> {
 
 enum DiffError: Error {
 
-    case duplicates
     case invalidItemsCount(String)
     case unknown(String)
 }
