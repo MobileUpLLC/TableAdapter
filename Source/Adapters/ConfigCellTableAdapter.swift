@@ -8,14 +8,14 @@
 import Foundation
 
 open class ConfigCellTableAdapter<
-        ItemType: Hashable,
-        SectionType: Hashable,
-        HeaderType: Any
-    >: TableAdapter<ItemType, SectionType, HeaderType> {
+        Item: Hashable,
+        SecitonId: Hashable,
+        Header: Any
+    >: TableAdapter<Item, SecitonId, Header> {
 
     // MARK: Types
     
-    public typealias CellReuseIdentifierProvider = (IndexPath, ItemType) -> String?
+    public typealias CellReuseIdentifierProvider = (IndexPath, Item) -> String?
     
     // MARK: Public properties
     
@@ -36,7 +36,7 @@ open class ConfigCellTableAdapter<
     // MARK: Private methods
     
     private func dequeueConfiguredCell(
-        for item: ItemType,
+        for item: Item,
         at indexPath: IndexPath
     ) -> UITableViewCell {
         
@@ -52,7 +52,7 @@ open class ConfigCellTableAdapter<
         return cell
     }
     
-    private func getCellIdetifier(for item: ItemType, at indexPath: IndexPath) -> String {
+    private func getCellIdetifier(for item: Item, at indexPath: IndexPath) -> String {
         
         return cellIdentifierProvider?(indexPath, item) ?? defaultCellIdentifier
     }

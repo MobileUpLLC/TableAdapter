@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Diff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any> {
+struct Diff<Item: Hashable, SectionId: Hashable, Header: Any> {
     
-    typealias Sec = Section<ItemType, SectionType, HeaderType>
+    typealias SectionType = Section<Item, SectionId, Header>
     
     let sections: IndexSetDiff
     let rows: IndexPathDiff
     
-    let intermediateData: [Sec]
-    let resultData: [Sec]
+    let intermediateData: [SectionType]
+    let resultData: [SectionType]
 }
 
 // MARK: CustomStringConvertible

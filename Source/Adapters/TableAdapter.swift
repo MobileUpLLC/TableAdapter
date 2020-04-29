@@ -8,20 +8,20 @@
 import UIKit
 
 open class TableAdapter<
-        ItemType: Hashable,
-        SectionType: Hashable,
-        HeaderType: Any
+        Item: Hashable,
+        SectionId: Hashable,
+        Header: Any
     >: NSObject, UITableViewDataSource {
     
     // MARK: Types
     
-    public typealias CellProvider = (UITableView, IndexPath, ItemType) -> UITableViewCell
+    public typealias CellProvider = (UITableView, IndexPath, Item) -> UITableViewCell
     
-    public typealias Sec = Section<ItemType, SectionType, HeaderType>
+    public typealias SecionType = Section<Item, SectionId, Header>
         
     // MARK: Public properties
     
-    public private(set) var sections: [Sec] = []
+    public private(set) var sections: [SecionType] = []
     
     public var cellProvider: CellProvider?
     
@@ -31,14 +31,14 @@ open class TableAdapter<
     
     // MARK: Private methods
     
-    private func reloadTable(with newSections: [Sec]) {
+    private func reloadTable(with newSections: [SecionType]) {
         
         sections = newSections
         
         tableView.reloadData()
     }
     
-    private func updateTable(with newSections: [Sec]) {
+    private func updateTable(with newSections: [SecionType]) {
         
         do {
             
@@ -57,7 +57,7 @@ open class TableAdapter<
         }
     }
     
-    private func updateTable(with diff: Diff<ItemType, SectionType, HeaderType>) {
+    private func updateTable(with diff: Diff<Item, SectionId, Header>) {
         
         tableView.makeBatchUpdates {
             
@@ -91,7 +91,7 @@ open class TableAdapter<
         tableView.dataSource = self
     }
 
-    open func update(with sections: [Sec], animated: Bool = true) {
+    open func update(with sections: [SecionType], animated: Bool = true) {
         
         if animated {
             
@@ -103,7 +103,7 @@ open class TableAdapter<
         }
     }
     
-    public func getItem(for indexPath: IndexPath) -> ItemType {
+    public func getItem(for indexPath: IndexPath) -> Item {
         
         return sections[indexPath.section].items[indexPath.row]
     }

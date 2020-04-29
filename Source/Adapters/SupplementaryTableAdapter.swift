@@ -8,14 +8,14 @@
 import Foundation
 
 open class SupplementaryTableAdapter<
-        ItemType: Hashable,
-        SectionType: Hashable,
-        HeaderType: Any
-    >: ConfigCellTableAdapter<ItemType, SectionType, HeaderType>, UITableViewDelegate {
+        Item: Hashable,
+        SectionId: Hashable,
+        Header: Any
+    >: ConfigCellTableAdapter<Item, SectionId, Header>, UITableViewDelegate {
     
     // MARK: Types
     
-    public typealias CellDidSelectHandler = (UITableView, IndexPath, ItemType) -> Void
+    public typealias CellDidSelectHandler = (UITableView, IndexPath, Item) -> Void
     
     // MARK: Public properties
     

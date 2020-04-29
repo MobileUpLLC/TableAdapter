@@ -7,12 +7,19 @@
 
 import Foundation
 
-public class SectionedDiffUtil: DiffUtil {
+public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable, Header: Any>: DiffUtil {
     
-    private static func calculateRowsDiff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>(
+    // MARK: Types
+    
+    typealias DiffType = Diff<Item, SectionId, Header>
+    typealias SectionType = DiffType.SectionType
+    
+    // MARK: Private methods
+    
+    private static func calculateRowsDiff(
         
-        from oldSections: [Section<ItemType, SectionType, HeaderType>],
-        to newSections: [Section<ItemType, SectionType, HeaderType>]
+        from oldSections: [SectionType],
+        to newSections: [SectionType]
         
     ) throws -> IndexPathDiff {
         
@@ -39,12 +46,12 @@ public class SectionedDiffUtil: DiffUtil {
     
     // MARK: Public methods
     
-    static func calculateSectionDiff<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>(
+    static func calculateSectionDiff(
         
-        from oldSections: [Section<ItemType, SectionType, HeaderType>],
-        to newSections: [Section<ItemType, SectionType, HeaderType>]
+        from oldSections: [SectionType],
+        to newSections: [SectionType]
         
-    ) throws -> Diff<ItemType, SectionType, HeaderType> {
+    ) throws -> DiffType {
         
         let sectionsDiff = try calculateDiff(form: oldSections, to: newSections)
         
@@ -59,5 +66,4 @@ public class SectionedDiffUtil: DiffUtil {
             resultData: newSections
         )
     }
-    
 }
