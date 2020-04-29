@@ -34,11 +34,17 @@ public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable, Header: Any>
             
             let indexSetDiff = try calculateDiff(form: oldSections[i].items, to: newSections[i].items)
             
-            let indexPathDiff = indexSetDiff.convertToIndexPathDiff(section: i)
+            result.inserts.append(
+                contentsOf: indexSetDiff.inserts.convertToIndexPaths(section: i)
+            )
             
-            result.inserts.append(contentsOf: indexPathDiff.inserts)
-            result.moves.append(contentsOf: indexPathDiff.moves)
-            result.deletes.append(contentsOf: indexPathDiff.deletes)
+            result.moves.append(
+                contentsOf: indexSetDiff.moves.convertToIndexPaths(section: i)
+            )
+            
+            result.deletes.append(
+                contentsOf: indexSetDiff.deletes.convertToIndexPaths(section: i)
+            )
         }
         
         return result

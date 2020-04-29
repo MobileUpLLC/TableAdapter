@@ -14,26 +14,6 @@ public struct IndexSetDiff {
     public var deletes: IndexSet
 }
 
-extension IndexSetDiff {
-    
-    func convertToIndexPathDiff(section: Int) -> IndexPathDiff {
-        
-        let m = moves.map {
-            
-            Move<IndexPath>(
-                from: IndexPath(row: $0.from, section: section),
-                to: IndexPath(row: $0.to, section: section)
-            )
-        }
-        
-        return IndexPathDiff(
-            inserts: inserts.convertToIndexPaths(section: section),
-            moves: m,
-            deletes: deletes.convertToIndexPaths(section: section)
-        )
-    }
-}
-
 // MARK: CustomStringConvertible
 
 extension IndexSetDiff: CustomStringConvertible {
@@ -47,6 +27,27 @@ extension IndexSetDiff: CustomStringConvertible {
         Moves: \(moves)
             
         """
+    }
+}
+
+// MARK: Convert To IndexPaths
+
+extension Move where T == Int {
+    
+    func convertToIndexPath(section: Int) -> Move<IndexPath> {
+        
+        return Move<IndexPath>(
+            from: IndexPath(row: from, section: section),
+            to: IndexPath(row: to, section: section)
+        )
+    }
+}
+
+extension Array where Element == Move<Int> {
+    
+    func convertToIndexPaths(section: Int) -> [Move<IndexPath>] {
+        
+        return map { $0.convertToIndexPath(section: section) }
     }
 }
 

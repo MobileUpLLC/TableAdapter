@@ -7,32 +7,6 @@
 
 import Foundation
 
-struct SymbolEntry {
-    
-    /// Number of item copies in Old file.
-    var oc: Int
-    
-    /// Number of item copies in New file.
-    var nc: Int
-    
-    /// Item position in Old file.
-    var olno: Int?
-    
-    var isMutualUnqueLine: Bool {
-        
-        return oc == 1 && oc == nc
-    }
-}
-
-enum Entry<T: Hashable> {
-    
-    // Pointer to item SymbolTable entry.
-    case stPointer(p: T)
-    
-    // Item position in oppposite file. For N it's position in O, and back.
-    case oppositePosition(p: Int)
-}
-
 enum DiffError: Error {
 
     case invalidItemsCount(String)

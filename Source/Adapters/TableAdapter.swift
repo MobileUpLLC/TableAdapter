@@ -7,11 +7,8 @@
 
 import UIKit
 
-open class TableAdapter<
-        Item: Hashable,
-        SectionId: Hashable,
-        Header: Any
-    >: NSObject, UITableViewDataSource {
+open class TableAdapter<Item: Hashable,SectionId: Hashable, Header: Any>
+    : NSObject, UITableViewDataSource {
     
     // MARK: Types
     

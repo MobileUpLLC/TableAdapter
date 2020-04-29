@@ -7,11 +7,8 @@
 
 import Foundation
 
-open class ConfigCellTableAdapter<
-        Item: Hashable,
-        SecitonId: Hashable,
-        Header: Any
-    >: TableAdapter<Item, SecitonId, Header> {
+open class ConfigCellTableAdapter<Item: Hashable, SecitonId: Hashable, Header: Any>
+    : TableAdapter<Item, SecitonId, Header> {
 
     // MARK: Types
     
