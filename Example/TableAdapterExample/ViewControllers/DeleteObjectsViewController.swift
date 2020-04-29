@@ -28,7 +28,7 @@ class DeleteObjectsViewController: UIViewController {
         
         adapter.cellDidSelectHandler = { (table, indexPath, item) in
             
-            var sections = self.adapter.currentSections
+            var sections = self.adapter.sections
             
             sections[indexPath.section].items.remove(at: indexPath.row)
             

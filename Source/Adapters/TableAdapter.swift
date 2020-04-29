@@ -7,79 +7,73 @@
 
 import UIKit
 
-open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: Any>: NSObject, UITableViewDataSource {
+open class TableAdapter<
+        ItemType: Hashable,
+        SectionType: Hashable,
+        HeaderType: Any
+    >: NSObject, UITableViewDataSource {
     
     // MARK: Types
     
     public typealias CellProvider = (UITableView, IndexPath, ItemType) -> UITableViewCell
     
     public typealias Sec = Section<ItemType, SectionType, HeaderType>
-    
-    // MARK: Private properties
-    
-    private(set) var sections: [Sec] = []
-    
-    private var cellProvider: CellProvider?
-    
+        
     // MARK: Public properties
+    
+    public private(set) var sections: [Sec] = []
+    
+    public var cellProvider: CellProvider?
     
     public let tableView: UITableView
     
     public var animationType: UITableView.RowAnimation = .fade
     
-    open var currentSections: [Sec] {
-        
-        return sections
-    }
-    
     // MARK: Private methods
     
-    private func updateTable(with newSections: [Sec]) {
+    private func reloadTable(with newSections: [Sec]) {
         
         sections = newSections
         
         tableView.reloadData()
     }
     
-    private func updateTableAnimated(with newSections: [Sec]) {
+    private func updateTable(with newSections: [Sec]) {
         
         do {
-
+            
             let diff = try SectionedDiffUtil.calculateSectionDiff(from: sections, to: newSections)
 
-            updateTableView(with: diff)
-
-        } catch DiffError.duplicates {
-
-            print("Duplicates found during updating. Updates will be will be performed without animation")
-
-            updateTable(with: newSections)
+            updateTable(with: diff)
 
         } catch {
+            
+            print("Animated table update failed. Error: \(error)")
 
             updateTable(with: newSections)
         }
     }
     
-    private func updateTableView(with diff: Diff<ItemType, SectionType, HeaderType>) {
+    private func updateTable(with diff: Diff<ItemType, SectionType, HeaderType>) {
+        
+        tableView.makeBatchUpdates {
+            
+            sections = diff.intermediateData
 
-        sections = diff.intermediateData
+            tableView.insertSections(diff.sections.inserts, with: animationType)
+            tableView.deleteSections(diff.sections.deletes, with: animationType)
+            diff.sections.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
+        }
+        
+        tableView.makeBatchUpdates {
+            
+            sections = diff.resultData
 
-        tableView.beginUpdates()
-        tableView.insertSections(diff.sections.inserts, with: animationType)
-        tableView.deleteSections(diff.sections.deletes, with: animationType)
-        diff.sections.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
-        tableView.endUpdates()
-
-        sections = diff.resultData
-
-        tableView.beginUpdates()
-        tableView.deleteRows(at: diff.rows.deletes, with: animationType)
-        tableView.insertRows(at: diff.rows.inserts, with: animationType)
-        diff.rows.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
-        tableView.endUpdates()
+            tableView.deleteRows(at: diff.rows.deletes, with: animationType)
+            tableView.insertRows(at: diff.rows.inserts, with: animationType)
+            diff.rows.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
+        }
     }
-    
     
     // MARK: Public methods
     
@@ -103,11 +97,11 @@ open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: A
         
         if animated {
             
-            updateTableAnimated(with: sections)
+            updateTable(with: sections)
         
         } else {
             
-            updateTable(with: sections)
+            reloadTable(with: sections)
         }
     }
     
@@ -115,7 +109,6 @@ open class TableAdapter<ItemType: Hashable, SectionType: Hashable, HeaderType: A
         
         return sections[indexPath.section].items[indexPath.row]
     }
-    
     
     // MARK: UITableViewDataSource
     

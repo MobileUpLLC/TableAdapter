@@ -96,7 +96,7 @@ class HeaderFooterViewController: UIViewController {
     
     @objc private func updateSections() {
         
-        if adapter.currentSections.count == 3 {
+        if adapter.sections.count == 3 {
             
             adapter.update(with: sections)
             
