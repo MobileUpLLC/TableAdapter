@@ -13,10 +13,6 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
     
     public typealias CellDidSelectHandler = (UITableView, IndexPath, ItemType) -> Void
     
-    // MARK: Private properties
-    
-    private weak var delegate: AnyTableAdapterDelegate?
-    
     // MARK: Public properties
     
     public var cellDidSelectHandler: CellDidSelectHandler?
@@ -80,41 +76,6 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
         self.cellDidSelectHandler = cellDidSelectHandler
     }
     
-    public convenience init<Delegate: TableAdapterDelegate>(
-        tableView: UITableView,
-        sender: AnyObject? = nil,
-        delegate: Delegate? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
-    ) {
-        self.init(
-            tableView: tableView,
-            sender: sender,
-            cellIdentifierProvider: cellIdentifierProvider
-        )
-        
-        self.delegate = delegate
-    }
-    
-    public convenience init<Delegate: TableAdapterDelegate, DataSource: TableAdapterDataSource>(
-        tableView: UITableView,
-        sender: AnyObject? = nil,
-        dataSource: DataSource? = nil,
-        delegate: Delegate? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil,
-        cellDidSelectHandler: CellDidSelectHandler? = nil
-    ) {
-        self.init(
-            tableView: tableView,
-            sender: sender,
-            dataSource: dataSource,
-            cellIdentifierProvider: cellIdentifierProvider
-        )
-        
-        self.cellDidSelectHandler = cellDidSelectHandler
-        self.delegate = delegate
-    }
-    
-    
     // MARK: UITableViewDelegate
     
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -137,15 +98,11 @@ open class SupplementaryTableAdapter<ItemType: Hashable, SectionType: Hashable, 
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let item = getItem(for: indexPath)
-        
         if let handler = cellDidSelectHandler {
             
+            let item = getItem(for: indexPath)
+            
             handler(tableView, indexPath, item)
-            
-        } else {
-            
-            delegate?.tableAdapter(self, didSelect: item)
         }
     }
 }

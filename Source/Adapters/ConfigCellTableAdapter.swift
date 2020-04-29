@@ -13,10 +13,6 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
     
     public typealias CellReuseIdentifierProvider = (IndexPath, ItemType) -> String?
     
-    // MARK: Private properties
-    
-    private weak var dataSource: AnyTableAdapterDataSource?
-    
     // MARK: Public properties
     
     public var cellIdentifierProvider: CellReuseIdentifierProvider?
@@ -64,17 +60,6 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
     
     // MARK: Public methods
     
-    public convenience init<DataSource: TableAdapterDataSource>(
-        tableView: UITableView,
-        sender: AnyObject? = nil,
-        dataSource: DataSource? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
-    ) {
-        self.init(tableView: tableView, sender: sender, cellIdentifierProvider: cellIdentifierProvider)
-        
-        self.dataSource = dataSource
-    }
-    
     public convenience init(
         tableView: UITableView,
         sender: AnyObject? = nil,
@@ -95,10 +80,6 @@ open class ConfigCellTableAdapter<ItemType: Hashable, SectionType: Hashable, Hea
         
             return cellId
         
-        } else if let cellId = dataSource?.tableAdapter(self, cellIdentifierFor: item) {
-            
-            return cellId
-              
         } else {
             
             return defaultCellIdentifier
