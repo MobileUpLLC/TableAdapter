@@ -83,7 +83,6 @@
 		A19C79B7238FE8F400B4E62A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A19C79BA238FE8F400B4E62A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A19C79BC238FE8F400B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1F3DD8D23C87C9E0094DA00 /* ReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsViewController.swift; sourceTree = "<group>"; };
 		A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedObjectsViewController.swift; sourceTree = "<group>"; };
 		C47A1EFA355171BCC6DD57D7 /* Pods-TableAdapterExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExampleTests.release.xcconfig"; path = "Target Support Files/Pods-TableAdapterExampleTests/Pods-TableAdapterExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,7 +158,6 @@
 				A11869E0239FD635003827B3 /* WiFiViewController.swift */,
 				A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */,
 				A156904623A272AE0078F3F1 /* SortViewController.swift */,
-				A1F3DD8D23C87C9E0094DA00 /* ReservationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
