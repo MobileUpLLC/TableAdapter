@@ -255,6 +255,7 @@
 			buildConfigurationList = A11A09EB2453656200756D4A /* Build configuration list for PBXNativeTarget "TableAdapterExampleTests" */;
 			buildPhases = (
 				48138D7EFFDE347058A57CA1 /* [CP] Check Pods Manifest.lock */,
+				A11A0A062459FBB700756D4A /* SwiftLint */,
 				A11A09DE2453656200756D4A /* Sources */,
 				A11A09DF2453656200756D4A /* Frameworks */,
 				A11A09E02453656200756D4A /* Resources */,
@@ -275,6 +276,7 @@
 			buildConfigurationList = A19C79BF238FE8F400B4E62A /* Build configuration list for PBXNativeTarget "TableAdapterExample" */;
 			buildPhases = (
 				A157D32FE45D9E8F07887C90 /* [CP] Check Pods Manifest.lock */,
+				A11A0A072459FC1700756D4A /* SwiftLint */,
 				A19C79A7238FE8EE00B4E62A /* Sources */,
 				A19C79A8238FE8EE00B4E62A /* Frameworks */,
 				A19C79A9238FE8EE00B4E62A /* Resources */,
@@ -388,6 +390,42 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A11A0A062459FBB700756D4A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		A11A0A072459FC1700756D4A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		A157D32FE45D9E8F07887C90 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

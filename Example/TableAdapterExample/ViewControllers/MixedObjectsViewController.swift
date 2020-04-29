@@ -64,7 +64,10 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(PrimitiveItemCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(
+            PrimitiveItemCell.self,
+            forCellReuseIdentifier: adapter.defaultCellIdentifier
+        )
     }
     
     private func setupSegmentedControl() {

@@ -9,10 +9,6 @@
 import XCTest
 
 class TableAdapterExampleTests: TableAdapterTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
     
     // MARK: Private properties
     
@@ -62,7 +58,6 @@ class TableAdapterExampleTests: TableAdapterTestCase {
             let add = makeList(from: oldCount, to: oldCount + insertCount)
             new.append(contentsOf: add)
             new.shuffle()
-            
             
             check(old: old, new: new)
         }        

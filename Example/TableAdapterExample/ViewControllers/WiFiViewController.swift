@@ -32,14 +32,14 @@ class WiFiViewController: UIViewController {
     private lazy var adapter = ExtendedTableAdapter<Item, Int, String>(
         tableView: tableView,
         sender: self,
-        cellIdentifierProvider: { [unowned self] (indexPath, item) -> String? in
+        cellIdentifierProvider: { [unowned self] (_, item) -> String? in
         
             switch item {
                
-            case .net(_):
+            case .net:
                 return self.networkCellIdentifier
                 
-            case .config(_):
+            case .config:
                 return self.wifiSwitchCellIdentifier
             }
         }
@@ -89,8 +89,15 @@ class WiFiViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(WiFiSwitchCell.self, forCellReuseIdentifier: wifiSwitchCellIdentifier)
-        tableView.register(NetworkCell.self, forCellReuseIdentifier: networkCellIdentifier)
+        tableView.register(
+            WiFiSwitchCell.self,
+            forCellReuseIdentifier: wifiSwitchCellIdentifier
+        )
+
+        tableView.register(
+            NetworkCell.self,
+            forCellReuseIdentifier: networkCellIdentifier
+        )
     }
     
     private func updateUI() {
@@ -114,7 +121,7 @@ class WiFiViewController: UIViewController {
             
             sections = [
                 Section<Item, Int, String>(id: 0, items: configItems, header: "Current network"),
-                Section<Item, Int, String>(id: 1, items: nets, header: "Available networks"),
+                Section<Item, Int, String>(id: 1, items: nets, header: "Available networks")
             ]
             
         } else {

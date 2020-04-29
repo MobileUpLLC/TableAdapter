@@ -15,7 +15,7 @@ class TableAdapterTestCase: XCTestCase {
     
     func makeList(from: Int, to: Int, shuffled: Bool = true) -> [Int] {
         
-        let result = Array<Int>(from..<to)
+        let result = [Int](from..<to)
         
         if shuffled {
             

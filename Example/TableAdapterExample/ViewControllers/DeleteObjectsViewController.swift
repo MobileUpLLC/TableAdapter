@@ -52,6 +52,9 @@ class DeleteObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(AnyObjectCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(
+            AnyObjectCell.self,
+            forCellReuseIdentifier: adapter.defaultCellIdentifier
+        )
     }
 }
