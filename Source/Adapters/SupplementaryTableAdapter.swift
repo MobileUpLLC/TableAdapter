@@ -98,7 +98,6 @@ open class SupplementaryTableAdapter<
     ) -> UIView? {
 
         return dequeueConfiguredHeaderFooterView(
-
             withIdentifier: getHeaderIdentifier(for: section),
             configItem: sections[section].header
         )
@@ -110,7 +109,6 @@ open class SupplementaryTableAdapter<
     ) -> UIView? {
 
         return dequeueConfiguredHeaderFooterView(
-
             withIdentifier: getFooterIdentifier(for: section),
             configItem: sections[section].footer
         )

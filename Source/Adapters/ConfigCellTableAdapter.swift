@@ -52,6 +52,11 @@ open class ConfigCellTableAdapter<
         return cell
     }
     
+    private func getCellIdetifier(for item: ItemType, at indexPath: IndexPath) -> String {
+        
+        return cellIdentifierProvider?(indexPath, item) ?? defaultCellIdentifier
+    }
+    
     // MARK: Public methods
     
     public init(
@@ -68,18 +73,6 @@ open class ConfigCellTableAdapter<
         
         self.sender = sender
         self.cellIdentifierProvider = cellIdentifierProvider
-    }
-    
-    open func getCellIdetifier(for item: ItemType, at indexPath: IndexPath) -> String {
-        
-        if let cellId = cellIdentifierProvider?(indexPath, item) {
-        
-            return cellId
-        
-        } else {
-            
-            return defaultCellIdentifier
-        }
     }
     
     public func setupConfigurableView(_ view: UIView, with object: Any) {
