@@ -15,7 +15,7 @@ class MixedObjectsViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = ConfigCellTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
     
     private var items: [PrimitiveItem] = {
         

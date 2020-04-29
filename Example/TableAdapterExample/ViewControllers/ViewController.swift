@@ -15,24 +15,23 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var adapter = SupplementaryTableAdapter<Example, Int, String>(
+    private lazy var adapter = ExtendedTableAdapter<Example, Int, String>(
         tableView: tableView,
         cellDidSelectHandler: { [weak self] (table, indexPath, item) in
         
             table.deselectRow(at: indexPath, animated: true)
             
             self?.open(item)
-    })
+        }
+    )
     
     private let items: [Example] = [
-        
         Example(name: "Search", controller: SearchViewController.self),
         Example(name: "Mixed objects", controller: MixedObjectsViewController.self),
         Example(name: "Wi-Fi", controller: WiFiViewController.self),
         Example(name: "Delete objects", controller: DeleteObjectsViewController.self),
         Example(name: "HeaderFooter", controller: HeaderFooterViewController.self),
-        Example(name: "Sort", controller: SortViewController.self),
-//        Example(name: "Reservations", controller: ReservationsViewController.self)
+        Example(name: "Sort", controller: SortViewController.self)
     ]
     
     // MARK: Override methods

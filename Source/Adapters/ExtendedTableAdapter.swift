@@ -7,8 +7,8 @@
 
 import Foundation
 
-open class SupplementaryTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>
-    : ConfigCellTableAdapter<Item, SectionId, Header>, UITableViewDelegate {
+open class ExtendedTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>
+    : TableAdapter<Item, SectionId, Header>, UITableViewDelegate {
     
     // MARK: Types
     
