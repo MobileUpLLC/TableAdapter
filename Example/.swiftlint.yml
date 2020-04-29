@@ -1,0 +1,112 @@
+# Disable rules from default list.
+disabled_rules:
+  # Lines should not have trailing whitespace.
+  - trailing_whitespace
+
+  # Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.
+#  - colon
+
+  # Type bodies should not span too many lines.
+#  - type_body_length
+
+  # Case statements should vertically align with their enclosing switch statement, or indented if configured otherwise.
+#  - switch_case_alignment
+
+# Enable rules not from default list.
+opt_in_rules:
+  # Delegate protocols should be class-only so they can be weakly referenced.
+  - class_delegate_protocol
+
+  # Closure bodies should not span too many lines.
+  - closure_body_length
+
+  # Prefer checking isEmpty over comparing count to zero.
+  - empty_count
+
+  # Prefer checking isEmpty over comparing string to an empty string literal.
+  - empty_string
+
+  # Prefer using .first(where:) over .filter { }.first in collections.
+  - first_where
+
+  # Prefer using .last(where:) over .filter { }.last in collections.
+  - last_where
+
+  # Force unwrapping should be avoided.
+  - force_unwrapping
+
+  # IBOutlets should be private to avoid leaking UIKit to higher layers.
+  - private_outlet
+
+  # IBActions should be private.
+  - private_action
+
+  # Prefer someBool.toggle() over someBool = !someBool.
+  - toggle_bool
+
+  # Fallthrough should be avoided.
+  - fallthrough
+
+  # Let and var should be separated from other statements by a blank line.
+  - let_var_whitespace
+
+  # Arguments should be either on the same line, or one per line.
+  - multiline_arguments
+
+  # Multiline arguments should have their surrounding brackets in a new line.
+  - multiline_arguments_brackets
+
+  # Chained function calls should be either on the same line, or one per line.
+  - multiline_function_chains
+
+  # Multiline literals should have their surrounding brackets in a new line.
+  - multiline_literal_brackets
+
+  # Functions and methods parameters should be either on the same line, or one per line.
+  - multiline_parameters
+
+  # Include a single empty line between switch cases.
+  - vertical_whitespace_between_cases
+
+# Paths to ignore during linting. Takes precedence over `included`.
+excluded:
+  - Carthage
+  - Pods
+
+# Force rules.
+force_cast: warning
+force_unwrapping: warning
+force_try: warning
+
+# Length rules.
+function_body_length:
+  warning: 50
+  error: 100
+
+line_length: 120 
+
+file_length:
+  warning: 500
+  error: 700
+
+closure_body_length:
+  warning: 10
+  error: 30
+
+# Naming rules. Additionally they can set excluded names
+type_name:
+  min_length: 2
+  max_length: 40
+
+variable_name:
+  min_length: 1
+  max_length: 40
+
+# Other rules.
+# warning_threshold: 20
+
+cyclomatic_complexity:
+  warning: 12
+  error: 20
+
+reporter: "xcode"
