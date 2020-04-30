@@ -15,7 +15,7 @@ class SortViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = ConfigCellTableAdapter<Float, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<Float, Int, String>(tableView: tableView)
     
     private let itemsCount = 50
     
@@ -53,7 +53,7 @@ class SortViewController: UIViewController {
     
     private func update(items: [Float], animated: Bool) {
         
-        let section = Section(id: 0, objects: items, header: "")
+        let section = Section(id: 0, items: items, header: "")
         
         adapter.update(with: [section], animated: animated)
     }

@@ -29,20 +29,21 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
+    private lazy var adapter = ExtendedTableAdapter<Item, Int, String>(
         tableView: tableView,
-        sender: self
-    ) { [unowned self] (indexPath, item) -> String? in
+        sender: self,
+        cellIdentifierProvider: { [unowned self] (_, item) -> String? in
         
-        switch item {
-           
-        case .net(_):
-            return self.networkCellIdentifier
-            
-        case .config(_):
-            return self.wifiSwitchCellIdentifier
+            switch item {
+               
+            case .net:
+                return self.networkCellIdentifier
+                
+            case .config:
+                return self.wifiSwitchCellIdentifier
+            }
         }
-    }
+    )
     
     private var currentNetwork: Network?
     
@@ -88,8 +89,15 @@ class WiFiViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(WiFiSwitchCell.self, forCellReuseIdentifier: wifiSwitchCellIdentifier)
-        tableView.register(NetworkCell.self, forCellReuseIdentifier: networkCellIdentifier)
+        tableView.register(
+            WiFiSwitchCell.self,
+            forCellReuseIdentifier: wifiSwitchCellIdentifier
+        )
+
+        tableView.register(
+            NetworkCell.self,
+            forCellReuseIdentifier: networkCellIdentifier
+        )
     }
     
     private func updateUI() {
@@ -112,14 +120,14 @@ class WiFiViewController: UIViewController {
             let nets: [Item] = networkItems.map { .net($0) }
             
             sections = [
-                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network"),
-                Section<Item, Int, String>(id: 1, objects: nets, header: "Available networks"),
+                Section<Item, Int, String>(id: 0, items: configItems, header: "Current network"),
+                Section<Item, Int, String>(id: 1, items: nets, header: "Available networks")
             ]
             
         } else {
             
             sections = [
-                Section<Item, Int, String>(id: 0, objects: configItems, header: "Current network")
+                Section<Item, Int, String>(id: 0, items: configItems, header: "Current network")
             ]
         }
         

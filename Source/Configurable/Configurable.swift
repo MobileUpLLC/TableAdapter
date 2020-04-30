@@ -34,8 +34,13 @@ public extension Configurable {
             setup(with: item)
             
         } else {
+
+            let msg = """
+            Could not cast item of type '\(type(of: item))' to expected type '\(ItemType.self)'.
+            '\(type(of: self))' must provide correct jeneric type for Configurable protocol
+            """
             
-            assertionFailure("Could not cast value of type '\(type(of: item))' to expected type '\(ItemType.self)'. '\(type(of: self))' must provide correct jeneric type for Configurable protocol")
+            assertionFailure(msg)
         }
     }
 }

@@ -36,9 +36,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12C4BBA6A945552433BA85F7 /* Pods_TableAdapterExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableAdapterExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		24429E11EFDF5BB60D1A9AB4 /* Pods-TableAdapterExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.release.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.release.xcconfig"; sourceTree = "<group>"; };
 		2ADEF947A4DCE10EAF780A96 /* Pods-TableAdapterExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExample.debug.xcconfig"; path = "Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample.debug.xcconfig"; sourceTree = "<group>"; };
 		3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TableAdapterExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D8C11981068DC70915C830B /* Pods-TableAdapterExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-TableAdapterExampleTests/Pods-TableAdapterExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A108620423F5570A00988FEC /* NetworkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCell.swift; sourceTree = "<group>"; };
 		A108620623F5571600988FEC /* WiFiSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiSwitchCell.swift; sourceTree = "<group>"; };
 		A108620823F5579100988FEC /* AnyObjectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyObjectCell.swift; sourceTree = "<group>"; };
@@ -64,9 +66,9 @@
 		A19C79B7238FE8F400B4E62A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A19C79BA238FE8F400B4E62A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A19C79BC238FE8F400B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A1F3DD8D23C87C9E0094DA00 /* ReservationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationsViewController.swift; sourceTree = "<group>"; };
 		A1FD84A7239A64CD009AB5E7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		A1FD84A9239A9A0B009AB5E7 /* MixedObjectsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MixedObjectsViewController.swift; sourceTree = "<group>"; };
+		C47A1EFA355171BCC6DD57D7 /* Pods-TableAdapterExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TableAdapterExampleTests.release.xcconfig"; path = "Target Support Files/Pods-TableAdapterExampleTests/Pods-TableAdapterExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,7 +133,6 @@
 				A11869E0239FD635003827B3 /* WiFiViewController.swift */,
 				A11869FD23A14AE4003827B3 /* DeleteObjectsViewController.swift */,
 				A156904623A272AE0078F3F1 /* SortViewController.swift */,
-				A1F3DD8D23C87C9E0094DA00 /* ReservationsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -194,6 +195,8 @@
 			children = (
 				2ADEF947A4DCE10EAF780A96 /* Pods-TableAdapterExample.debug.xcconfig */,
 				24429E11EFDF5BB60D1A9AB4 /* Pods-TableAdapterExample.release.xcconfig */,
+				3D8C11981068DC70915C830B /* Pods-TableAdapterExampleTests.debug.xcconfig */,
+				C47A1EFA355171BCC6DD57D7 /* Pods-TableAdapterExampleTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				3A8008E9FAE9590EADBA3048 /* Pods_TableAdapterExample.framework */,
+				12C4BBA6A945552433BA85F7 /* Pods_TableAdapterExampleTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -214,6 +218,7 @@
 			buildConfigurationList = A19C79BF238FE8F400B4E62A /* Build configuration list for PBXNativeTarget "TableAdapterExample" */;
 			buildPhases = (
 				A157D32FE45D9E8F07887C90 /* [CP] Check Pods Manifest.lock */,
+				A11A0A072459FC1700756D4A /* SwiftLint */,
 				A19C79A7238FE8EE00B4E62A /* Sources */,
 				A19C79A8238FE8EE00B4E62A /* Frameworks */,
 				A19C79A9238FE8EE00B4E62A /* Resources */,
@@ -234,7 +239,7 @@
 		A19C79A3238FE8EE00B4E62A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1120;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "MobileUp LLC";
 				TargetAttributes = {
@@ -293,6 +298,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TableAdapterExample/Pods-TableAdapterExample-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		A11A0A072459FC1700756D4A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 		A157D32FE45D9E8F07887C90 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

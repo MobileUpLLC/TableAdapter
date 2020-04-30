@@ -11,7 +11,7 @@ import TableAdapter
 
 class RedHeaderFooterView: UITableViewHeaderFooterView {
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
 }
 
 // MARK: Configurable

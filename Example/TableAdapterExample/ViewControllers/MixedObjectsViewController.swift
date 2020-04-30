@@ -15,7 +15,7 @@ class MixedObjectsViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = ConfigCellTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
     
     private var items: [PrimitiveItem] = {
         
@@ -55,7 +55,7 @@ class MixedObjectsViewController: UIViewController {
     
     private func update(items: [PrimitiveItem], animated: Bool) {
         
-        let section = Section(id: 0, objects: items, header: "", footer: "")
+        let section = Section(id: 0, items: items, header: "", footer: "")
         
         adapter.update(with: [section], animated: animated)
     }
@@ -64,7 +64,10 @@ class MixedObjectsViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(PrimitiveItemCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(
+            PrimitiveItemCell.self,
+            forCellReuseIdentifier: adapter.defaultCellIdentifier
+        )
     }
     
     private func setupSegmentedControl() {

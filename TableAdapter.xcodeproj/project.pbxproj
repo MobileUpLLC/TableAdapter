@@ -7,13 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A14B822E2391122800498B01 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B822D2391122800498B01 /* ConfigurableCell.swift */; };
-		A14B823623911B0C00498B01 /* TableAdapterDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */; };
-		A14B823723911B0C00498B01 /* TableSectionsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A14B823523911B0C00498B01 /* TableSectionsSource.swift */; };
+		A11A0A1D245A05C800756D4A /* Configurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A09245A05C800756D4A /* Configurable.swift */; };
+		A11A0A1F245A05C900756D4A /* SenderConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0A245A05C800756D4A /* SenderConfigurable.swift */; };
+		A11A0A21245A05C900756D4A /* TableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0C245A05C800756D4A /* TableAdapter.swift */; };
+		A11A0A23245A05C900756D4A /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0D245A05C800756D4A /* Section.swift */; };
+		A11A0A25245A05C900756D4A /* BaseTableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */; };
+		A11A0A27245A05C900756D4A /* ExtendedTableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */; };
+		A11A0A29245A05C900756D4A /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A12245A05C800756D4A /* Diff.swift */; };
+		A11A0A2B245A05C900756D4A /* IndexPathDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A13245A05C800756D4A /* IndexPathDiff.swift */; };
+		A11A0A2D245A05C900756D4A /* SectionedDiffUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A14245A05C800756D4A /* SectionedDiffUtil.swift */; };
+		A11A0A2F245A05C900756D4A /* Move.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A16245A05C800756D4A /* Move.swift */; };
+		A11A0A31245A05C900756D4A /* IndexSetDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A17245A05C800756D4A /* IndexSetDiff.swift */; };
+		A11A0A33245A05C900756D4A /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A18245A05C800756D4A /* Entry.swift */; };
+		A11A0A35245A05C900756D4A /* SymbolEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A19245A05C800756D4A /* SymbolEntry.swift */; };
+		A11A0A37245A05C900756D4A /* DiffUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A1A245A05C800756D4A /* DiffUtil.swift */; };
+		A11A0A39245A05C900756D4A /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A1C245A05C800756D4A /* UITableView.swift */; };
+		A1988313245ACAFC00C8C4D1 /* DiffTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */; };
+		A1988314245ACAFC00C8C4D1 /* CalculateDiffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */; };
 		A19C7991238FD86800B4E62A /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19C7987238FD86700B4E62A /* TableAdapter.framework */; };
-		A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C7995238FD86800B4E62A /* TableAdapterTests.swift */; };
 		A19C7998238FD86800B4E62A /* TableAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = A19C798A238FD86700B4E62A /* TableAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A19C79C52390239700B4E62A /* TableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C79C42390239700B4E62A /* TableAdapter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,16 +39,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A14B822D2391122800498B01 /* ConfigurableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
-		A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapterDataSource.swift; sourceTree = "<group>"; };
-		A14B823523911B0C00498B01 /* TableSectionsSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSectionsSource.swift; sourceTree = "<group>"; };
+		A11A0A09245A05C800756D4A /* Configurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurable.swift; sourceTree = "<group>"; };
+		A11A0A0A245A05C800756D4A /* SenderConfigurable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SenderConfigurable.swift; sourceTree = "<group>"; };
+		A11A0A0C245A05C800756D4A /* TableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapter.swift; sourceTree = "<group>"; };
+		A11A0A0D245A05C800756D4A /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableAdapter.swift; sourceTree = "<group>"; };
+		A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedTableAdapter.swift; sourceTree = "<group>"; };
+		A11A0A12245A05C800756D4A /* Diff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
+		A11A0A13245A05C800756D4A /* IndexPathDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathDiff.swift; sourceTree = "<group>"; };
+		A11A0A14245A05C800756D4A /* SectionedDiffUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedDiffUtil.swift; sourceTree = "<group>"; };
+		A11A0A16245A05C800756D4A /* Move.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Move.swift; sourceTree = "<group>"; };
+		A11A0A17245A05C800756D4A /* IndexSetDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexSetDiff.swift; sourceTree = "<group>"; };
+		A11A0A18245A05C800756D4A /* Entry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		A11A0A19245A05C800756D4A /* SymbolEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolEntry.swift; sourceTree = "<group>"; };
+		A11A0A1A245A05C800756D4A /* DiffUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffUtil.swift; sourceTree = "<group>"; };
+		A11A0A1C245A05C800756D4A /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffTestCase.swift; sourceTree = "<group>"; };
+		A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculateDiffTests.swift; sourceTree = "<group>"; };
 		A19C7987238FD86700B4E62A /* TableAdapter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableAdapter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C798A238FD86700B4E62A /* TableAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableAdapter.h; sourceTree = "<group>"; };
 		A19C798B238FD86700B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A19C7990238FD86800B4E62A /* TableAdapterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TableAdapterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A19C7995238FD86800B4E62A /* TableAdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableAdapterTests.swift; sourceTree = "<group>"; };
 		A19C7997238FD86800B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A19C79C42390239700B4E62A /* TableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +82,65 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A11A0A08245A05C800756D4A /* Configurable */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A09245A05C800756D4A /* Configurable.swift */,
+				A11A0A0A245A05C800756D4A /* SenderConfigurable.swift */,
+			);
+			path = Configurable;
+			sourceTree = "<group>";
+		};
+		A11A0A0B245A05C800756D4A /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A0C245A05C800756D4A /* TableAdapter.swift */,
+				A11A0A0D245A05C800756D4A /* Section.swift */,
+				A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */,
+				A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */,
+			);
+			path = Adapters;
+			sourceTree = "<group>";
+		};
+		A11A0A10245A05C800756D4A /* Diff */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A11245A05C800756D4A /* Sectioned */,
+				A11A0A15245A05C800756D4A /* Base */,
+			);
+			path = Diff;
+			sourceTree = "<group>";
+		};
+		A11A0A11245A05C800756D4A /* Sectioned */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A12245A05C800756D4A /* Diff.swift */,
+				A11A0A13245A05C800756D4A /* IndexPathDiff.swift */,
+				A11A0A14245A05C800756D4A /* SectionedDiffUtil.swift */,
+			);
+			path = Sectioned;
+			sourceTree = "<group>";
+		};
+		A11A0A15245A05C800756D4A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A16245A05C800756D4A /* Move.swift */,
+				A11A0A17245A05C800756D4A /* IndexSetDiff.swift */,
+				A11A0A18245A05C800756D4A /* Entry.swift */,
+				A11A0A19245A05C800756D4A /* SymbolEntry.swift */,
+				A11A0A1A245A05C800756D4A /* DiffUtil.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		A11A0A1B245A05C800756D4A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A11A0A1C245A05C800756D4A /* UITableView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		A19C797D238FD86700B4E62A = {
 			isa = PBXGroup;
 			children = (
@@ -79,12 +162,12 @@
 		A19C7989238FD86700B4E62A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				A14B822D2391122800498B01 /* ConfigurableCell.swift */,
-				A14B823423911B0C00498B01 /* TableAdapterDataSource.swift */,
-				A14B823523911B0C00498B01 /* TableSectionsSource.swift */,
-				A19C79C42390239700B4E62A /* TableAdapter.swift */,
 				A19C798A238FD86700B4E62A /* TableAdapter.h */,
 				A19C798B238FD86700B4E62A /* Info.plist */,
+				A11A0A0B245A05C800756D4A /* Adapters */,
+				A11A0A08245A05C800756D4A /* Configurable */,
+				A11A0A10245A05C800756D4A /* Diff */,
+				A11A0A1B245A05C800756D4A /* Extensions */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -92,7 +175,8 @@
 		A19C7994238FD86800B4E62A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				A19C7995238FD86800B4E62A /* TableAdapterTests.swift */,
+				A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */,
+				A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */,
 				A19C7997238FD86800B4E62A /* Info.plist */,
 			);
 			path = Tests;
@@ -116,6 +200,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A19C799B238FD86800B4E62A /* Build configuration list for PBXNativeTarget "TableAdapter" */;
 			buildPhases = (
+				A11A0A3B245A060500756D4A /* SwiftLint */,
 				A19C7982238FD86700B4E62A /* Headers */,
 				A19C7983238FD86700B4E62A /* Sources */,
 				A19C7984238FD86700B4E62A /* Frameworks */,
@@ -203,15 +288,47 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A11A0A3B245A060500756D4A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A19C7983238FD86700B4E62A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A14B822E2391122800498B01 /* ConfigurableCell.swift in Sources */,
-				A14B823723911B0C00498B01 /* TableSectionsSource.swift in Sources */,
-				A14B823623911B0C00498B01 /* TableAdapterDataSource.swift in Sources */,
-				A19C79C52390239700B4E62A /* TableAdapter.swift in Sources */,
+				A11A0A33245A05C900756D4A /* Entry.swift in Sources */,
+				A11A0A2F245A05C900756D4A /* Move.swift in Sources */,
+				A11A0A39245A05C900756D4A /* UITableView.swift in Sources */,
+				A11A0A2D245A05C900756D4A /* SectionedDiffUtil.swift in Sources */,
+				A11A0A29245A05C900756D4A /* Diff.swift in Sources */,
+				A11A0A1D245A05C800756D4A /* Configurable.swift in Sources */,
+				A11A0A23245A05C900756D4A /* Section.swift in Sources */,
+				A11A0A37245A05C900756D4A /* DiffUtil.swift in Sources */,
+				A11A0A1F245A05C900756D4A /* SenderConfigurable.swift in Sources */,
+				A11A0A35245A05C900756D4A /* SymbolEntry.swift in Sources */,
+				A11A0A2B245A05C900756D4A /* IndexPathDiff.swift in Sources */,
+				A11A0A27245A05C900756D4A /* ExtendedTableAdapter.swift in Sources */,
+				A11A0A25245A05C900756D4A /* BaseTableAdapter.swift in Sources */,
+				A11A0A31245A05C900756D4A /* IndexSetDiff.swift in Sources */,
+				A11A0A21245A05C900756D4A /* TableAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,7 +336,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */,
+				A1988313245ACAFC00C8C4D1 /* DiffTestCase.swift in Sources */,
+				A1988314245ACAFC00C8C4D1 /* CalculateDiffTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,7 +531,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4778UMCE49;
-				INFOPLIST_FILE = TableAdapterTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,7 +550,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4778UMCE49;
-				INFOPLIST_FILE = TableAdapterTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
