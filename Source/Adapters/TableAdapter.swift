@@ -7,8 +7,7 @@
 
 import Foundation
 
-open class TableAdapter<Item: Hashable, SecitonId: Hashable, Header: Any>
-    : BaseTableAdapter<Item, SecitonId, Header> {
+open class TableAdapter<Item: Hashable, SecitonId: Hashable, Header: Any>: BaseTableAdapter<Item, SecitonId, Header> {
 
     // MARK: Types
     

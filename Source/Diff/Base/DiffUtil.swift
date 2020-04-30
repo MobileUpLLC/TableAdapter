@@ -14,6 +14,57 @@ enum DiffError: Error {
 }
 
 public class DiffUtil {
+
+    // MARK: Private methods
+
+    private static func collectDiff<Item: Hashable>(
+        symbolTable: [Item: SymbolEntry],
+        oa: [Entry<Item>],
+        na: [Entry<Item>]
+    ) -> IndexSetDiff {
+
+        var result = IndexSetDiff(
+            inserts: IndexSet(),
+            moves: [],
+            deletes: IndexSet()
+        )
+
+        // Insets & Moves
+
+        for (i, entry) in na.enumerated() {
+
+            switch entry {
+
+            case .stPointer:
+                result.inserts.insert(i)
+
+            case .oppositePosition(let p):
+
+                if p != i {
+
+                    result.moves.append(Move<Int>(from: p, to: i))
+                }
+            }
+        }
+
+        // Deletes
+
+        for (j, entry) in oa.enumerated() {
+
+            switch entry {
+
+            case .stPointer:
+                result.deletes.insert(j)
+
+            case .oppositePosition:
+                break
+            }
+        }
+
+        return result
+    }
+
+    // MARK: Public methods
     
     public static func calculateDiff<T: Hashable>(
 
@@ -131,46 +182,7 @@ public class DiffUtil {
         
         // Collect Result
         
-        var result = IndexSetDiff(
-            inserts: IndexSet(),
-            moves: [],
-            deletes: IndexSet()
-        )
-        
-        // Insets & Moves
-        
-        for (i, entry) in na.enumerated() {
-            
-            switch entry {
-                
-            case .stPointer(_):
-                result.inserts.insert(i)
-                
-            case .oppositePosition(let p):
-                
-                if p != i {
-                    
-                    result.moves.append(Move<Int>(from: p, to: i))
-                }
-            }
-        }
-        
-        // Deletes
-        
-        for (j, entry) in oa.enumerated() {
-            
-            switch entry {
-                
-            case .stPointer(_):
-                result.deletes.insert(j)
-                
-            case .oppositePosition(_):
-                break
-            }
-            
-        }
-
-        return result
+        return collectDiff(symbolTable: symbolTable, oa: oa, na: na)
     }
     
     public static func applyDiff<T: Hashable>(
@@ -181,18 +193,18 @@ public class DiffUtil {
         
         let resultCount = old.count + diff.inserts.count - diff.deletes.count
         
-        var result = Array<T?>(repeating: nil, count: resultCount)
+        var result = [T?](repeating: nil, count: resultCount)
         
-        var oldD: [T?] = old
+        var oldItems: [T?] = old
         
         for delete in diff.deletes {
             
-            oldD[delete] = nil
+            oldItems[delete] = nil
         }
         
         for move in diff.moves {
             
-            result[move.to] = oldD[move.from]
+            result[move.to] = oldItems[move.from]
         }
         
         for insert in diff.inserts {
@@ -200,15 +212,11 @@ public class DiffUtil {
             result[insert] = insertsProvider(insert)
         }
         
-        for i in 0..<result.count {
+        for i in 0..<result.count where result[i] == nil {
             
-            if result[i] == nil {
-                
-                result[i] = oldD[i]
-            }
+            result[i] = oldItems[i]
         }
         
         return result.compactMap { $0 }
     }
 }
-

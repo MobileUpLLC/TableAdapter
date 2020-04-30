@@ -32,14 +32,25 @@ public extension SenderConfigurable {
     func anySetup(with item: Any, sender: Any?) {
         
         guard let obj = item as? ItemType else {
+
+            let msg = """
+            Could not cast item of type '\(type(of: item))' to expected type '\(ItemType.self)'.
+            '\(type(of: self))' must provide correct object type for SenderConfigurable protocol
+            """
             
-            assertionFailure("Could not cast value of type '\(type(of: item))' to expected type '\(ItemType.self)'. '\(type(of: self))' must provide correct object type for Configurable protocol")
+            assertionFailure(msg)
+
             return
         }
         
         guard let sen = sender as? SenderType else {
-            
-            assertionFailure("Could not cast sender of type '\(type(of: sender))' to expected type '\(SenderType.self)'. '\(type(of: self))' must provide correct sender type for SenderConfigurable protocol")
+
+            let msg = """
+            Could not cast sender of type '\(type(of: sender))' to expected type '\(SenderType.self)'.
+            '\(type(of: self))' must provide correct sender type for SenderConfigurable protocol
+            """
+
+            assertionFailure(msg)
             
             return
         }
