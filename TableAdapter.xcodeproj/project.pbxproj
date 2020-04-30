@@ -22,6 +22,8 @@
 		A11A0A35245A05C900756D4A /* SymbolEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A19245A05C800756D4A /* SymbolEntry.swift */; };
 		A11A0A37245A05C900756D4A /* DiffUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A1A245A05C800756D4A /* DiffUtil.swift */; };
 		A11A0A39245A05C900756D4A /* UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A1C245A05C800756D4A /* UITableView.swift */; };
+		A1988313245ACAFC00C8C4D1 /* DiffTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */; };
+		A1988314245ACAFC00C8C4D1 /* CalculateDiffTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */; };
 		A19C7991238FD86800B4E62A /* TableAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A19C7987238FD86700B4E62A /* TableAdapter.framework */; };
 		A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19C7995238FD86800B4E62A /* TableAdapterTests.swift */; };
 		A19C7998238FD86800B4E62A /* TableAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = A19C798A238FD86700B4E62A /* TableAdapter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -53,6 +55,8 @@
 		A11A0A19245A05C800756D4A /* SymbolEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolEntry.swift; sourceTree = "<group>"; };
 		A11A0A1A245A05C800756D4A /* DiffUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffUtil.swift; sourceTree = "<group>"; };
 		A11A0A1C245A05C800756D4A /* UITableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITableView.swift; sourceTree = "<group>"; };
+		A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffTestCase.swift; sourceTree = "<group>"; };
+		A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculateDiffTests.swift; sourceTree = "<group>"; };
 		A19C7987238FD86700B4E62A /* TableAdapter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TableAdapter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A19C798A238FD86700B4E62A /* TableAdapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableAdapter.h; sourceTree = "<group>"; };
 		A19C798B238FD86700B4E62A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				A19C7995238FD86800B4E62A /* TableAdapterTests.swift */,
+				A1988312245ACAFC00C8C4D1 /* CalculateDiffTests.swift */,
+				A1988311245ACAFC00C8C4D1 /* DiffTestCase.swift */,
 				A19C7997238FD86800B4E62A /* Info.plist */,
 			);
 			path = Tests;
@@ -333,6 +339,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1988313245ACAFC00C8C4D1 /* DiffTestCase.swift in Sources */,
+				A1988314245ACAFC00C8C4D1 /* CalculateDiffTests.swift in Sources */,
 				A19C7996238FD86800B4E62A /* TableAdapterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
