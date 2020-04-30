@@ -4,13 +4,7 @@ disabled_rules:
   - trailing_whitespace
 
   # Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.
-#  - colon
-
-  # Type bodies should not span too many lines.
-#  - type_body_length
-
-  # Case statements should vertically align with their enclosing switch statement, or indented if configured otherwise.
-#  - switch_case_alignment
+  - colon
 
 # Enable rules not from default list.
 opt_in_rules:
@@ -106,7 +100,7 @@ variable_name:
 # warning_threshold: 20
 
 cyclomatic_complexity:
-  warning: 12
+  warning: 15
   error: 20
 
 reporter: "xcode"
