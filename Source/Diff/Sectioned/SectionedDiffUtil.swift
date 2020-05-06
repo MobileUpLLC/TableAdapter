@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable, Header: Any>: DiffUtil {
+public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable>: DiffUtil {
     
     // MARK: Types
     
-    typealias DiffType = Diff<Item, SectionId, Header>
+    typealias DiffType = Diff<Item, SectionId>
     typealias SectionType = DiffType.SectionType
     
     // MARK: Private methods

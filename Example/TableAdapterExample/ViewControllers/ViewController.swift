@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var adapter = TableAdapter<Example, Int, String>(
+    private lazy var adapter = TableAdapter<Example, Int>(
         tableView: tableView,
         cellDidSelectHandler: { [weak self] (table, indexPath, item) in
         
@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let sec = Section<Example, Int, String>(id: 0, items: items)
+        let sec = Section<Example, Int>(id: 0, items: items)
         
         adapter.update(with: [sec])
     }

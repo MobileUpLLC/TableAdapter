@@ -15,9 +15,9 @@ class HeaderFooterViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<PrimitiveItem, Int>(tableView: tableView)
     
-    private var sections: [Section<PrimitiveItem, Int, String>] = {
+    private var sections: [Section<PrimitiveItem, Int>] = {
         
         let ints = [1, 2, 3, 1, 1, 1].map { PrimitiveItem(type: .integer, value: $0) }
         let sectionInts = Section(id: 0, items: ints, header: "Ints begin", footer: "Ints end")
@@ -34,7 +34,7 @@ class HeaderFooterViewController: UIViewController {
         return [sectionInts, sectionStrings, sectionBools, sectionFloats]
     }()
     
-    private var sections2: [Section<PrimitiveItem, Int, String>] = {
+    private var sections2: [Section<PrimitiveItem, Int>] = {
         
         let ints = [4, 1, 5, 2, 1, 6].map { PrimitiveItem(type: .integer, value: $0) }
         let sectionInts = Section(

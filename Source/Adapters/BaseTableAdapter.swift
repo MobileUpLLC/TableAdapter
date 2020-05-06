@@ -7,7 +7,7 @@
 
 import UIKit
 
-open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: NSObject, UITableViewDataSource {
+open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITableViewDataSource {
     
     // MARK: Types
     
@@ -15,7 +15,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: N
 
     public typealias CellReuseIdentifierProvider = (IndexPath, Item) -> String?
     
-    public typealias SecionType = Section<Item, SectionId, Header>
+    public typealias SecionType = Section<Item, SectionId>
         
     // MARK: Public properties
 
@@ -61,7 +61,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: N
         }
     }
 
-    private func updateTable(with diff: Diff<Item, SectionId, Header>) {
+    private func updateTable(with diff: Diff<Item, SectionId>) {
 
         tableView.makeBatchUpdates {
 

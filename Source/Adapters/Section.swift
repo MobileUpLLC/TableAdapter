@@ -7,17 +7,17 @@
 
 import Foundation
 
-public struct Section<Item: Hashable, SectionId: Hashable, Header: Any> {
+public struct Section<Item: Hashable, SectionId: Hashable> {
     
-    typealias SectionType = Section<Item, SectionId, Header>
+    typealias SectionType = Section<Item, SectionId>
     
     // MARK: Public properties
     
     public var id: SectionId
     public var items: [Item]
     
-    public let header: Header?
-    public let footer: Header?
+    public let header: Any?
+    public let footer: Any?
     
     public let headerIdentifier: String?
     public let footerIdentifier: String?
@@ -27,8 +27,8 @@ public struct Section<Item: Hashable, SectionId: Hashable, Header: Any> {
     public init(
         id: SectionId,
         items: [Item],
-        header: Header? = nil,
-        footer: Header? = nil,
+        header: Any? = nil,
+        footer: Any? = nil,
         headerIdentifier: String? = nil,
         footerIdentifier: String? = nil
     ) {
@@ -48,8 +48,8 @@ public struct Section<Item: Hashable, SectionId: Hashable, Header: Any> {
 extension Section: Hashable {
     
     public static func == (
-        lhs: Section<Item, SectionId, Header>,
-        rhs: Section<Item, SectionId, Header>
+        lhs: Section<Item, SectionId>,
+        rhs: Section<Item, SectionId>
     ) -> Bool {
         
         return lhs.id == rhs.id

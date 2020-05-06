@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Diff<Item: Hashable, SectionId: Hashable, Header: Any> {
+struct Diff<Item: Hashable, SectionId: Hashable> {
     
-    typealias SectionType = Section<Item, SectionId, Header>
+    typealias SectionType = Section<Item, SectionId>
     
     let sections: IndexSetDiff
     let rows: IndexPathDiff

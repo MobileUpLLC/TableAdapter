@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter<String, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<String, Int>(tableView: tableView)
     
     private lazy var seas: [String] = seasRaw.components(separatedBy: CharacterSet.newlines)
     
@@ -51,8 +51,6 @@ class SearchViewController: UIViewController {
         
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
-        
-        tableView.tableFooterView = UIView()
     }
     
     private func setupSearchController() {
@@ -67,7 +65,7 @@ class SearchViewController: UIViewController {
     
     private func update(with items: [String], animated: Bool) {
         
-        let section = Section<String, Int, String>(id: 0, items: items)
+        let section = Section<String, Int>(id: 0, items: items)
         
         adapter.update(with: [section], animated: animated)
     }

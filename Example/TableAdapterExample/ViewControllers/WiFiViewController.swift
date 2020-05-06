@@ -29,7 +29,7 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter<Item, Int, String>(
+    private lazy var adapter = TableAdapter<Item, Int>(
         tableView: tableView,
         sender: self,
         cellIdentifierProvider: { [unowned self] (_, item) -> String? in
@@ -102,7 +102,7 @@ class WiFiViewController: UIViewController {
     
     private func updateUI() {
         
-        let sections: [Section<Item, Int, String>]
+        let sections: [Section<Item, Int>]
         
         var configItems: [Item] = [.config("Wi-Fi")]
         
@@ -120,14 +120,14 @@ class WiFiViewController: UIViewController {
             let nets: [Item] = networkItems.map { .net($0) }
             
             sections = [
-                Section<Item, Int, String>(id: 0, items: configItems, header: "Current network"),
-                Section<Item, Int, String>(id: 1, items: nets, header: "Available networks")
+                Section<Item, Int>(id: 0, items: configItems, header: "Current network"),
+                Section<Item, Int>(id: 1, items: nets, header: "Available networks")
             ]
             
         } else {
             
             sections = [
-                Section<Item, Int, String>(id: 0, items: configItems, header: "Current network")
+                Section<Item, Int>(id: 0, items: configItems, header: "Current network")
             ]
         }
         

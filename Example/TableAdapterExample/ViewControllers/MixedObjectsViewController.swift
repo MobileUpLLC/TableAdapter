@@ -15,7 +15,7 @@ class MixedObjectsViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = TableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<PrimitiveItem, Int>(tableView: tableView)
     
     private var items: [PrimitiveItem] = {
         
@@ -55,7 +55,7 @@ class MixedObjectsViewController: UIViewController {
     
     private func update(items: [PrimitiveItem], animated: Bool) {
         
-        let section = Section<PrimitiveItem, Int, String>(id: 0, items: items)
+        let section = Section<PrimitiveItem, Int>(id: 0, items: items)
         
         adapter.update(with: [section], animated: animated)
     }

@@ -15,9 +15,9 @@ class DeleteObjectsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = TableAdapter<Int, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<Int, Int>(tableView: tableView)
     
-    private let items: [Int] = [1, 1, 2, 3, 4, 5]
+    private let items: [Int] = [1, 2, 3, 4, 5]
     
     // MARK: Override methods
 
@@ -35,7 +35,7 @@ class DeleteObjectsViewController: UIViewController {
             self.adapter.update(with: sections)
         }
         
-        let section = Section(id: 1, items: items, header: "")
+        let section = Section(id: 0, items: items)
         
         adapter.update(with: [section], animated: false)
     }

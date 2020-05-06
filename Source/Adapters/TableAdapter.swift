@@ -7,8 +7,8 @@
 
 import Foundation
 
-open class TableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>:
-    BaseTableAdapter<Item, SectionId, Header>, UITableViewDelegate {
+open class TableAdapter<Item: Hashable, SectionId: Hashable>:
+    BaseTableAdapter<Item, SectionId>, UITableViewDelegate {
     
     // MARK: Types
     
