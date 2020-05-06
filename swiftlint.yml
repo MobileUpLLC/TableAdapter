@@ -1,11 +1,3 @@
-# Disable rules from default list.
-disabled_rules:
-  # Lines should not have trailing whitespace.
-  - trailing_whitespace
-
-  # Colons should be next to the identifier when specifying a type and next to the key in dictionary literals.
-  - colon
-
 # Enable rules not from default list.
 opt_in_rules:
   # Delegate protocols should be class-only so they can be weakly referenced.

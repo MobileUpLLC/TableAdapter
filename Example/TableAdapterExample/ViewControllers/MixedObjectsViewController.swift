@@ -55,12 +55,15 @@ class MixedObjectsViewController: UIViewController {
     
     private func update(items: [PrimitiveItem], animated: Bool) {
         
-        let section = Section(id: 0, items: items, header: "", footer: "")
+        let section = Section<PrimitiveItem, Int, String>(id: 0, items: items)
         
         adapter.update(with: [section], animated: animated)
     }
     
     private func setupTableView() {
+
+        tableView.estimatedSectionHeaderHeight = 0
+        tableView.estimatedSectionFooterHeight = 0
         
         view.addSubview(tableView)
         

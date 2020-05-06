@@ -15,7 +15,7 @@ class DeleteObjectsViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = ExtendedTableAdapter<Int, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<Int, Int, String>(tableView: tableView)
     
     private let items: [Int] = [1, 1, 2, 3, 4, 5]
     

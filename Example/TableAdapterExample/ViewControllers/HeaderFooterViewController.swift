@@ -15,7 +15,7 @@ class HeaderFooterViewController: UIViewController {
     
     private let tableView = UITableView()
     
-    private lazy var adapter = ExtendedTableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
+    private lazy var adapter = TableAdapter<PrimitiveItem, Int, String>(tableView: tableView)
     
     private var sections: [Section<PrimitiveItem, Int, String>] = {
         
@@ -37,7 +37,14 @@ class HeaderFooterViewController: UIViewController {
     private var sections2: [Section<PrimitiveItem, Int, String>] = {
         
         let ints = [4, 1, 5, 2, 1, 6].map { PrimitiveItem(type: .integer, value: $0) }
-        let sectionInts = Section(id: 0, items: ints, header: "Ints begin", footer: "Ints end")
+        let sectionInts = Section(
+            id: 0,
+            items: ints,
+            header: "Ints begin",
+            footer: "Ints end",
+            headerIdentifier: "Footer",
+            footerIdentifier: "Header"
+        )
         
         let strings = ["foo", "bar", "zoo", "bar"].map { PrimitiveItem(type: .string, value: $0) }
         let sectionStrings = Section(id: 1, items: strings, header: "Strings begin", footer: "Strings end")

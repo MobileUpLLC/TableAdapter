@@ -12,18 +12,26 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: N
     // MARK: Types
     
     public typealias CellProvider = (UITableView, IndexPath, Item) -> UITableViewCell
+
+    public typealias CellReuseIdentifierProvider = (IndexPath, Item) -> String?
     
     public typealias SecionType = Section<Item, SectionId, Header>
         
     // MARK: Public properties
-    
-    public private(set) var sections: [SecionType] = []
-    
-    public var cellProvider: CellProvider?
-    
+
     public let tableView: UITableView
-    
+
+    public private(set) var sections: [SecionType] = []
+
+    public var cellProvider: CellProvider?
+
+    public var cellIdentifierProvider: CellReuseIdentifierProvider?
+
     public var animationType: UITableView.RowAnimation = .fade
+
+    public weak var sender: AnyObject?
+
+    public var defaultCellIdentifier = "Cell"
     
     // MARK: Private methods
     
@@ -49,29 +57,51 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: N
             
             print("Animated table update failed. Error: \(error)")
 
-            updateTable(with: newSections)
+            reloadTable(with: newSections)
         }
     }
-    
+
     private func updateTable(with diff: Diff<Item, SectionId, Header>) {
-        
+
         tableView.makeBatchUpdates {
-            
+
             sections = diff.intermediateData
 
             tableView.insertSections(diff.sections.inserts, with: animationType)
             tableView.deleteSections(diff.sections.deletes, with: animationType)
             diff.sections.moves.forEach { tableView.moveSection($0.from, toSection: $0.to) }
         }
-        
+
         tableView.makeBatchUpdates {
-            
+
             sections = diff.resultData
 
             tableView.deleteRows(at: diff.rows.deletes, with: animationType)
             tableView.insertRows(at: diff.rows.inserts, with: animationType)
             diff.rows.moves.forEach { tableView.moveRow(at: $0.from, to: $0.to) }
         }
+    }
+
+    private func dequeueConfiguredCell(
+        for item: Item,
+        at indexPath: IndexPath
+    ) -> UITableViewCell {
+
+        let cellIdentifier = getCellIdetifier(for: item, at: indexPath)
+
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: cellIdentifier,
+            for: indexPath
+        )
+
+        setupConfigurableView(cell, with: item)
+
+        return cell
+    }
+
+    private func getCellIdetifier(for item: Item, at indexPath: IndexPath) -> String {
+
+        return cellIdentifierProvider?(indexPath, item) ?? defaultCellIdentifier
     }
     
     // MARK: Public methods
@@ -85,6 +115,40 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>: N
         super.init()
         
         tableView.dataSource = self
+    }
+
+    public init(
+        tableView: UITableView,
+        sender: AnyObject? = nil,
+        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
+    ) {
+
+        self.tableView = tableView
+
+        super.init()
+
+        self.cellProvider = { (table, indexPath, item) in
+
+            return self.dequeueConfiguredCell(for: item, at: indexPath)
+        }
+
+        self.sender = sender
+
+        self.cellIdentifierProvider = cellIdentifierProvider
+
+        tableView.dataSource = self
+    }
+
+    public func setupConfigurableView(_ view: UIView, with object: Any) {
+
+        if let view = view as? AnySenderConfigurable {
+
+            view.anySetup(with: object, sender: sender)
+
+        } else if let view = view as? AnyConfigurable {
+
+            view.anySetup(with: object)
+        }
     }
 
     open func update(with sections: [SecionType], animated: Bool = true) {
