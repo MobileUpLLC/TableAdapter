@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private lazy var adapter = ExtendedTableAdapter<Example, Int, String>(
+    private lazy var adapter = TableAdapter<Example, Int, String>(
         tableView: tableView,
         cellDidSelectHandler: { [weak self] (table, indexPath, item) in
         

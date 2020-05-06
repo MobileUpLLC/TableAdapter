@@ -12,7 +12,6 @@
 		A11A0A21245A05C900756D4A /* TableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0C245A05C800756D4A /* TableAdapter.swift */; };
 		A11A0A23245A05C900756D4A /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0D245A05C800756D4A /* Section.swift */; };
 		A11A0A25245A05C900756D4A /* BaseTableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */; };
-		A11A0A27245A05C900756D4A /* ExtendedTableAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */; };
 		A11A0A29245A05C900756D4A /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A12245A05C800756D4A /* Diff.swift */; };
 		A11A0A2B245A05C900756D4A /* IndexPathDiff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A13245A05C800756D4A /* IndexPathDiff.swift */; };
 		A11A0A2D245A05C900756D4A /* SectionedDiffUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11A0A14245A05C800756D4A /* SectionedDiffUtil.swift */; };
@@ -44,7 +43,6 @@
 		A11A0A0C245A05C800756D4A /* TableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableAdapter.swift; sourceTree = "<group>"; };
 		A11A0A0D245A05C800756D4A /* Section.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableAdapter.swift; sourceTree = "<group>"; };
-		A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtendedTableAdapter.swift; sourceTree = "<group>"; };
 		A11A0A12245A05C800756D4A /* Diff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
 		A11A0A13245A05C800756D4A /* IndexPathDiff.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathDiff.swift; sourceTree = "<group>"; };
 		A11A0A14245A05C800756D4A /* SectionedDiffUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionedDiffUtil.swift; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 				A11A0A0C245A05C800756D4A /* TableAdapter.swift */,
 				A11A0A0D245A05C800756D4A /* Section.swift */,
 				A11A0A0E245A05C800756D4A /* BaseTableAdapter.swift */,
-				A11A0A0F245A05C800756D4A /* ExtendedTableAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -325,7 +322,6 @@
 				A11A0A1F245A05C900756D4A /* SenderConfigurable.swift in Sources */,
 				A11A0A35245A05C900756D4A /* SymbolEntry.swift in Sources */,
 				A11A0A2B245A05C900756D4A /* IndexPathDiff.swift in Sources */,
-				A11A0A27245A05C900756D4A /* ExtendedTableAdapter.swift in Sources */,
 				A11A0A25245A05C900756D4A /* BaseTableAdapter.swift in Sources */,
 				A11A0A31245A05C900756D4A /* IndexSetDiff.swift in Sources */,
 				A11A0A21245A05C900756D4A /* TableAdapter.swift in Sources */,

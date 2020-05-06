@@ -1,5 +1,5 @@
 //
-//  BaseTableAdapter.swift
+//  SupplementaryTableAdapter.swift
 //  TableAdapter
 //
 //  Created by Nikolai Timonin on 13.02.2020.
@@ -7,50 +7,48 @@
 
 import Foundation
 
-open class TableAdapter<Item: Hashable, SecitonId: Hashable, Header: Any>: BaseTableAdapter<Item, SecitonId, Header> {
-
+open class TableAdapter<Item: Hashable, SectionId: Hashable, Header: Any>:
+    BaseTableAdapter<Item, SectionId, Header>, UITableViewDelegate {
+    
     // MARK: Types
     
-    public typealias CellReuseIdentifierProvider = (IndexPath, Item) -> String?
+    public typealias CellDidSelectHandler = (UITableView, IndexPath, Item) -> Void
     
     // MARK: Public properties
     
-    public var cellIdentifierProvider: CellReuseIdentifierProvider?
+    public var cellDidSelectHandler: CellDidSelectHandler?
     
-    public weak var sender: AnyObject?
-    
-    public var defaultCellIdentifier = "Cell" {
-        
-        didSet {
-            assert(
-                defaultCellIdentifier.isEmpty == false,
-                "Cell reuse identifier must not be empty string"
-            )
-        }
-    }
+    public var defaultHeaderIdentifier = "Header"
+    public var defaultFooterIdentifier = "Footer"
     
     // MARK: Private methods
     
-    private func dequeueConfiguredCell(
-        for item: Item,
-        at indexPath: IndexPath
-    ) -> UITableViewCell {
+    private func dequeueConfiguredHeaderFooterView(
+        withIdentifier id: String,
+        configItem: Any?
+    ) -> UIView? {
         
-        let cellIdentifier = getCellIdetifier(for: item, at: indexPath)
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) else {
+            
+            return nil
+        }
         
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: cellIdentifier,
-            for: indexPath
-        )
+        if let item = configItem {
+            
+            setupConfigurableView(view, with: item)
+        }
         
-        setupConfigurableView(cell, with: item)
-        
-        return cell
+        return view
     }
-    
-    private func getCellIdetifier(for item: Item, at indexPath: IndexPath) -> String {
         
-        return cellIdentifierProvider?(indexPath, item) ?? defaultCellIdentifier
+    private func getHeaderIdentifier(for section: Int) -> String {
+        
+        return sections[section].headerIdentifier ?? defaultHeaderIdentifier
+    }
+
+    private func getFooterIdentifier(for section: Int) -> String {
+        
+        return sections[section].footerIdentifier ?? defaultFooterIdentifier
     }
     
     // MARK: Public methods
@@ -58,28 +56,54 @@ open class TableAdapter<Item: Hashable, SecitonId: Hashable, Header: Any>: BaseT
     public init(
         tableView: UITableView,
         sender: AnyObject? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
+        cellIdentifierProvider: CellReuseIdentifierProvider? = nil,
+        cellDidSelectHandler: CellDidSelectHandler? = nil
     ) {
-        super.init(tableView: tableView, cellProvider: nil)
+        super.init(
+            tableView: tableView,
+            sender: sender,
+            cellIdentifierProvider: cellIdentifierProvider
+        )
         
-        self.cellProvider = { (table, indexPath, item) in
-            
-            return self.dequeueConfiguredCell(for: item, at: indexPath)
-        }
+        self.cellDidSelectHandler = cellDidSelectHandler
         
-        self.sender = sender
-        self.cellIdentifierProvider = cellIdentifierProvider
+        tableView.delegate = self
     }
     
-    public func setupConfigurableView(_ view: UIView, with object: Any) {
+    // MARK: UITableViewDelegate
+    
+    open func tableView(
+        _ tableView: UITableView,
+        viewForHeaderInSection section: Int
+    ) -> UIView? {
+
+        return dequeueConfiguredHeaderFooterView(
+            withIdentifier: getHeaderIdentifier(for: section),
+            configItem: sections[section].header
+        )
+    }
+
+    open func tableView(
+        _ tableView: UITableView,
+        viewForFooterInSection section: Int
+    ) -> UIView? {
+
+        return dequeueConfiguredHeaderFooterView(
+            withIdentifier: getFooterIdentifier(for: section),
+            configItem: sections[section].footer
+        )
+    }
+    
+    open func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         
-        if let view = view as? AnySenderConfigurable {
+        if let handler = cellDidSelectHandler {
             
-            view.anySetup(with: object, sender: sender)
+            let item = getItem(for: indexPath)
             
-        } else if let view = view as? AnyConfigurable {
-            
-            view.anySetup(with: object)
+            handler(tableView, indexPath, item)
         }
     }
 }

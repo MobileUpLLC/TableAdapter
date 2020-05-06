@@ -29,7 +29,7 @@ class WiFiViewController: UIViewController {
     
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
-    private lazy var adapter = ExtendedTableAdapter<Item, Int, String>(
+    private lazy var adapter = TableAdapter<Item, Int, String>(
         tableView: tableView,
         sender: self,
         cellIdentifierProvider: { [unowned self] (_, item) -> String? in
