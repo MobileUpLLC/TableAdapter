@@ -36,9 +36,9 @@ Item for cells must adopt `Hashable` protocol.
 Table view cell should conform to `Configurable` protocol in order to receive cell item for setup.
 
 ```swift
-class Cell: UITableViewCell, Configurable {
+extension Cell: Configurable {
     
-    public func setup(with item: Item) {
+    public func setup(with item: User) {
         
         textLabel?.text = item.name
     }
@@ -48,7 +48,7 @@ class Cell: UITableViewCell, Configurable {
 Header/Footer view also should adopt `Configurable` protocol to receive config item provided by `Section`.
 
 ```swift
-class Header: UITableViewHeaderFooterView, Configurable {
+extension Header: Configurable {
 
     public func setup(with item: String) {
         
@@ -60,11 +60,11 @@ class Header: UITableViewHeaderFooterView, Configurable {
 #### 2. Create sections. 
 Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`. 
 
-Section `Section<ItemType, SectionType, HeaderType>`  is generic type and developer should provide cell items type, section id type and header/footer setup object type.
+Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type and header/footer setup object type.
 
 
 #### 3. Create adapter and fill it with section.
-Create `SupplementaryTableAdapter<ItemType, SectionType, HeaderType>` which is generic type to, with item, section id and header/footer assosiated types, just like in `Section`.
+Create `TableAdapter<Item, SectionId>` which is generic type to, with item and section id assosiated types, just like in `Section`.
 
 Then update adapter with sections.
 
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
 
     let tableView = ...
     
-    private lazy var adapter = SupplementaryTableAdapter<Item, Int, String>(
+    private lazy var adapter = TableAdapter<Item, Int>(
         tableView: tableView,
         cellIdentifierProvider: { (indexPath, item) -> String? in
             return "Cell"
@@ -93,12 +93,12 @@ class ViewController: UIViewController {
         tableView.register(Header.self, forHeaderFooterViewReuseIdentifier identifier: "HeaderId")
         tableView.register(Footer.self, forHeaderFooterViewReuseIdentifier identifier: "FooterId")
 
-        let section = Section<Item, Int, String>(
+        let section = Section<Item, Int>(
             id: 0, 
             items: items, 
             header: "Begin", 
             footer: "End",
-            headerIdentifier: "HedaerId",
+            headerIdentifier: "HeaderId",
             footerIdentifier: "FooterId"
         )
 
@@ -107,7 +107,7 @@ class ViewController: UIViewController {
 }
 ```
 
-**Note**: this type of adapter set table view delegate to itself. To handle other table view delegate methods, you must inherit `SupplementaryTableAdapter` and implement them. Or you can use `ConfigCellTableAdapter`.
+**Note**: this type of adapter set table view delegate to itself. To handle other table view delegate methods, you must inherit `TableAdapter` and implement them. Or you can use `BaseTableAdapter`.
 
 Also you can obtain current adapter sections unisng `currentSections: [Section]` variable.
 
@@ -129,7 +129,7 @@ extension Cell: SenderConfigurable {
 To use default header/footer view in section create `Section` with `String` header/footer object type and **without** reuse identifiers.
 
 ```swift
-let section = Section<Item, Int, String>(
+let section = Section<User, Int>(
     id: 0, 
     items: [...], 
     header: "Begin", 
@@ -141,7 +141,7 @@ let section = Section<Item, Int, String>(
 To use only one cell type, create adapter **without** `CellReuserIdentifierProvider`
 
 ```swift
- lazy var adapter = ConfigCellTableAdapter<Item, Int, String>(tableView: tableView)
+ lazy var adapter = TableAdapter<Item, Int>(tableView: tableView)
  ```
 
  and register cell via storyboard or code for default cell reuse identifier, which is "Cell" under the hood
