@@ -24,9 +24,6 @@ A data-driven library for building complex table views. Easy updating table view
 - Simple yet flexible sections constructing
 
 
-
-
-
 ## Usage
 
 #### 1. Setup items and reusable views.
@@ -72,8 +69,10 @@ Then update adapter with sections.
 class ViewController: UIViewController {
 
     let tableView = ...
+
+    let users: [User] = [...]
     
-    private lazy var adapter = TableAdapter<Item, Int>(
+    private lazy var adapter = TableAdapter<User, Int>(
         tableView: tableView,
         cellIdentifierProvider: { (indexPath, item) -> String? in
             return "Cell"
@@ -83,19 +82,12 @@ class ViewController: UIViewController {
         }
     )
 
-    let items: [Item] = [...]
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
-
-        tableView.register(Header.self, forHeaderFooterViewReuseIdentifier identifier: "HeaderId")
-        tableView.register(Footer.self, forHeaderFooterViewReuseIdentifier identifier: "FooterId")
-
-        let section = Section<Item, Int>(
+        let section = Section<User, Int>(
             id: 0, 
-            items: items, 
+            items: users, 
             header: "Begin", 
             footer: "End",
             headerIdentifier: "HeaderId",
@@ -103,6 +95,12 @@ class ViewController: UIViewController {
         )
 
         adapter.update(with: [section]], animated: true)
+    }
+
+    func setupTable() {
+        tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(Header.self, forHeaderFooterViewReuseIdentifier identifier: "HeaderId")
+        tableView.register(Footer.self, forHeaderFooterViewReuseIdentifier identifier: "FooterId")
     }
 }
 ```
@@ -141,7 +139,7 @@ let section = Section<User, Int>(
 To use only one cell type, create adapter **without** `CellReuserIdentifierProvider`
 
 ```swift
- lazy var adapter = TableAdapter<Item, Int>(tableView: tableView)
+ lazy var adapter = TableAdapter<User, Int>(tableView: tableView)
  ```
 
  and register cell via storyboard or code for default cell reuse identifier, which is "Cell" under the hood
