@@ -32,24 +32,24 @@ class WiFiViewController: UIViewController {
     private lazy var adapter = TableAdapter<Item, Int>(
         tableView: tableView,
         sender: self,
-        cellIdentifierProvider: { [unowned self] (_, item) -> String? in
+        cellIdentifierProvider: { (_, item) -> String? in
         
             switch item {
                
             case .net:
-                return self.networkCellIdentifier
+                return WiFiViewController.networkCellIdentifier
                 
             case .config:
-                return self.wifiSwitchCellIdentifier
+                return WiFiViewController.wifiSwitchCellIdentifier
             }
         }
     )
     
     private var currentNetwork: Network?
     
-    private let wifiSwitchCellIdentifier = "WifiSettings"
+    private static let wifiSwitchCellIdentifier = "WifiSettings"
     
-    private let networkCellIdentifier = "Network"
+    private static let networkCellIdentifier = "Network"
     
     // MARK: Public properties
     
@@ -68,13 +68,13 @@ class WiFiViewController: UIViewController {
                 
                 self?.currentNetwork = net
                 
-                self?.updateUI()
+                self?.updateSections()
             }
         }
         
         setupTableView()
         
-        updateUI()
+        updateSections()
     }
     
     override func viewDidLayoutSubviews() {
@@ -91,16 +91,16 @@ class WiFiViewController: UIViewController {
         
         tableView.register(
             WiFiSwitchCell.self,
-            forCellReuseIdentifier: wifiSwitchCellIdentifier
+            forCellReuseIdentifier: WiFiViewController.wifiSwitchCellIdentifier
         )
 
         tableView.register(
             NetworkCell.self,
-            forCellReuseIdentifier: networkCellIdentifier
+            forCellReuseIdentifier: WiFiViewController.networkCellIdentifier
         )
     }
     
-    private func updateUI() {
+    private func updateSections() {
         
         let sections: [Section<Item, Int>]
         
@@ -140,6 +140,6 @@ class WiFiViewController: UIViewController {
         
         isWifiEnabled = wifiSwitch.isOn
         
-        updateUI()
+        updateSections()
     }
 }
