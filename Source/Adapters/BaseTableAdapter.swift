@@ -54,8 +54,14 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
             updateTable(with: diff)
 
         } catch {
+
+            let msg = """
+            Animated table update failed.
+            Error: \(error)
+            Please report this bug to developer.
+            """
             
-            print("Animated table update failed. Error: \(error)")
+            print(msg)
 
             reloadTable(with: newSections)
         }
@@ -107,7 +113,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     // MARK: Public methods
     
     public init(tableView: UITableView, cellProvider: CellProvider?) {
-        
+
         self.tableView = tableView
         
         self.cellProvider = cellProvider
@@ -189,12 +195,17 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     ) -> UITableViewCell {
         
         guard let provider = cellProvider else {
-            
-            assertionFailure("CellProvider not found")
-            
+
+            let msg = """
+            `CellProvider` closure not found. Provide it during initialization or later,
+            but before updating adapter with sections.
+            """
+
+            assertionFailure(msg)
+
             return UITableViewCell()
         }
-        
+
         let item = getItem(for: indexPath)
         
         return provider(tableView, indexPath, item)
