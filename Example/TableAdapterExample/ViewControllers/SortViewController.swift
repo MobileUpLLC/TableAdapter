@@ -35,12 +35,7 @@ class SortViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = view.bounds
-        
-        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-
-        tableView.rowHeight = (tableView.frame.size.height - navBarHeight - statusBarHeight) / CGFloat(itemsCount)
+        updateTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +62,16 @@ class SortViewController: UIViewController {
         tableView.estimatedSectionFooterHeight = 0
         
         tableView.register(ColorCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+    }
+
+    private func updateTableView() {
+        
+        tableView.frame = view.bounds
+
+        let navBarHeight = navigationController?.navigationBar.frame.size.height ?? 0
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+
+        tableView.rowHeight = (tableView.frame.size.height - navBarHeight - statusBarHeight) / CGFloat(itemsCount)
     }
     
     private func setupNavBar() {
