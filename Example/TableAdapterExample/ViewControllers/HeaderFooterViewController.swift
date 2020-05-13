@@ -37,14 +37,7 @@ class HeaderFooterViewController: UIViewController {
     private var sections2: [Section<PrimitiveItem, Int>] = {
         
         let ints = [4, 1, 5, 2, 1, 6].map { PrimitiveItem(type: .integer, value: $0) }
-        let sectionInts = Section(
-            id: 0,
-            items: ints,
-            header: "Ints begin",
-            footer: "Ints end",
-            headerIdentifier: "Footer",
-            footerIdentifier: "Header"
-        )
+        let sectionInts = Section(id: 0, items: ints, header: "Ints begin", footer: "Ints end", headerIdentifier: "Footer", footerIdentifier: "Header" )
         
         let strings = ["foo", "bar", "zoo", "bar"].map { PrimitiveItem(type: .string, value: $0) }
         let sectionStrings = Section(id: 1, items: strings, header: "Strings begin", footer: "Strings end")
@@ -78,7 +71,10 @@ class HeaderFooterViewController: UIViewController {
         
         view.addSubview(tableView)
         
-        tableView.register(PrimitiveItemCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(
+            PrimitiveItemCell.self,
+            forCellReuseIdentifier: adapter.defaultCellIdentifier
+        )
         
         tableView.register(
             UINib(nibName: "RedHeaderFooterView", bundle: nil),
@@ -94,10 +90,10 @@ class HeaderFooterViewController: UIViewController {
     private func setupNavBar() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Update",
-            style: .plain,
-            target: self,
-            action: #selector(HeaderFooterViewController.updateSections)
+            title  : "Update",
+            style  : .plain,
+            target : self,
+            action : #selector(HeaderFooterViewController.updateSections)
         )
     }
     

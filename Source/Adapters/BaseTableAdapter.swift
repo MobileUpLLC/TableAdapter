@@ -47,8 +47,8 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         do {
             
             let diff = try SectionedDiffUtil.calculateSectionDiff(
-                from: sections,
-                to: newSections
+                from : sections,
+                to   : newSections
             )
 
             updateTable(with: diff)
@@ -89,15 +89,15 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     }
 
     private func dequeueConfiguredCell(
-        for item: Item,
-        at indexPath: IndexPath
+        for item     : Item,
+        at indexPath : IndexPath
     ) -> UITableViewCell {
 
         let cellIdentifier = getCellIdetifier(for: item, at: indexPath)
 
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: cellIdentifier,
-            for: indexPath
+            withIdentifier : cellIdentifier,
+            for            : indexPath
         )
 
         setupConfigurableView(cell, with: item)
@@ -124,9 +124,9 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     }
 
     public init(
-        tableView: UITableView,
-        sender: AnyObject? = nil,
-        cellIdentifierProvider: CellReuseIdentifierProvider? = nil
+        tableView              : UITableView,
+        sender                 : AnyObject?                    = nil,
+        cellIdentifierProvider : CellReuseIdentifierProvider?  = nil
     ) {
 
         self.tableView = tableView
@@ -182,16 +182,16 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     }
     
     open func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
+        _ tableView                   : UITableView,
+        numberOfRowsInSection section : Int
     ) -> Int {
         
         return sections[section].items.count
     }
     
     open func tableView(
-        _ tableView: UITableView,
-        cellForRowAt indexPath: IndexPath
+        _ tableView            : UITableView,
+        cellForRowAt indexPath : IndexPath
     ) -> UITableViewCell {
         
         guard let provider = cellProvider else {
@@ -212,44 +212,44 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     }
     
     open func tableView(
-        _ tableView: UITableView,
-        titleForHeaderInSection section: Int
+        _ tableView                     : UITableView,
+        titleForHeaderInSection section : Int
     ) -> String? {
 
         return sections[section].header as? String
     }
 
     open func tableView(
-        _ tableView: UITableView,
-        titleForFooterInSection section: Int
+        _ tableView                     : UITableView,
+        titleForFooterInSection section : Int
     ) -> String? {
 
         return sections[section].footer as? String
     }
 
     open func tableView(
-        _ tableView: UITableView,
-        canEditRowAt indexPath: IndexPath
+        _ tableView            : UITableView,
+        canEditRowAt indexPath : IndexPath
     ) -> Bool {
         return true
     }
 
     open func tableView(
-        _ tableView: UITableView,
-        commit editingStyle: UITableViewCell.EditingStyle,
-        forRowAt indexPath: IndexPath
+        _ tableView         : UITableView,
+        commit editingStyle : UITableViewCell.EditingStyle,
+        forRowAt indexPath  : IndexPath
     ) { }
 
     open func tableView(
-        _ tableView: UITableView,
-        canMoveRowAt indexPath: IndexPath
+        _ tableView            : UITableView,
+        canMoveRowAt indexPath : IndexPath
     ) -> Bool {
         return true
     }
 
     open func tableView(
-        _ tableView: UITableView,
-        moveRowAt sourceIndexPath: IndexPath,
-        to destinationIndexPath: IndexPath
+        _ tableView               : UITableView,
+        moveRowAt sourceIndexPath : IndexPath,
+        to destinationIndexPath   : IndexPath
     ) { }
 }

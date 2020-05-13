@@ -30,10 +30,10 @@ class WiFiViewController: UIViewController {
     private let tableView = UITableView(frame: .zero, style: .grouped)
     
     private lazy var adapter = TableAdapter<Item, Int>(
-        tableView: tableView,
-        sender: self,
-        cellIdentifierProvider: { (_, item) -> String? in
-        
+        tableView              : tableView,
+        sender                 : self,
+        cellIdentifierProvider : { (_, item) -> String? in
+
             switch item {
                
             case .net:

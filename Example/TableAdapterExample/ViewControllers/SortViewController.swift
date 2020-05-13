@@ -62,7 +62,10 @@ class SortViewController: UIViewController {
         tableView.estimatedSectionHeaderHeight = 0
         tableView.estimatedSectionFooterHeight = 0
         
-        tableView.register(ColorCell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
+        tableView.register(
+            ColorCell.self,
+            forCellReuseIdentifier: adapter.defaultCellIdentifier
+        )
     }
 
     private func layoutTable() {
@@ -81,10 +84,10 @@ class SortViewController: UIViewController {
     private func setupNavBar() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Sort",
-            style: .plain,
-            target: self,
-            action: #selector(SortViewController.runSort)
+            title  : "Sort",
+            style  : .plain,
+            target : self,
+            action : #selector(SortViewController.runSort)
         )
     }
     

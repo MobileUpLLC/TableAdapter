@@ -14,10 +14,10 @@ class ColorCell: UITableViewCell, Configurable {
     func setup(with object: Float) {
         
         backgroundColor = UIColor(
-            hue: CGFloat(object),
-            saturation: 1.0,
-            brightness: 1.0,
-            alpha: 1.0
+            hue        : CGFloat(object),
+            saturation : 1.0,
+            brightness : 1.0,
+            alpha      : 1.0
         )
     }
 }

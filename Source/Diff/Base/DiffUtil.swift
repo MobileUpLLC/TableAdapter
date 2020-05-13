@@ -18,15 +18,15 @@ public class DiffUtil {
     // MARK: Private methods
 
     private static func collectDiff<Item: Hashable>(
-        symbolTable: [Item: SymbolEntry],
-        oa: [Entry<Item>],
-        na: [Entry<Item>]
+        symbolTable : [Item : SymbolEntry],
+        oa          : [Entry<Item>],
+        na          : [Entry<Item>]
     ) -> IndexSetDiff {
 
         var result = IndexSetDiff(
-            inserts: IndexSet(),
-            moves: [],
-            deletes: IndexSet()
+            inserts : IndexSet(),
+            moves   : [],
+            deletes : IndexSet()
         )
 
         // Insets & Moves
@@ -67,10 +67,8 @@ public class DiffUtil {
     // MARK: Public methods
     
     public static func calculateDiff<T: Hashable>(
-
-        form oldItems: [T],
-        to newItems: [T]
-
+        form oldItems : [T],
+        to newItems   : [T]
     ) throws -> IndexSetDiff {
 
         var symbolTable: [T: SymbolEntry] = [:]
@@ -186,9 +184,9 @@ public class DiffUtil {
     }
     
     public static func applyDiff<T: Hashable>(
-        _ diff: IndexSetDiff,
-        from old: [T],
-        insertsProvider: ((Int) -> T)
+        _ diff          : IndexSetDiff,
+        from old        : [T],
+        insertsProvider : ((Int) -> T)
     ) -> [T] {
         
         let resultCount = old.count + diff.inserts.count - diff.deletes.count

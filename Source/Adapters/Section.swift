@@ -25,12 +25,12 @@ public struct Section<Item: Hashable, SectionId: Hashable> {
     // MARK: Public methods
     
     public init(
-        id: SectionId,
-        items: [Item],
-        header: Any? = nil,
-        footer: Any? = nil,
-        headerIdentifier: String? = nil,
-        footerIdentifier: String? = nil
+        id               : SectionId,
+        items            : [Item],
+        header           : Any?     = nil,
+        footer           : Any?     = nil,
+        headerIdentifier : String?  = nil,
+        footerIdentifier : String?  = nil
     ) {
         self.id = id
         self.items = items

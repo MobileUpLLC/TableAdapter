@@ -28,10 +28,10 @@ class MixedObjectsViewController: UIViewController {
     }()
     
     let segments: [String: PrimitiveItem.ItemType?] = [
-        "Int": .integer,
-        "String": .string,
-        "Bool": .bool,
-        "Any": nil
+        "Int"    : .integer,
+        "String" : .string,
+        "Bool"   : .bool,
+        "Any"    : nil
     ]
     
     // MARK: Override methods
@@ -79,8 +79,8 @@ class MixedObjectsViewController: UIViewController {
         control.selectedSegmentIndex = 0
         control.addTarget(
             self,
-            action: #selector(MixedObjectsViewController.segmentedControlValueChanged(_:)),
-            for: .valueChanged
+            action : #selector(MixedObjectsViewController.segmentedControlValueChanged(_ :)),
+            for    : .valueChanged
         )
         
         navigationItem.titleView = control

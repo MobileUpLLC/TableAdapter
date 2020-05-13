@@ -18,9 +18,9 @@ public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable>: DiffUtil {
     
     private static func calculateRowsDiff(
         
-        from oldSections: [SectionType],
-        to newSections: [SectionType]
-        
+        from oldSections : [SectionType],
+        to newSections   : [SectionType]
+
     ) throws -> IndexPathDiff {
         
         guard oldSections.count == newSections.count else {
@@ -54,9 +54,9 @@ public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable>: DiffUtil {
     
     static func calculateSectionDiff(
         
-        from oldSections: [SectionType],
-        to newSections: [SectionType]
-        
+        from oldSections : [SectionType],
+        to newSections   : [SectionType]
+
     ) throws -> DiffType {
         
         let sectionsDiff = try calculateDiff(form: oldSections, to: newSections)
@@ -66,10 +66,10 @@ public class SectionedDiffUtil<Item: Hashable, SectionId: Hashable>: DiffUtil {
         let rowsDiff = try calculateRowsDiff(from: intermediateSections, to: newSections)
         
         return Diff(
-            sections: sectionsDiff,
-            rows: rowsDiff,
-            intermediateData: intermediateSections,
-            resultData: newSections
+            sections         : sectionsDiff,
+            rows             : rowsDiff,
+            intermediateData : intermediateSections,
+            resultData       : newSections
         )
     }
 }

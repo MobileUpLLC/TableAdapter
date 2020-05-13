@@ -39,8 +39,8 @@ extension WiFiSwitchCell: SenderConfigurable {
         
         wifiSwitch.addTarget(
             sender,
-            action: #selector(WiFiViewController.toggleWifi(_:)),
-            for: .touchUpInside
+            action : #selector(WiFiViewController.toggleWifi(_ :)),
+            for    : .touchUpInside
         )
     }
 }

@@ -16,9 +16,9 @@ class ViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
     private lazy var adapter = TableAdapter<Example, Int>(
-        tableView: tableView,
-        cellDidSelectHandler: { [weak self] (table, indexPath, item) in
-        
+        tableView            : tableView,
+        cellDidSelectHandler : { [weak self] (table, indexPath, item) in
+
             table.deselectRow(at: indexPath, animated: true)
             
             self?.open(item)
