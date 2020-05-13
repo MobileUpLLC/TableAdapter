@@ -1,10 +1,11 @@
 # TableAdapter
+
 <p align="left">
     <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-Swift_4.0-green" alt="Swift5" /></a>
-	<a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.10.0-blue.svg" alt="CocoaPods compatible" /></a>
+ <a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.10.0-blue.svg" alt="CocoaPods compatible" /></a>
     <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
-	<img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
-	<a href="https://mobileup.ru/"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
+ <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
+ <a href="https://mobileup.ru/"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
 </p>
 
 A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data but not in terms of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it needed. And configuring reusable views in a type-safe manner helps to keep code clean and stable.
@@ -16,17 +17,19 @@ A data-driven library for building complex table views. Easy updating table view
 </div>
 
 ## Features
-- Animated updates based on auto diffing
-- Declarative type-safe cell, header and footer setup
-- No more `dequeReusable...` 
+
+- Animated table updates based on auto diffing
+- Liner time diffing algorithm
+- Type-safe cell, header/footer setup via protocol implementation
+- No more `dequeReusable...`
 - No need to subclass either cell, table or model
 - Cell initialization from xib, storyboard or code
 - Simple yet flexible sections constructing
-
+- Easy to extend
 
 ## Usage
 
-#### 1. Setup items and reusable views.
+### 1. Setup items and reusable views
 
 Item for cells must adopt `Hashable` protocol.
 
@@ -34,9 +37,9 @@ Table view cell should conform to `Configurable` protocol in order to receive ce
 
 ```swift
 extension Cell: Configurable {
-    
+
     public func setup(with item: User) {
-        
+
         textLabel?.text = item.name
     }
 }
@@ -48,19 +51,20 @@ Header/Footer view also should adopt `Configurable` protocol to receive config i
 extension Header: Configurable {
 
     public func setup(with item: String) {
-        
+
         textLabel?.text = item
     }
 }
 ```
 
-#### 2. Create sections. 
-Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`. 
+### 2. Create sections
+
+Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`.
 
 Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type and header/footer setup object type.
 
+### 3. Create adapter and fill it with section
 
-#### 3. Create adapter and fill it with section.
 Create `TableAdapter<Item, SectionId>` which is generic type to, with item and section id assosiated types, just like in `Section`.
 
 Then update adapter with sections.
@@ -71,7 +75,7 @@ class ViewController: UIViewController {
     let tableView = ...
 
     let users: [User] = [...]
-    
+
     private lazy var adapter = TableAdapter<User, Int>(
         tableView: tableView,
         cellIdentifierProvider: { (indexPath, item) -> String? in
@@ -85,10 +89,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setupTable()
+
         let section = Section<User, Int>(
-            id: 0, 
-            items: users, 
-            header: "Begin", 
+            id: 0,
+            items: users,
+            header: "Begin",
             footer: "End",
             headerIdentifier: "HeaderId",
             footerIdentifier: "FooterId"
@@ -110,13 +116,14 @@ class ViewController: UIViewController {
 Also you can obtain current adapter sections unisng `currentSections: [Section]` variable.
 
 ## Sender
+
 Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
 
 ```swift
 extension Cell: SenderConfigurable {
-    
+
     func setup(with item: Item, sender: ViewController) {
-        
+
         textLabel?.text = object.name
         delegate = sender
     }
@@ -124,18 +131,20 @@ extension Cell: SenderConfigurable {
 ```
 
 ## Default Header/Footer
+
 To use default header/footer view in section create `Section` with `String` header/footer object type and **without** reuse identifiers.
 
 ```swift
 let section = Section<User, Int>(
-    id: 0, 
-    items: [...], 
-    header: "Begin", 
+    id: 0,
+    items: [...],
+    header: "Begin",
     footer: "End"
 )
 ```
 
 ## One cell type
+
 To use only one cell type, create adapter **without** `CellReuserIdentifierProvider`
 
 ```swift
@@ -149,20 +158,24 @@ tableView.register(Cell.self, forCellReuseIdentifier: adapter.defaultCellIdentif
  ```
 
 ## Requirements
-- Swift 4.0+
+
+- Swift 4.2+
 - iOS 9.0+
 
 ## Istallation
 
 ### CocoaPods
+
 Add the following to `Podfile`:
+
 ```ruby
 pod 'TableAdapter'
 ```
 
 ### Manual
+
 Download and drag files from Source folder into your Xcode project.
 
-
 ## License
+
 TableAdapter is distributed under the [MIT License](https://mobileup.ru/).

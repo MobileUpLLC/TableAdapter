@@ -168,7 +168,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         return sections[indexPath.section].items[indexPath.row]
     }
     
-    // MARK: UITableViewDataSource
+    // MARK: - UITableViewDataSource
     
     open func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -215,4 +215,30 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
 
         return sections[section].footer as? String
     }
+
+    open func tableView(
+        _ tableView: UITableView,
+        canEditRowAt indexPath: IndexPath
+    ) -> Bool {
+        return true
+    }
+
+    open func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) { }
+
+    open func tableView(
+        _ tableView: UITableView,
+        canMoveRowAt indexPath: IndexPath
+    ) -> Bool {
+        return true
+    }
+
+    open func tableView(
+        _ tableView: UITableView,
+        moveRowAt sourceIndexPath: IndexPath,
+        to destinationIndexPath: IndexPath
+    ) { }
 }
