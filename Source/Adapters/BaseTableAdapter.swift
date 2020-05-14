@@ -7,6 +7,8 @@
 
 import UIKit
 
+/// BaseTableAdapter sets table view data source to itself.
+/// Inherit adapter in order to extend functionality or handle other table view data source methods.
 open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITableViewDataSource {
     
     // MARK: Types
@@ -19,18 +21,25 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         
     // MARK: Public properties
 
+    /// Current table.
     public let tableView: UITableView
 
+    /// Current table sections.
     public private(set) var sections: [SecionType] = []
 
+    /// Returns table view cell for item at index path.
     public var cellProvider: CellProvider?
 
+    /// Returns cell reuse identifier for item at index path.
     public var cellIdentifierProvider: CellReuseIdentifierProvider?
 
+    /// Animation type for sections and rows update.
     public var animationType: UITableView.RowAnimation = .fade
 
+    /// Object to be sent in reusable cell, header or footer in case of adopting SenderConfigurable protocol.
     public weak var sender: AnyObject?
 
+    /// Default cell reuse identifier in case of absence CellReuseIdentifierProvider.
     public var defaultCellIdentifier = "Cell"
     
     // MARK: Private methods
@@ -111,7 +120,11 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
     }
     
     // MARK: Public methods
-    
+
+    /// Initialize adapter for table view with cell provider.
+    /// - Parameters:
+    ///   - tableView: Current table view.
+    ///   - cellProvider: Returns UITableViewCell for Item at IndexPath.
     public init(tableView: UITableView, cellProvider: CellProvider?) {
 
         self.tableView = tableView
@@ -123,6 +136,11 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         tableView.dataSource = self
     }
 
+    /// Initialize adapter for table view with sender and cell reuse identifier provider.
+    /// - Parameters:
+    ///   - tableView: Current table view.
+    ///   - sender: Object that will be send to cell, header or footer if SenderConfigurable protocol adopted.
+    ///   - cellIdentifierProvider: Returns cell reuse identifier for Item at IndexPath.
     public init(
         tableView              : UITableView,
         sender                 : AnyObject?                    = nil,
@@ -145,30 +163,41 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         tableView.dataSource = self
     }
 
-    public func setupConfigurableView(_ view: UIView, with object: Any) {
-
-        if let view = view as? AnySenderConfigurable {
-
-            view.anySetup(with: object, sender: sender)
-
-        } else if let view = view as? AnyConfigurable {
-
-            view.anySetup(with: object)
-        }
-    }
-
+    /// Update current table view state with new sections.
+    /// - Parameters:
+    ///   - sections: New sections.
+    ///   - animated: If true - performs update with animations based on auto diff.
     open func update(with sections: [SecionType], animated: Bool = true) {
-        
+
         if animated {
-            
+
             updateTable(with: sections)
-        
+
         } else {
-            
+
             reloadTable(with: sections)
         }
     }
-    
+
+    /// Setup reusable view with item.
+    /// - Parameters:
+    ///   - view: View that adopts either Configurable of SenderConfigurable protocol.
+    ///   - item: Item.
+    public func setupConfigurableView(_ view: UIView, with item: Any) {
+
+        if let view = view as? AnySenderConfigurable {
+
+            view.anySetup(with: item, sender: sender)
+
+        } else if let view = view as? AnyConfigurable {
+
+            view.anySetup(with: item)
+        }
+    }
+
+    /// Get Item for IndexPath from current sections.
+    /// - Parameter indexPath: Index path of item to return.
+    /// - Returns: Item.
     public func getItem(for indexPath: IndexPath) -> Item {
         
         return sections[indexPath.section].items[indexPath.row]

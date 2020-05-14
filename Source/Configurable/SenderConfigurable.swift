@@ -16,6 +16,10 @@ public protocol AnySenderConfigurable {
 
 // MARK: SenderConfigurable
 
+/// Implement in order to receive item and sender for reusable view setup.
+/// If real item value type provided by Section doesn't match ItemType,
+/// or real sender type provided by TableAdapter doesn't math SenderType
+/// `setup()` method won't get called.
 public protocol SenderConfigurable: AnySenderConfigurable {
     
     associatedtype SenderType : Any

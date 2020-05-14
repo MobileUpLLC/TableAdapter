@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// TableAdapter sets table view data source and delegate to itself.
+/// Inherit adapter in order to extend functionality or handle other table view data source/delegate methods.
 open class TableAdapter<Item: Hashable, SectionId: Hashable>:
     BaseTableAdapter<Item, SectionId>, UITableViewDelegate {
     
@@ -15,10 +17,14 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
     public typealias CellDidSelectHandler = (UITableView, IndexPath, Item) -> Void
     
     // MARK: Public properties
-    
+
+    /// Called on each cell selection.
     public var cellDidSelectHandler: CellDidSelectHandler?
-    
+
+    /// Default header indentifier in case of ommitng `headerIdentifier` in Section.
     public var defaultHeaderIdentifier = "Header"
+
+    /// Default footer indentifier in case of ommitng `footerIdentifier` in Section.
     public var defaultFooterIdentifier = "Footer"
     
     // MARK: Private methods
@@ -52,7 +58,14 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
     }
     
     // MARK: Public methods
-    
+
+    /// Initialize for table view, with sender, cell reuse identifier provider and cell selection handler.
+    /// Note: This type of adapter sets table view delegate to itself.
+    /// - Parameters:
+    ///   - tableView: Current table view.
+    ///   - sender: Object that will be send to cell, header or footer if SenderConfigurable protocol adopted.
+    ///   - cellIdentifierProvider: Returns cell reuse identifier for Item at IndexPath.
+    ///   - cellDidSelectHandler: Called on cell selection event.
     public init(
         tableView              : UITableView,
         sender                 : AnyObject?                    = nil,
@@ -70,6 +83,10 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         tableView.delegate = self
     }
 
+    /// Initialize adapter for table view with cell provider.
+    /// - Parameters:
+    ///   - tableView: Current table view.
+    ///   - cellProvider: Returns UITableViewCell for Item at IndexPath.
     public override init(
         tableView    : UITableView,
         cellProvider : BaseTableAdapter<Item, SectionId>.CellProvider?

@@ -16,6 +16,9 @@ public protocol AnyConfigurable {
 
 // MARK: Configurable
 
+/// Implement in order to receive item for reusable view setup.
+/// If real value type provided by Section doesn't match ItemType,
+/// `setup()` method won't get called.
 public protocol Configurable: AnyConfigurable {
     
     associatedtype ItemType: Any

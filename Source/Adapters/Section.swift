@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Section contains all iformation for section setup in table view.
 public struct Section<Item: Hashable, SectionId: Hashable> {
     
     typealias SectionType = Section<Item, SectionId>
@@ -23,7 +24,15 @@ public struct Section<Item: Hashable, SectionId: Hashable> {
     public let footerIdentifier : String?
 
     // MARK: Public methods
-    
+
+    /// Intitialize section.
+    /// - Parameters:
+    ///   - id: Section id. Must be unique in terms of Hashable protocol.
+    ///   - items: Items for cells in table view section.
+    ///   - header: Model for header view setup. Must be string for default table view header.
+    ///   - footer: Model for footer view setup. Must be string for default table view footer.
+    ///   - headerIdentifier: Heder view reuse identifier. Must be nil for default table view section header usage.
+    ///   - footerIdentifier: Footer view reuse identifier. Must be nil for default table view section footer usage.
     public init(
         id               : SectionId,
         items            : [Item],
