@@ -163,7 +163,7 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         editingStyleForRowAt indexPath : IndexPath
     ) -> UITableViewCell.EditingStyle {
 
-        return .none
+        return .delete
     }
 
     open func tableView(
@@ -171,7 +171,10 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         titleForDeleteConfirmationButtonForRowAt indexPath : IndexPath
     ) -> String? {
 
-        return nil
+        return NSLocalizedString(
+            "Delete",
+            comment: "Title for delete confirmation button for row at index path"
+        )
     }
 
     @available(iOS 11.0, *)
