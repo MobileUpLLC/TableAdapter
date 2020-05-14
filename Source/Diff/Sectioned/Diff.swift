@@ -11,11 +11,11 @@ struct Diff<Item: Hashable, SectionId: Hashable> {
     
     typealias SectionType = Section<Item, SectionId>
     
-    let sections: IndexSetDiff
-    let rows: IndexPathDiff
-    
-    let intermediateData: [SectionType]
-    let resultData: [SectionType]
+    let sections : IndexSetDiff
+    let rows     : IndexPathDiff
+
+    let intermediateData : [SectionType]
+    let resultData       : [SectionType]
 }
 
 // MARK: CustomStringConvertible

@@ -12,9 +12,9 @@ final class SortUtil<T: Comparable> {
     
     // MARK: Private properties
     
-    private let originItems: [T]
-    
-    private var items: [T]
+    private let originItems : [T]
+    private var items       : [T]
+
     private var currentIndex: Int
     
     // MARK: Public properties

@@ -13,15 +13,15 @@ public struct Section<Item: Hashable, SectionId: Hashable> {
     
     // MARK: Public properties
     
-    public var id: SectionId
-    public var items: [Item]
-    
-    public let header: Any?
-    public let footer: Any?
-    
-    public let headerIdentifier: String?
-    public let footerIdentifier: String?
-    
+    public var id    : SectionId
+    public var items : [Item]
+
+    public let header : Any?
+    public let footer : Any?
+
+    public let headerIdentifier : String?
+    public let footerIdentifier : String?
+
     // MARK: Public methods
     
     public init(

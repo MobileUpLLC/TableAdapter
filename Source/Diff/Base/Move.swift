@@ -9,8 +9,8 @@ import Foundation
 
 public struct Move<T> {
     
-    public let from: T
-    public let to: T
+    public let from : T
+    public let to   : T
 }
 
 // MARK: CustomStringConvertible

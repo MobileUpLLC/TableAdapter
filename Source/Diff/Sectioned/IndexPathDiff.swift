@@ -9,7 +9,7 @@ import Foundation
 
 public struct IndexPathDiff {
     
-    var inserts: [IndexPath]
-    var moves: [Move<IndexPath>]
-    var deletes: [IndexPath]
+    var inserts : [IndexPath]
+    var moves   : [Move<IndexPath>]
+    var deletes : [IndexPath]
 }

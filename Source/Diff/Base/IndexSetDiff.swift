@@ -9,9 +9,9 @@ import Foundation
 
 public struct IndexSetDiff {
     
-    public var inserts: IndexSet
-    public var moves: [Move<Int>]
-    public var deletes: IndexSet
+    public var inserts : IndexSet
+    public var moves   : [Move<Int>]
+    public var deletes : IndexSet
 }
 
 // MARK: CustomStringConvertible
@@ -37,8 +37,8 @@ extension Move where T == Int {
     func convertToIndexPath(section: Int) -> Move<IndexPath> {
         
         return Move<IndexPath>(
-            from: IndexPath(row: from, section: section),
-            to: IndexPath(row: to, section: section)
+            from : IndexPath(row: from, section: section),
+            to   : IndexPath(row: to, section: section)
         )
     }
 }

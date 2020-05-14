@@ -18,10 +18,9 @@ public protocol AnySenderConfigurable {
 
 public protocol SenderConfigurable: AnySenderConfigurable {
     
-    associatedtype SenderType: Any
-    
-    associatedtype ItemType: Any
-    
+    associatedtype SenderType : Any
+    associatedtype ItemType   : Any
+
     func setup(with item: ItemType, sender: SenderType)
 }
 
