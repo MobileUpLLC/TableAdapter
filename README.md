@@ -27,6 +27,71 @@ A data-driven library for building complex table views. Easy updating table view
 - Simple yet flexible sections constructing
 - Easy to extend
 
+
+## Why
+
+<table>
+
+  <tr>
+    <th width="50%">Simple three steps:</th>
+    <th width="50%">Result</th>
+  </tr>
+
+  <tr>
+    <td>1. Prepare models, cells and header/footer</td>
+    <th rowspan="10"><img src="https://raw.githubusercontent.com/kzaher/rxswiftcontent/master/GithubSearch.gif"></th>
+    <!-- <th rowspan="10"><img src="/Users/nikki/Movies/myVideo.2020-05-17 12_57_16.gif"></th> -->
+    <!-- <th rowspan="10"><img src="/Users/nikki/Movies/qwe.gif"></th> -->
+  </tr>
+
+  <tr>
+    <td>
+    <div class="highlight highlight-source-swift">
+    <pre>
+extension User: Hashable { ... }<br>
+extension Cell: Configurable {
+    public func setup(with item: User) {
+        textLabel?.text = item.name
+    }
+}</pre></div></td>
+  </tr>
+
+  <tr>
+    <td>2. Create sections</td>
+  </tr>
+
+  <tr>
+    <td width="50%"><div class="highlight highlight-source-swift"><pre>
+let section = Section<User, Int>(
+    id: 0,
+    items: users,
+    header: "Begin",
+    footer: "End",
+    headerIdentifier: "HeaderId",
+    footerIdentifier: "FooterId"
+)</pre></div></td>
+  </tr>
+
+  <tr>
+    <td>3. Create adapter and update it with sections</td>
+  </tr>
+
+  <tr>
+    <td width="50%"><div class="highlight highlight-source-swift"><pre>
+var adapter = TableAdapter<User, Int>(
+    tableView: tableView,
+    cellIdentifierProvider: { (indexPath, item) in
+        // Return cell reuse id for item at index path
+    },
+    cellDidSelectHandler: { (table, indexPath, item) in
+        // Handle cell selection for item at index path
+    }
+)
+adapter.update(with: [section], animated: true)</pre></div></td>
+  </tr>
+
+</table>
+
 ## Usage
 
 ### 1. Setup models and reusable views
