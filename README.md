@@ -1,10 +1,10 @@
 # TableAdapter
 
 <p align="left">
-    <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-Swift_4.0-green" alt="Swift5" /></a>
+    <a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/language-Swift_4.2-green" alt="Swift5" /></a>
+ <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
  <a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.10.0-blue.svg" alt="CocoaPods compatible" /></a>
     <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
- <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
  <a href="https://mobileup.ru/"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
 </p>
 
@@ -29,9 +29,13 @@ A data-driven library for building complex table views. Easy updating table view
 
 ## Usage
 
-### 1. Setup items and reusable views
+### 1. Setup models and reusable views
+
+#### 1.1 Model setup
 
 Item for cells must adopt `Hashable` protocol.
+
+#### 1.2 Cells setup
 
 Table view cell should conform to `Configurable` protocol in order to receive cell item for setup.
 
@@ -44,6 +48,8 @@ extension Cell: Configurable {
     }
 }
 ```
+
+#### 1.3 Header/Footer view setup
 
 Header/Footer view also should adopt `Configurable` protocol to receive config item provided by `Section`.
 
@@ -61,7 +67,7 @@ extension Header: Configurable {
 
 Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`.
 
-Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type and header/footer setup object type.
+Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type.
 
 ### 3. Create adapter and fill it with section
 
@@ -81,7 +87,7 @@ class ViewController: UIViewController {
         cellIdentifierProvider: { (indexPath, item) -> String? in
             return "Cell"
         },
-        cellDidSelectHandler: { [weak self] (table, indexPath, item) in
+        cellDidSelectHandler: { (table, indexPath, item) in
             // Handle cell selection for item at indexPath
         }
     )
@@ -100,7 +106,7 @@ class ViewController: UIViewController {
             footerIdentifier: "FooterId"
         )
 
-        adapter.update(with: [section]], animated: true)
+        adapter.update(with: [section], animated: true)
     }
 
     func setupTable() {
@@ -132,7 +138,7 @@ extension Cell: SenderConfigurable {
 
 ## Default Header/Footer
 
-To use default header/footer view in section create `Section` with `String` header/footer object type and **without** reuse identifiers.
+To use default header/footer view in section create `Section` with `String` header/footer object type and **omit** reuse identifiers.
 
 ```swift
 let section = Section<User, Int>(
@@ -148,10 +154,10 @@ let section = Section<User, Int>(
 To use only one cell type, create adapter **without** `CellReuserIdentifierProvider`
 
 ```swift
- lazy var adapter = TableAdapter<User, Int>(tableView: tableView)
+lazy var adapter = TableAdapter<User, Int>(tableView: tableView)
  ```
 
- and register cell via storyboard or code for default cell reuse identifier, which is "Cell" under the hood
+and register cell via storyboard or code for default cell reuse identifier, which is "Cell" under the hood
 
  ```swift
 tableView.register(Cell.self, forCellReuseIdentifier: adapter.defaultCellIdentifier)
