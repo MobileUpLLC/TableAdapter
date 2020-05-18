@@ -178,6 +178,14 @@ Add the following to `Podfile`:
 pod 'TableAdapter'
 ```
 
+### Carthage
+
+Add the following to `Cartfile`:
+
+```ruby
+github "MobileUpLLC/TableAdapter"
+```
+
 ### Manual
 
 Download and drag files from Source folder into your Xcode project.
