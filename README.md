@@ -5,7 +5,7 @@
  <img src="https://img.shields.io/badge/platform-iOS-blue.svg?style=flat" alt="Platform iOS" />
  <a href="https://cocoapods.org/pods/tablekit"><img src="https://img.shields.io/badge/pod-2.10.0-blue.svg" alt="CocoaPods compatible" /></a>
     <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible" /></a>
- <a href="https://mobileup.ru/"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
+ <a href="https://github.com/MobileUpLLC/TableAdapter/blob/develop/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
 </p>
 
 A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data but not in terms of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it needed. And configuring reusable views in a type-safe manner helps to keep code clean and stable.
@@ -184,4 +184,4 @@ Download and drag files from Source folder into your Xcode project.
 
 ## License
 
-TableAdapter is distributed under the [MIT License](https://mobileup.ru/).
+TableAdapter is distributed under the [MIT License](https://github.com/MobileUpLLC/TableAdapter/blob/develop/LICENSE).
