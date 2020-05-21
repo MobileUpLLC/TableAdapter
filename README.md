@@ -8,7 +8,7 @@
  <a href="https://github.com/MobileUpLLC/TableAdapter/blob/develop/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License: MIT" /></a>
 </p>
 
-A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data but not in terms of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it needed. And configuring reusable views in a type-safe manner helps to keep code clean and stable.
+A data-driven library for building complex table views. Easy updating table view items with animations using automatic diffing algorithm under the hood. Our goal is to think in terms of data instead of index paths while building tables. High-level yet flexible api allows to setup sectioned lists in a few lines of code and take more control over the table where it’s needed. And reusable views configuring helps to keep code clean and stable in a type-safe manner.
 
 <div align="center">
     <img src="https://user-images.githubusercontent.com/26662065/71070139-31544b00-218b-11ea-9512-5b2c519c0382.gif" width="" height="400" />
@@ -65,13 +65,13 @@ extension Header: Configurable {
 
 ### 2. Create sections
 
-Section contains information about items, header/footer (optionally) and must be unique by `id: Hashable`.
+Section contains information about items, header/footer (optionally) and must have unique `id: Hashable`.
 
 Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type.
 
 ### 3. Create adapter and fill it with section
 
-Create `TableAdapter<Item, SectionId>` which is generic type to, with item and section id assosiated types, just like in `Section`.
+Create `TableAdapter<Item, SectionId>` which is generic type to, with item and section id associated types, just like in `Section`.
 
 Then update adapter with sections.
 
@@ -117,13 +117,13 @@ class ViewController: UIViewController {
 }
 ```
 
-**Note**: this type of adapter set table view delegate to itself. To handle other table view delegate methods, you must inherit `TableAdapter` and implement them. Or you can use `BaseTableAdapter`.
+**Note**: his adapter type sets table view delegate to itself. To handle other table view delegate methods, you must inherit `TableAdapter` and implement them.
 
-Also you can obtain current adapter sections unisng `currentSections: [Section]` variable.
+You can also obtain current adapter sections unisng `currentSections: [Section]` variable.
 
 ## Sender
 
-Sometimes you need set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
+Sometimes you need to set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
 
 ```swift
 extension Cell: SenderConfigurable {
@@ -168,7 +168,7 @@ tableView.register(Cell.self, forCellReuseIdentifier: adapter.defaultCellIdentif
 - Swift 4.2+
 - iOS 9.0+
 
-## Istallation
+## Installation
 
 ### CocoaPods
 
