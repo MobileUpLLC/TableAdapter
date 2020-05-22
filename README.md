@@ -13,7 +13,7 @@ A data-driven library for building complex table views. Easy updating table view
 <div align="center">
     <img src="https://user-images.githubusercontent.com/26662065/71070139-31544b00-218b-11ea-9512-5b2c519c0382.gif" width="" height="400" />
     <img src="https://user-images.githubusercontent.com/26662065/71070318-96a83c00-218b-11ea-9c0f-9015b63225e7.gif" width="" height="400" />
-    <img src="https://user-images.githubusercontent.com/26662065/71070476-eb4bb700-218b-11ea-9239-db6d822d327d.gif" width="" height="400" />
+    <img src="https://user-images.githubusercontent.com/16690973/82672960-bf0bf900-9c49-11ea-9d86-56ba4711d1ae.gif" width="" height="400" />
 </div>
 
 ## Features
