@@ -41,6 +41,25 @@ class RandomizeViewController: UIViewController {
         return result.shuffled()
     }
 
+    private var baseSections: [Section<Int, Int>] {
+
+        let fistSection = Section<Int, Int>(
+            id: 0,
+            items: [1, 2, 3],
+            header: "Section 1",
+            footer: "Section 1"
+        )
+
+        let secondSection = Section<Int, Int>(
+            id: 1,
+            items:  [4, 5, 6],
+            header: "Section 2",
+            footer: "Section 2"
+        )
+
+        return [fistSection, secondSection]
+    }
+
     // MARK: Public properties
 
     // MARK: Override methods
@@ -51,7 +70,7 @@ class RandomizeViewController: UIViewController {
         setupTableView()
         setupToolbar()
 
-        adapter.update(with: sections, animated: false)
+        adapter.update(with: baseSections, animated: false)
     }
 
     override func viewDidLayoutSubviews() {
@@ -81,6 +100,13 @@ class RandomizeViewController: UIViewController {
             action: #selector(suffleItems)
         )
 
+        let reset = UIBarButtonItem(
+            title: "Reset",
+            style: .plain,
+            target: self,
+            action: #selector(resetItems)
+        )
+
         let randomize = UIBarButtonItem(
             title: "Randomize",
             style: .plain,
@@ -94,7 +120,7 @@ class RandomizeViewController: UIViewController {
             action: nil
         )
 
-        toolbarItems = [shuffle, spacer, randomize]
+        toolbarItems = [shuffle, spacer, randomize, spacer, reset]
 
         navigationController?.setToolbarHidden(false, animated: false)
     }
@@ -102,6 +128,11 @@ class RandomizeViewController: UIViewController {
     @objc private func randomizeItems() {
 
         adapter.update(with: sections)
+    }
+
+    @objc private func resetItems() {
+
+        adapter.update(with: baseSections)
     }
 
     @objc private func suffleItems() {
