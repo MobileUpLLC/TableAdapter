@@ -49,12 +49,12 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         
     private func getHeaderIdentifier(for section: Int) -> String {
         
-        return sections[section].headerIdentifier ?? defaultHeaderIdentifier
+        return sections[section].header?.reuseIdentifier ?? defaultHeaderIdentifier
     }
 
     private func getFooterIdentifier(for section: Int) -> String {
         
-        return sections[section].footerIdentifier ?? defaultFooterIdentifier
+        return sections[section].footer?.reuseIdentifier ?? defaultFooterIdentifier
     }
     
     // MARK: Public methods
@@ -103,9 +103,14 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         viewForHeaderInSection section : Int
     ) -> UIView? {
 
+        guard let item = sections[section].header?.customItem else {
+
+            return nil
+        }
+
         return dequeueConfiguredHeaderFooterView(
-            withIdentifier : getHeaderIdentifier(for : section),
-            configItem     : sections[section].header
+            withIdentifier : getHeaderIdentifier(for: section),
+            configItem     : item
         )
     }
 
@@ -114,10 +119,31 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         viewForFooterInSection section : Int
     ) -> UIView? {
 
+        guard let item = sections[section].footer?.customItem else {
+
+            return nil
+        }
+
         return dequeueConfiguredHeaderFooterView(
-            withIdentifier : getFooterIdentifier(for : section),
-            configItem     : sections[section].footer
+            withIdentifier : getFooterIdentifier(for: section),
+            configItem     : item
         )
+    }
+
+    public func tableView(
+        _ tableView                      : UITableView,
+        heightForHeaderInSection section : Int
+    ) -> CGFloat {
+
+        return tableView.sectionHeaderHeight
+    }
+
+    public func tableView(
+        _ tableView                      : UITableView,
+        heightForFooterInSection section : Int
+    ) -> CGFloat {
+
+        return tableView.sectionFooterHeight
     }
 
     // MARK: Selection
