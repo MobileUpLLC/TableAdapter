@@ -93,7 +93,7 @@ let section = Section<User, Int>(
 
 ### 3. Create adapter and fill it with section
 
-Create `TableAdapter<Item, SectionId>` which is generic type to, with item and section id associated types, just like in `Section`.
+Create `TableAdapter<Item, SectionId>`. Item and section id are associated types, like in `Section`.
 
 Then update adapter with sections.
 
@@ -138,13 +138,13 @@ class ViewController: UIViewController {
 }
 ```
 
-**Note**: his adapter type sets table view delegate to itself. To handle other table view delegate methods, you must inherit `TableAdapter` and implement them.
+**Note**: this adapter type sets table view delegate to itself. To handle other table view delegate methods, you must inherit `TableAdapter` and implement them.
 
 You can also obtain current adapter sections unisng `currentSections: [Section]` variable.
 
 ## Sender
 
-Sometimes you need to set delegate to cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
+Sometimes you need to set delegate for cell, header or footer. For that purpose table adapter has `sender` property, which will be passed to configurable view, that adopts `SenderConfigurable` protocol.
 
 ```swift
 extension Cell: SenderConfigurable {
