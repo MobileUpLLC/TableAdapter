@@ -49,7 +49,7 @@ class SortViewController: UIViewController {
     
     private func update(items: [Float], animated: Bool) {
         
-        let section = Section(id: 0, items: items, header: "")
+        let section = Section(id: 0, items: items)
         
         adapter.update(with: [section], animated: animated)
     }
