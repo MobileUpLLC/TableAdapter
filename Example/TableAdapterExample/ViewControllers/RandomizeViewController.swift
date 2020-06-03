@@ -13,7 +13,7 @@ class RandomizeViewController: UIViewController {
 
     // MARK: Private properties
 
-    private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+    private let tableView = UITableView()
 
     private lazy var adapter = TableAdapter<Int, Int>(tableView: tableView)
 
