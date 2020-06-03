@@ -17,8 +17,8 @@ public struct Section<Item: Hashable, SectionId: Hashable> {
     public var id    : SectionId
     public var items : [Item]
 
-    public let header : HeaderFooterViewModel?
-    public let footer : HeaderFooterViewModel?
+    public let header : HeaderFooterConfig?
+    public let footer : HeaderFooterConfig?
 
     // MARK: Public methods
 
@@ -26,13 +26,13 @@ public struct Section<Item: Hashable, SectionId: Hashable> {
     /// - Parameters:
     ///   - id: Section id. Must be unique in terms of Hashable protocol.
     ///   - items: Items for cells in table view section.
-    ///   - header: View model for header view setup.
-    ///   - footer: View model for footer view setup.
+    ///   - header: Model for header view setup.
+    ///   - footer: Model for footer view setup.
     public init(
         id               : SectionId,
         items            : [Item],
-        header           : HeaderFooterViewModel?     = nil,
-        footer           : HeaderFooterViewModel?     = nil
+        header           : HeaderFooterConfig?     = nil,
+        footer           : HeaderFooterConfig?     = nil
     ) {
         self.id = id
         self.items = items

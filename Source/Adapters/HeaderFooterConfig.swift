@@ -1,5 +1,5 @@
 //
-//  HeaderFooterViewModel.swift
+//  HeaderFooterConfig.swift
 //  TableAdapter
 //
 //  Created by Nikolai Timonin on 03.06.2020.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct HeaderFooterViewModel {
+public struct HeaderFooterConfig {
 
     // MARK: Types
 
@@ -26,6 +26,7 @@ public struct HeaderFooterViewModel {
 
     public let type: Type
     public let item: Any
+    
     public let reuseIdentifier: String?
 
     // MARK: Internal methods
