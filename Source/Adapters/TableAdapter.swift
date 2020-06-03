@@ -130,7 +130,17 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         )
     }
 
-    public func tableView(
+    // Variable height support
+
+    open func tableView(
+        _ tableView              : UITableView,
+        heightForRowAt indexPath : IndexPath
+    ) -> CGFloat {
+
+        return tableView.rowHeight
+    }
+
+    open func tableView(
         _ tableView                      : UITableView,
         heightForHeaderInSection section : Int
     ) -> CGFloat {
@@ -138,7 +148,7 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         return tableView.sectionHeaderHeight
     }
 
-    public func tableView(
+    open func tableView(
         _ tableView                      : UITableView,
         heightForFooterInSection section : Int
     ) -> CGFloat {
@@ -146,21 +156,29 @@ open class TableAdapter<Item: Hashable, SectionId: Hashable>:
         return tableView.sectionFooterHeight
     }
 
+    open func tableView(
+        _ tableView                       : UITableView,
+        estimatedHeightForRowAt indexPath : IndexPath
+    ) -> CGFloat {
+
+        return tableView.estimatedRowHeight
+    }
+
     // MARK: Selection
 
-    public func tableView(
+    open func tableView(
         _ tableView                    : UITableView,
         shouldHighlightRowAt indexPath : IndexPath
     ) -> Bool {
         return true
     }
 
-    public func tableView(
+    open func tableView(
         _ tableView                 : UITableView,
         didHighlightRowAt indexPath : IndexPath
     ) { }
 
-    public func tableView(
+    open func tableView(
         _ tableView                   : UITableView,
         didUnhighlightRowAt indexPath : IndexPath
     ) { }
