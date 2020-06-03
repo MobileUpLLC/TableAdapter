@@ -65,9 +65,31 @@ extension Header: Configurable {
 
 ### 2. Create sections
 
-Section contains information about items, header/footer (optionally) and must have unique `id: Hashable`.
+Section `Section<Item, SectionId>` is generic type and developer should provide cell models type (`Item`) and section id type (`SectionId`). It contains information about items, header/footer config (optionally) and must have unique `id`.
 
-Section `Section<Item, SectionId>`  is generic type and developer should provide cell items type, section id type.
+`HeaderFooterConfig` contains all information for section header/footer setup. There are two types of it: for default and custom header/footer view type.
+
+#### 2.1 Default title for header/footer
+
+```swift
+let section = Section<User, Int>(
+    id: 0,
+    items: [...],
+    header: .default(title: "Section Begin")
+)
+```
+
+#### 2.2 Custom header/footer view
+
+```swift
+let section = Section<User, Int>(
+    id: 0,
+    items: [...],
+    header: .custom(item: "Section Begin", reuseId: "FooterId")
+)
+```
+
+**Node:** any type of item can be used for header/footer setup.
 
 ### 3. Create adapter and fill it with section
 
@@ -100,10 +122,8 @@ class ViewController: UIViewController {
         let section = Section<User, Int>(
             id: 0,
             items: users,
-            header: "Begin",
-            footer: "End",
-            headerIdentifier: "HeaderId",
-            footerIdentifier: "FooterId"
+            header: .custom(item: "Begin", reuseId: "HeaderId"),
+            footer: .custom(item: "End", reuseId: "FooterId"),
         )
 
         adapter.update(with: [section], animated: true)
@@ -111,6 +131,7 @@ class ViewController: UIViewController {
 
     func setupTable() {
         tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
+
         tableView.register(Header.self, forHeaderFooterViewReuseIdentifier identifier: "HeaderId")
         tableView.register(Footer.self, forHeaderFooterViewReuseIdentifier identifier: "FooterId")
     }
@@ -134,19 +155,6 @@ extension Cell: SenderConfigurable {
         delegate = sender
     }
 }
-```
-
-## Default Header/Footer
-
-To use default header/footer view in section create `Section` with `String` header/footer object type and **omit** reuse identifiers.
-
-```swift
-let section = Section<User, Int>(
-    id: 0,
-    items: [...],
-    header: "Begin",
-    footer: "End"
-)
 ```
 
 ## One cell type
