@@ -23,8 +23,8 @@ class HeaderFooterViewController: UIViewController {
         let sectionInts = Section(
             id: 0,
             items: ints,
-            header: .default(item: "Ints begin"),
-            footer: .default(item: "Ints end")
+            header: .default(title: "Ints begin"),
+            footer: .default(title: "Ints end")
         )
         
         let strings = ["foo", "bar"].map { PrimitiveItem(type: .string, value: $0) }

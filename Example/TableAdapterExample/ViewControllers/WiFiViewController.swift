@@ -120,14 +120,14 @@ class WiFiViewController: UIViewController {
             let nets: [Item] = networkItems.map { .net($0) }
             
             sections = [
-                Section<Item, Int>(id: 0, items: configItems, header: .default(item: "Current network")),
-                Section<Item, Int>(id: 1, items: nets, header: .default(item: "Available networks"))
+                Section<Item, Int>(id: 0, items: configItems, header: .default(title: "Current network")),
+                Section<Item, Int>(id: 1, items: nets, header: .default(title: "Available networks"))
             ]
             
         } else {
             
             sections = [
-                Section<Item, Int>(id: 0, items: configItems, header: .default(item: "Current network"))
+                Section<Item, Int>(id: 0, items: configItems, header: .default(title: "Current network"))
             ]
         }
         

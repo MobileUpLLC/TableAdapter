@@ -32,7 +32,7 @@ public struct HeaderFooterConfig {
     // MARK: Internal methods
 
 
-    var defaultItem: String? {
+    public var defaultTitle: String? {
 
         switch type {
 
@@ -44,7 +44,7 @@ public struct HeaderFooterConfig {
         }
     }
 
-    var customItem: Any? {
+    public var customItem: Any? {
 
         switch type {
 
@@ -58,11 +58,19 @@ public struct HeaderFooterConfig {
 
     // MARK: Public methods
 
-    public static func `default`(item: String) -> Self {
+    /// Default table header/footer view.
+    /// - Parameter title: Title for header/footer view.
+    /// - Returns: Config for setup.
+    public static func `default`(title: String) -> Self {
 
-        return Self(type: .default, item: item, reuseIdentifier: nil)
+        return Self(type: .default, item: title, reuseIdentifier: nil)
     }
 
+    /// Custom table header/footer view.
+    /// - Parameters:
+    ///   - item: Model for header/footer view setup.
+    ///   - reuseId: Reuse identifier of registered header/footer view.
+    /// - Returns: Config for setup.
     public static func custom(item: Any, reuseId: String? = nil) -> Self {
 
         return Self(type:.custom, item: item, reuseIdentifier: reuseId)

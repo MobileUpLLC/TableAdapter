@@ -245,7 +245,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         titleForHeaderInSection section : Int
     ) -> String? {
 
-        return sections[section].header?.defaultItem
+        return sections[section].header?.defaultTitle
     }
 
     open func tableView(
@@ -253,7 +253,7 @@ open class BaseTableAdapter<Item: Hashable, SectionId: Hashable>: NSObject, UITa
         titleForFooterInSection section : Int
     ) -> String? {
 
-        return sections[section].footer?.defaultItem
+        return sections[section].footer?.defaultTitle
     }
 
     open func tableView(
